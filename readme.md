@@ -6,4 +6,4 @@
 
 #### 面试题
 
-[进大厂不迷路(前端)之一面](https://github.com/hanyueqiang/frontEnd_book/blob/master/%E4%BB%8A%E5%A4%A9%E6%88%91%E6%98%AF%E9%9D%A2%E8%AF%95%E5%AE%98%E4%B9%8B%E4%B8%80%E9%9D%A2.md)
+[进大厂不迷路(前端)之一面](https://github.com/hanyueqiang/frontEnd_book/blob/master/%E8%BF%9B%E5%A4%A7%E5%8E%82%E4%B8%8D%E8%BF%B7%E8%B7%AF(%E5%89%8D%E7%AB%AF)%E4%B9%8B%E4%B8%80%E9%9D%A2.md)
