@@ -2,7 +2,7 @@
 
 #### 设计模式
 
-[javascript 设计模式详解](https://github.com/hanyueqiang/frontEnd_book/blob/master/%E6%B5%85%E8%B0%88%E5%89%8D%E7%AB%AF%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F.md)
+[javascript 设计模式详解](https://github.com/hanyueqiang/frontEnd_book/blob/master/javascript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3.md)
 
 #### 面试题
 
