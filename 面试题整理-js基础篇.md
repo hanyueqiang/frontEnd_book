@@ -43,7 +43,7 @@ arr.forEach(function(item, index, array) {
 // 执行某些操作
 });
 
-// 归并方法 reduce()和reduceRight(), 这两个方法只是遍历方向不同
+// reduce()和reduceRight(), 这两个方法只是遍历方向不同
 var arr = [1, 2, 3, 4, 5];
 var sum = arr.reduce(function(prev, cur, index, array){
   return prev + cur;
@@ -213,9 +213,164 @@ console.log(f1.__proto__ === Foo.prototype); // true
 
 #### 事件委托机制(某站)
 
+事件委托就是利用冒泡的原理，把事件加到父元素或祖先元素上，触发执行效果。
+1、提高 JavaScript 性能。事件委托可以显著的提高事件的处理速度，减少内存的占用
+2、 动态绑定事件
+
+```
+<ul id="list">
+  <li>item 1</li>
+  <li>item 2</li>
+  <li>item 3</li>
+  ......
+  <li>item n</li>
+</ul>
+
+// 给父层元素绑定事件
+document.getElementById('list').addEventListener('click', function (e) {
+  // 兼容性处理
+  var event = e || window.event;
+  var target = event.target || event.srcElement;
+
+  // 判断是否匹配目标元素
+  if (target.nodeName.toLocaleLowerCase === 'li') {
+    console.log(target.innerHTML);
+  }
+});
+// target 元素则是在 #list 元素之下具体被点击的元素，然后通过判断 target 的一些属性（比如：nodeName，id 等等）
+
+```
+
+局限性
+
+1、focus、blur 之类的事件本身没有事件冒泡机制，所以无法委托
+
+2、mousemove、mouseout 虽然有事件冒泡，但是只能不断通过位置去计算定位，对性能消耗高，也不适合于事件委托
+
 #### 事件冒泡，阻止冒泡事件，阻止默认事件(某站)
 
+首先说明什么是事件冒泡？当事件发生后，这个事件就要开始传播（从里到外，或者从外向里）。为什么要传播呢？因为事件源本身（可能）并没有处理事件的能力，或处理事件的函数并未绑定在该事件源上
+
+阻止冒泡事件
+
+```
+function bubbles(e){
+  var ev = e || window.event;
+  if(ev && ev.stopPropagation) {
+    //非IE浏览器
+    ev.stopPropagation();
+  } else {
+    //IE浏览器(IE11以下)
+    ev.cancelBubble = true;
+  }
+  console.log("最底层盒子被点击了")
+}
+```
+
+阻止默认事件
+
+```
+// 谷歌及IE8以上
+e.preventDefault();
+
+// IE8及以下
+window.event.returnValue = false;
+
+return false;
+```
+
 #### ES6 异步请求方法 promise/async await/generator 等(某站)
+
+类似于将一个异步方法封装在一个具有回调函数的函数里，Promise 实际上充当了这种封装作用。然后通过 resolve 和 reject 函数向外输出成功时的数据和失败时的错误信息
+
+```
+const p = new Promise((resolve, reject) => {
+  setTimeout(function(){
+    const name = 'joyitsai';
+    resolve(name);
+  /*
+  如果失败reject输出错误信息
+    reject(`error_info`)
+  */
+  }, 1000);
+});
+p.then((data) => {
+  console.log(data);
+})
+```
+
+Promise，把它想象成一个容器，里面放着一些正在处理的问题，但不管过多长时间，它最终都会把它处理完成的结果(不管是成功还是失败的)输出给你，而且，它允许你通过.then((data)=>{})方法来接收这个结果数据。Promise 可以说是为处理异步而生.
+
+1.关于 async
+
+它是将一个方法或函数变成异步的，它会将一个普通函数封装成一个 Promise，为什么要封装成 Promise 呢？其实它只是 Promise 的搬运工，利用了 Promise 处理异步问题的能力，能让你更好地解决需要异步处理的代码
+
+```
+/**async/await 与Promise */
+async function testAsync(){
+    return 'Here is Async';
+}
+const result = testAsync();
+console.log(result); // 输出 Promise { 'Here is Async' }
+```
+
+2.关于 await
+
+async 用来申明里面包裹的内容可以进行同步的方式执行，await 则是进行执行顺序控制，每次执行一个 await，程序都会暂停等待 await 返回值，然后再执行之后的 await。
+
+await 只能用在 async 函数之中，用在普通函数中会报错
+
+await 命令后面的 Promise 对象，运行结果可能是 rejected，所以最好把 await 命令放在 try...catch 代码块中
+
+await 具有阻塞功能，可以理解为：等待 await 语句执行完成后，后面的程序才会继续。这就意味着，虽然一段包含 await 语句的异步程序，最终却是按照同步的顺序来执行
+
+```
+async function test(){
+    console.log(2);
+    return 'Joyitsai';
+}
+
+async function run(){
+    console.log(1);
+    const data = await test();
+    console.log(data);
+    console.log(3);
+}
+run();
+
+// 打印结果
+1
+2
+Joyitsai
+3
+```
+
+3.ES6 中的 Generator 函数
+
+Generator 函数是 ES6 提供的一种异步编程解决方案，语法行为与传统函数完全不同。从语法上，首先可以把它理解成，Generator 函数是一个状态机，封装了多个内部状态
+
+形式上，Generator 函数是一个普通函数，但是有两个特征：1.function 关键字与函数名之间有一个星号 2.函数体内部使用 yield 语句，定义不同的内部状态
+
+```
+var arr = [1, [[2, 3], 4], [5, 6]];
+
+var flat = function* (a) {
+  var length = a.length;
+  for (var i = 0; i < length; i++) {
+    var item = a[i];
+    if (typeof item !== 'number') {
+      yield* flat(item);
+    } else {
+      yield item;
+    }
+  }
+};
+
+for (var f of flat(arr)) {
+  console.log(f);
+}
+// 1, 2, 3, 4, 5, 6
+```
 
 #### var let 和 const 区别， 块级作用域(某站)
 
