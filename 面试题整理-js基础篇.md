@@ -462,6 +462,35 @@ window.b // undefined
 
 #### 什么是作用域链 作用域 闭包?(某站)
 
+作用域
+先来谈谈变量的作用域
+变量的作用域无非就是两种：全局变量和局部变量。
+全局作用域：
+最外层函数定义的变量拥有全局作用域，即对任何内部函数来说，都是可以访问的：
+
+```
+<script>
+  var outerVar = "hello";
+  function fn(){
+    console.log(outerVar);
+  }
+  fn(); // hello
+</script>
+```
+
+局部作用域：
+和全局作用域相反，局部作用域一般只在固定的代码片段内可访问到，而对于函数外部是无法访问的，最常见的例如函数内部
+
+```
+<script>
+  function fn(){
+    var innerVar = "inner";
+  }
+  fn();
+  console.log(innerVar); // ReferenceError: innerVar is not defined
+</script>
+```
+
 #### 箭头函数的概念和普通函数的区别?(某站)
 
 #### apply、call、bind 改变 this call 和 apply 与箭头函数有什么区别?(某站)
