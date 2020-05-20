@@ -493,13 +493,61 @@ window.b // undefined
 
 #### 箭头函数的概念和普通函数的区别?(某站)
 
-#### apply、call、bind 改变 this call 和 apply 与箭头函数有什么区别?(某站)
+箭头函数的 this 指向规则：
 
-#### Math 的方法 Math.max Math.min 向上向下取整 Math.ceil Math.floor Math.round(某站)
+1. 箭头函数没有 prototype(原型)，所以箭头函数本身没有 this
+
+```
+let a = () =>{};
+console.log(a.prototype); // undefined
+```
+
+2. 箭头函数的 this 指向在定义的时候继承自外层第一个普通函数的 this。
+3. 不能直接修改箭头函数的 this 指向
+4. 箭头函数外层没有普通函数，严格模式和非严格模式下它的 this 都会指向 window(全局对象)
+
+```
+const obj = {
+  array: [1, 2, 3],
+  sum: () => {
+    // 外层没有普通函数this会指向全局对象
+    return this.array.push('全局对象下没有array，这里会报错'); // 找不到push方法
+  }
+};
+obj.sum();
+
+// 修改后 这两种写法是等价的
+sum() {
+  return this.array.push('this指向obj');
+}
+sum: function() {
+  return this.array.push('this指向obj');
+}
+```
+
+5. 使用 new 调用箭头函数会报错
+   无论箭头函数的 thsi 指向哪里，使用 new 调用箭头函数都会报错，因为箭头函数没有 constructor
+
+```
+let a = () => {};
+let b = new  a(); // a is not a constructor
+```
+
+#### apply、call、bind 改变 this call 和 apply 与箭头函数有什么区别?(某站)
 
 #### js 的 toFixed 方法(某站)
 
+toFixed(num) 方法可把 Number 四舍五入为指定小数位数的数字
+num 必需。规定小数的位数，是 0 ~ 20 之间的值，包括 0 和 20
+返回值：字符串 string
+
 #### js 的 map 方法(某站)
+
+map 方法返回一个新数组，数组中的元素为原始数组元素调用函数处理后的值
+
+方法按照原始数组元素顺序依次处理元素
+
+不会对空数组进行检测,不会改变原始数组,兼容 ie9+
 
 #### canvas 了解吗 webgl(某站)
 
