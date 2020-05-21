@@ -22,6 +22,16 @@ git stash
   // 用git stash list命令去查看我们“存储”的列表。
   $ git stash list
 
+  // 查看 stash 列表，找到之前存储的 id stash 记录
+  // 恢复 id stash 的内容
+  $ git stash apply stash@{0}
+
+  // 删除 stash 列表中已经恢复的 id stash 记录
+  $ git stash drop stash@{0}
+
+  // 执行git stash list 命令，查看 stash 列表，已将之前存储的 id stash 记录删除
+
+  // 全部恢复命令
   // stash apply命令恢复所有stash内容
   // 但是恢复后，stash内容并不删除
   $ git stash apply
@@ -35,9 +45,11 @@ git stash
 ```
 // commitId是你要合并的commit后所形成的一个commitId前一个commitId
 // -i 的参数是不需要合并的 commit 的 hash 值
-git rebase -i commitId
+$ git rebase -i commitId
 
-// vi模式下，在合并到前面改为squash
+// vi模式下，在合并到前面改为squash 或简写为s，pick是使用该次提交
 squash 的意思是这个 commit 会被合并到前一个commit
-// 修改commit信息后 wq退出
+// 修改commit信息后 wq退出，执行git log查看
+
+$ git log
 ```
