@@ -31,7 +31,38 @@ HTTP1.1 新增了五种请求方法：OPTIONS, PUT, DELETE, TRACE 和 CONNECT
 
 #### 200 304 缓存区别(某团)
 
+浏览器缓存
+
+- 浏览器在请求某一资源时，会先获取该资源缓存的 header 信息，判断是否命中强缓存（cache-control 和 expires 信息），若命中直接从缓存中获取资源信息，包括缓存 header 信息，本次请求就不会与服务器进行通信。
+
+- 如果没有命中强缓存，浏览器会发送请求到服务器，请求会携带第一次返回的有关缓存的 header 字段信息（Last-Modifued/If-Modified-Since 和 Etag/If-None-Match），由服务器根据 header 信息来比对结果是否协商缓存命中。若命中，则服务器返回新的响应 header 信息更新缓存中的对应 header 信息，但是不返回资源内容，它会告知浏览器可以直接从缓存获取；否则返回最新的资源内容。
+
+强缓存相关 header 字段
+
+Expires 策略
+Expires 是 Web 服务器响应消息头字段，在响应 http 请求时告诉浏览器在过期时间前浏览器可以直接从浏览器缓存取数据，而无需再次请求。
+Expires 设置失效时间，精确到时分秒。
+不过 Expires 是 HTTP 1.0 的东西，现在默认浏览器均默认使用 HTTP 1.1，所以它的作用基本忽略。
+http 协议头 Cache-Control ：值可以是 public、private、no-cache、no- store、no-transform、must-revalidate、proxy-revalidate、max-age
+
+协商缓存相关的 header 字段
+
+Last-Modifued/If-Modified-Since 和 Etag/If-None-Match 这两组搭档都是成对出现的，即第一次请求的响应头带上某个字段（Last-Modifued 或者 Etag），则后续请求会带上对应的请求字段（If-Modified-Since 或者 If-None-Match），若响应头没有 Last-Modifued 或者 Etag 字段，则请求头也不会有对应字段
+
 #### OSI 七层协议、http 是哪个层 tcp/udp 呢(某站)
+
+OSI 七层模型每一层都有自己的作用，从上到下的作用依次为：
+
+- 应用层(Application) :提供网络与用户应用软件之间的接口服务
+- 表示层(Presentation) :提供格式化的表示和转换数据服务，如加密和压缩
+- 会话层(Session) 提供包括访问验证和会话管理在内的建立和维护应用之间通信的机制
+- 传输层(Transimission):提供建立、维护和取消传输连接功能，负责可靠地传输数据(PC)
+- 网络层(Network): 处理网络间路由，确保数据及时传送(路由器)
+- 数据链路层(DataLink): 负责无错传输数据，确认帧、发错重传等(交换机)
+- 物理层(Physics) :提供机械、电气、功能和过程特性(网卡、网线、双绞线、同轴电缆、中继器)
+
+http 属于应用层
+tcp/udp 属于传输层
 
 #### GET 和 POST 有什么区别？
 
