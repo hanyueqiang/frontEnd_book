@@ -14,6 +14,8 @@
 
 [React里为什么不能用index作为key](https://github.com/hanyueqiang/frontEnd_book/blob/master/React%E9%87%8C%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E8%83%BD%E7%94%A8index%E4%BD%9C%E4%B8%BAkey.md)
 
+[React Hooks中useRef如何优雅使用](https://github.com/hanyueqiang/frontEnd_book/blob/master/React%20Hooks%E4%B8%ADuseRef%E7%9A%84%E4%BC%98%E9%9B%85%E4%BD%BF%E7%94%A8.md)
+
 #### 面试题
 
 [面试题整理-js 基础篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%95%B4%E7%90%86-js%E5%9F%BA%E7%A1%80%E7%AF%87.md)
