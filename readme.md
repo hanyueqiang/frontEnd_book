@@ -16,6 +16,10 @@
 
 [React Hooks中useRef如何优雅使用](https://github.com/hanyueqiang/frontEnd_book/blob/master/React%20Hooks%E4%B8%ADuseRef%E7%9A%84%E4%BC%98%E9%9B%85%E4%BD%BF%E7%94%A8.md)
 
+
+[React Hooks父组件中获取子组件实例值](https://github.com/hanyueqiang/frontEnd_book/blob/master/React%20Hooks%E7%88%B6%E7%BB%84%E4%BB%B6%E4%B8%AD%E8%8E%B7%E5%8F%96%E5%AD%90%E7%BB%84%E4%BB%B6%E5%AE%9E%E4%BE%8B%E5%80%BC.md)
+
+
 #### 面试题
 
 [面试题整理-js 基础篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%95%B4%E7%90%86-js%E5%9F%BA%E7%A1%80%E7%AF%87.md)
