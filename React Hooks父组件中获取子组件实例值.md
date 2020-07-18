@@ -52,6 +52,59 @@ const WrappedForm = forwardRef(SubForm);
 export default WrappedForm;
 ```
 
+按上面子组件的写法会存在获取到 form 是初始值，如果我们修改了 form 里 Item 的值，会获取不到，还有的场景需要我们先进行必填表单校验，直接获取子组件 form 实例值，会跳过表单校验，这样也会出现问题
+
+解决思路：子组件暴露出 form，父组件先进行表单校验，再获取 form 值
+
+修改后父组件
+
+```js
+import React, { useRef } from "react";
+import { Modal } from "antd";
+import SubForm from "./subForm";
+
+const Parent = () => {
+  const getFormValue = useRef();
+
+  const handleOk = () => {
+    const { getFieldsForm }: any = getFormValue.current;
+    // 首先经行表单校验
+    getFieldsForm.validateFields().then(() => {
+      const values = getFieldsForm.getFieldsValue();
+      console.log(values);
+    });
+  };
+
+  return (
+    <Modal onOk={handleOk}>
+      <SubForm ref={getFormValue} />
+    </Modal>
+  );
+};
+
+export default Parent;
+```
+
+修改后子组件
+
+```js
+import React, { useImperativeHandle, useRef, forwardRef } from "react";
+import { Form } from "antd";
+
+const SubForm = (props, ref) => {
+  const [form] = Form.useForm();
+
+  useImperativeHandle(ref, () => ({
+    formFields: form,
+  }));
+
+  return <Form form={form}>...</Form>;
+};
+
+const WrappedForm = forwardRef(SubForm);
+export default WrappedForm;
+```
+
 #### 二、获取子组件实例值（`useState` 内容）
 
 父组件
