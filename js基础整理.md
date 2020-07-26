@@ -28,7 +28,7 @@ call 和 aplly 的第一个参数都是要改变上下文的对象，而 call �
 #### 手写 call
 
 ```js
-Function.prototype.newCall = function (context) {
+Function.prototype.newCall = function(context) {
   var context = Object(context) || window;
 
   context.fn = this;
@@ -46,7 +46,7 @@ Function.prototype.newCall = function (context) {
 #### 手写 apply
 
 ```js
-Function.prototype.newApply = function (context, args) {
+Function.prototype.newApply = function(context, args) {
   var context = Object(context) || window;
 
   context.fn = this;
@@ -113,7 +113,7 @@ function myPromise(constructor) {
   }
 }
 
-myPromise.prototype.then = function (onFullfilled, onRejected) {
+myPromise.prototype.then = function(onFullfilled, onRejected) {
   let self = this;
   switch (self.status) {
     case "resolved":
@@ -206,22 +206,22 @@ const p2 = new Promise((resolve) => {
 const p3 = 3;
 console.log(Promise.all([p1, p2, p3])); // [1, 2, 3]
 
-Promise.prototype.all = function (promiseArr) {
+Promise.prototype.all = function(promiseArr) {
   let resArr = [];
   let count = 0;
   let len = promiseArr.length;
   // 返回一个新的promise实例
-  return new Promise(function (resolve, reject) {
+  return new Promise(function(resolve, reject) {
     for (let promise of promiseArr) {
       Promise.resolve(promise).then(
-        function (res) {
+        function(res) {
           resArr[count] = res;
           count++;
           if (count === len) {
             return resolve(resArr);
           }
         },
-        function (err) {
+        function(err) {
           return reject(err);
         }
       );
@@ -247,8 +247,8 @@ const promiseAsync = async (arr) {
 > 与 Promise.all 一样，Promise.race 也接收包含 Promise 对象或普通值的数组(或其它可迭代对象)作为参数，返回一个 Promise 实例对象。与 Promise.all 不同的是，一旦有一个 Promise 实例对象 resolve ，立即把这个 resolve 的值作为 Promise.race resolve 的值。一旦有一个对象 reject， Promise.race 也会立即 reject。
 
 ```js
-Promise.prototype.race = function (promiseArr) {
-  return new Promise(function (resolve, reject) {
+Promise.prototype.race = function(promiseArr) {
+  return new Promise(function(resolve, reject) {
     for (let promise of promiseArr) {
       if (typeof promise === "object" && typeof promise.then === "function") {
         promise.then(resolve, reject);
@@ -266,7 +266,7 @@ Promise.prototype.race = function (promiseArr) {
 #### 使用冒泡排序
 
 ```js
-Array.prototype.csSort = function () {
+Array.prototype.csSort = function() {
   var newarr = this;
   /** 2、 冒泡法排序
    * 插入发排序，即那数组的前一项和后一项对比，如果前面一项小于后面
@@ -314,7 +314,7 @@ function sort(arr) {
  * @return {ListNode}
  */
 
-var mergeTwoLists = function (l1, l2) {
+var mergeTwoLists = function(l1, l2) {
   if (l1 == null) return l2;
   if (l2 == null) return l1;
   if (l1.val < l2.val) {
@@ -335,7 +335,7 @@ var mergeTwoLists = function (l1, l2) {
 说明：本题中，我们将空字符串定义为有效的回文串。
 
 ```js
-var isPalindrome = function (s) {
+var isPalindrome = function(s) {
   let reg = /[a-z]|[0-9]/;
   s = s
     .split("")
@@ -415,11 +415,69 @@ DOM-diff 比较两个虚拟 DOM 的区别，也就是在比较两个对象的区
 
 ## http 和 https 的区别
 
+http 协议的报文传输时不加密的，有些隐私信息存在被窃听的风险
+http 协议通信时无法验证通信方身份，可能存在伪装者（客户端、服务器）
+http 协议无法判断通信报文的完整性，通信报文在 TCP/IP 协议通信中可能会被篡改
+
+https 协议是 http 协议+ssl 协议组成的，那么 http 协议的缺点，只能是 ssl 协议来完成
+信任主机的问题.。 采用 https 的 server 必须从 CA （数字证书认证机构处于客户端与服务器双方都可信赖的第三方机构的 立场上）申请一个用于证明服务器用途类型的证书
+HTTP + 认证 + 加密 + 完整性保护 = HTTPS
+TCP 用的 port 是 80， https 用的是 443
+
 ## url 从输入到页面展示的过程
 
-## https 的握手有了解过吗，详细过程
+1. DNS 解析
+   以 chrome 浏览器为例，当输入 baidu.com 的时候，我们实际访问的是 14.215.177.39，这是百度的 IP 地址，从 baidu.com 到 14.215.177.39 的过程就是一个 DNS 解析的过程，首先会从浏览器里 DNS 缓存查找，chrome://dns/，一旦查找到了就完成了这个解析过程，但是如果没有呢？ 那么接着会从电脑本地的 hosts 文件中查找 2.三次握手
+   当了解了互联网协议后，我们接着之前的 URL 访问过程，获得了服务器 IP 地址以后，我们需要进行通信，这会进行一次连接，这是通过 TCP 协议完成的
+   三次握手:
+   第一次由客户端发送 SYN 包到服务器，等待服务器确认；
+   第二次是服务器接收到 SYN 数据包，将 SYN + 自己发送的 ACK 包一同发送给客户端；
+   第三次是客户端接收到服务器发送过来的 SYN + ACK 数据包后，再向服务器发送确认包 ACK，客户端和服务器进入连接状态，完成三次握手。
+   3.HTTP 通信
+   当客户端和服务器进入连接状态后，那么就可以进行 HTTP(应用层) 的通信了。 4.页面渲染
+   当浏览器接受到响应报文，举例是 html 文件，就开始解析和渲染并呈现给用户也就是我们。 一个完整的 html 文件包括了 html 部分，css 部分，javascript 部分
+
+TCP 四次挥手
+TCP 断开链接的过程和建立链接的过程比较类似，只不过中间的两部并不总是会合成一步走，所以它分成了 4 个动作，
+客户端挥手发送(fin)——服务端发送(ack)——服务端发送(fin)——客户端发送(ack)。
+
+## 手写防抖和节流
+
+防抖 debounce
+
+```js
+function debounce(fn, wait = 500) {
+  var timeout = null;
+  return function() {
+    if (timeout !== null) {
+      clearTimeout(timeout);
+    }
+    timeout = setTimeout(fn, wait);
+  };
+}
+```
+
+节流 throttle
+
+```js
+function throttle(func, delay) {
+  var prev = Date.now();
+  return function() {
+    var context = this;
+    var args = arguments;
+    var now = Date.now();
+    if (now - prev >= delay) {
+      func.apply(context, args);
+      prev = Date.now();
+    }
+  };
+}
+```
 
 ## 判断数据类型的几种方法，优缺点，实现方式
+
+1.typeof 直接返回数据类型字符串，无法判断数组，对象，null,其中 null、{}、[] 都返回 object
+2.instanceof 判断某个实例是不是属于原型
 
 ## react 中 setState 以后，是子树渲染还是整颗树渲染还是其他情况？
 
@@ -433,7 +491,74 @@ DOM-diff 比较两个虚拟 DOM 的区别，也就是在比较两个对象的区
 
 ## 算法，最大连续子序列(dp)
 
+当子序列的某个元素之前的元素和为负数时，他对后边的最大和一定是一个负向增益，没有该元素本身大,利用这个特点，我们把目光投向整个数组，如果我们从前向后遍历，当遇到前方和为负数时，就可以抛点前边的元素，从当前元素继续向后去计算，也可以总结成一个动态规划的公式:`dp = Math.max(dp + current, current)`
+
+```js
+/**
+ * @param {number[]} nums
+ * @return {number}
+ */
+let maxSubArray = function(nums) {
+  // 默认当前的最大和为第一个元素
+  let sum = nums[0];
+  // dp代表以当前元素结尾的最大和，默认也是第一个元素
+  let dp = nums[0];
+  // 从数组的第二个元素开始循环
+  for (let i = 1; i < nums.length; i++) {
+    // 上文中提到的dp公式
+    dp = Math.max(dp + nums[i], nums[i]);
+    // 同时进行当前最大值的记录
+    sum = Math.max(sum, dp);
+  }
+  return sum;
+};
+```
+
 ## instanceOf 原理，手写一个 instanceOf
+
+instanceof 可以检测某个对象是不是另一个对象的实例
+如果一个对象是数组，应该怎么判断？用 arr instanceof Array
+
+## 实现浅拷贝、深拷贝
+
+浅拷贝
+
+```js
+function copy(obj1) {
+  var obj2 = {};
+  for (var key in obj1) {
+    obj2[key] = obj1[key];
+  }
+  return obj2;
+}
+```
+
+深拷贝
+
+```js
+function deepClone(obj) {
+  // 如果是值类型或 null，则直接return
+  if (typeof obj !== "object" || obj === null) {
+    return obj;
+  }
+
+  // 定义结果对象
+  let copy = {};
+  // 如果对象是数组，则定义结果数组
+  if (obj.constructor === Array) {
+    copy = [];
+  }
+  // 遍历对象的key
+  for (let key in obj) {
+    // 如果key是对象的自有属性
+    if (obj.hasOwnProperty(key)) {
+      // 递归调用深拷贝方法
+      copy[key] = deepClone(obj[key]);
+    }
+  }
+  return copy;
+}
+```
 
 ## react 开发的几种方式
 
