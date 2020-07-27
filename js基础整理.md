@@ -568,6 +568,9 @@ function deepClone(obj) {
 
 ## react hook 使用过吗？ 使用过哪些 hook
 
+React 现在的渲染都是由 Fiber 来调度
+Fiber 调度过程中的两个阶段(以 Render 为界)
+
 ## react 高阶组件有哪几种方式，如何写一个高阶组件
 
 ## 什么时候使用 useRef，可以做到什么事情
@@ -576,17 +579,46 @@ function deepClone(obj) {
 
 ## 二维码扫描登录实现原理
 
+移动端基于 token 的认证机制。
+二维码扫码登录的原理。
+
 ## 大体积文件上传【分片、断点续传】
+
+使用 webuploader 组件实现大文件分片上传，断点续传,webuploader：是一个以 HTML5 为主， Flash 为辅的文件上传组件，采用大文件分片/并发上传的方式，极大地提高了文件上传的效率，同时兼容多种浏览器版本；
 
 ## 洗牌算法
 
 ## node 为什么适合做高并发
 
+I/O 密集型任务
+
 ## 实现 cacheRequest 方法，保证使用 ajax 请求相同资源实际只发送一次请求
+
+```js
+// 构建Map，用作缓存数据
+const dict = new Map();
+// 这里简单的把url作为cacheKey
+const cacheRquest = (url) => {
+  if (dict.has(url)) {
+    return Promise.resolve(dict.get(url));
+  } else {
+    // 无缓存，发起真实请求，成功后写入缓存
+    return request(url)
+      .then((res) => {
+        dict.set(url, res);
+        return res;
+      })
+      .catch((err) => Promise.reject(err));
+  }
+};
+```
 
 ## 一个无限长有序可重复数组 N，查 X 最后出现的位置
 
 ## treeshaking 原理
+
+Tree-shaking 的本质是消除无用的 js 代码。无用代码消除在广泛存在于传统的编程语言编译器中，编译器可以判断出某些代码根本不影响输出
+ES6 模块依赖关系是确定的，和运行时的状态无关，可以进行可靠的静态分析，这就是 tree-shaking 的基础。
 
 ## node 如何捕获异常
 
