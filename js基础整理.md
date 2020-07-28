@@ -652,3 +652,112 @@ const twoNum = (nums, target) => {
 ## ts 中 type interfece 区别
 
 ## redux 的设计
+
+## ajax 是什么？ 原理 步骤
+
+(1)创建 XMLHttpRequest 对象,也就是创建一个异步调用对象.
+(2)创建一个新的 HTTP 请求,并指定该 HTTP 请求的方法、URL 及验证信息.
+(3)设置响应 HTTP 请求状态变化的函数.
+(4)发送 HTTP 请求.
+(5)获取异步调用返回的数据.
+(6)使用 JavaScript 和 DOM 实现局部刷新.
+
+```js
+var XHR = new XMLHttpRequest();
+XHR.open("get", "./a.php");
+XHR.send(null);
+XHR.onreadystatechange = function() {
+  if (XHR.readyState === 4) {
+    if (XHR.status === 200) {
+      alert(XHR.responseText);
+    }
+  }
+};
+```
+
+### 闭包 什么时候用 有什么特点
+
+1、函数嵌套函数
+
+2、内部函数可以访问外部函数的变量
+
+3、参数和变量不会被回收。
+
+```js
+function test() {
+  var a = 0;
+  return function() {
+    a++;
+    alert(a);
+  };
+}
+var atest = new test(); //引用返回的函数
+atest(); // 1
+```
+
+### 箭头函数和普通函数有什么区别
+
+.箭头函数相当于匿名函数，是不能作为构造函数的，不能使用 new 2.箭头函数不绑定 arguments,取而代之用 rest 参数…解决 3.箭头函数会捕获其所在上下文的 this 值，作为自己的 this 值。即箭头函数的作用域会继承自外围的作用域。 4.箭头函数当方法使用的时候没有定义 this 的绑定
+.箭头函数没有函数原型
+
+```js
+obj = {
+  a: 10,
+  b: () => {
+    console.log(this.a); //undefined
+    console.log(this); //window
+  },
+  c: function() {
+    return () => {
+      console.log(this.a); //10
+    };
+  },
+};
+obj.b();
+obj.c(); // 10
+```
+
+## 匹配任何空白字符
+
+```js
+function trim(str) {
+  var reg = /^\s+|\s+$/g;
+
+  str = str.replace(reg, "");
+  console.log(str);
+}
+trim(" abc123   ");
+```
+
+## JS 原型链与继承
+
+> 每个构造函数(constructor)都有一个原型对象(prototype),原型对象都包含一个指向构造函数的指针,而实例(instance)都包含一个指向原型对象的内部指针.
+
+确定原型和实例的关系,使用 instanceof 操作符
+
+## CommonJS、AMD、CMD 和 ES6 模块化区别
+
+NodeJS 是 CommonJS 规范的实现，webpack 也是以 CommonJS 的形式来书写。node.js 将 javascript 语言用于服务器端编程。
+
+## 随机生成给定长度的字符串
+
+## .DOCTYPE 有哪些写法，有什么区别，什么是怪异模式，有哪些废弃掉的元素
+
+## 引入 css 有哪些方式，link 中的 media 属性是什么作用，有哪些取值
+
+## async，await 的理解
+
+## 实现一个 repeat
+
+## 事件代理
+
+## 写一个计数器
+
+```js
+var count = (function() {
+  var counter = 0;
+  return function() {
+    return ++counter;
+  };
+})();
+```
