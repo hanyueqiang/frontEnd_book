@@ -28,7 +28,7 @@ call 和 aplly 的第一个参数都是要改变上下文的对象，而 call �
 #### 手写 call
 
 ```js
-Function.prototype.newCall = function(context) {
+Function.prototype.newCall = function (context) {
   var context = Object(context) || window;
 
   context.fn = this;
@@ -46,7 +46,7 @@ Function.prototype.newCall = function(context) {
 #### 手写 apply
 
 ```js
-Function.prototype.newApply = function(context, args) {
+Function.prototype.newApply = function (context, args) {
   var context = Object(context) || window;
 
   context.fn = this;
@@ -113,7 +113,7 @@ function myPromise(constructor) {
   }
 }
 
-myPromise.prototype.then = function(onFullfilled, onRejected) {
+myPromise.prototype.then = function (onFullfilled, onRejected) {
   let self = this;
   switch (self.status) {
     case "resolved":
@@ -206,22 +206,22 @@ const p2 = new Promise((resolve) => {
 const p3 = 3;
 console.log(Promise.all([p1, p2, p3])); // [1, 2, 3]
 
-Promise.prototype.all = function(promiseArr) {
+Promise.prototype.all = function (promiseArr) {
   let resArr = [];
   let count = 0;
   let len = promiseArr.length;
   // 返回一个新的promise实例
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     for (let promise of promiseArr) {
       Promise.resolve(promise).then(
-        function(res) {
+        function (res) {
           resArr[count] = res;
           count++;
           if (count === len) {
             return resolve(resArr);
           }
         },
-        function(err) {
+        function (err) {
           return reject(err);
         }
       );
@@ -247,8 +247,8 @@ const promiseAsync = async (arr) {
 > 与 Promise.all 一样，Promise.race 也接收包含 Promise 对象或普通值的数组(或其它可迭代对象)作为参数，返回一个 Promise 实例对象。与 Promise.all 不同的是，一旦有一个 Promise 实例对象 resolve ，立即把这个 resolve 的值作为 Promise.race resolve 的值。一旦有一个对象 reject， Promise.race 也会立即 reject。
 
 ```js
-Promise.prototype.race = function(promiseArr) {
-  return new Promise(function(resolve, reject) {
+Promise.prototype.race = function (promiseArr) {
+  return new Promise(function (resolve, reject) {
     for (let promise of promiseArr) {
       if (typeof promise === "object" && typeof promise.then === "function") {
         promise.then(resolve, reject);
@@ -266,7 +266,7 @@ Promise.prototype.race = function(promiseArr) {
 #### 使用冒泡排序
 
 ```js
-Array.prototype.csSort = function() {
+Array.prototype.csSort = function () {
   var newarr = this;
   /** 2、 冒泡法排序
    * 插入发排序，即那数组的前一项和后一项对比，如果前面一项小于后面
@@ -314,7 +314,7 @@ function sort(arr) {
  * @return {ListNode}
  */
 
-var mergeTwoLists = function(l1, l2) {
+var mergeTwoLists = function (l1, l2) {
   if (l1 == null) return l2;
   if (l2 == null) return l1;
   if (l1.val < l2.val) {
@@ -335,7 +335,7 @@ var mergeTwoLists = function(l1, l2) {
 说明：本题中，我们将空字符串定义为有效的回文串。
 
 ```js
-var isPalindrome = function(s) {
+var isPalindrome = function (s) {
   let reg = /[a-z]|[0-9]/;
   s = s
     .split("")
@@ -448,7 +448,7 @@ TCP 断开链接的过程和建立链接的过程比较类似，只不过中间�
 ```js
 function debounce(fn, wait = 500) {
   var timeout = null;
-  return function() {
+  return function () {
     if (timeout !== null) {
       clearTimeout(timeout);
     }
@@ -462,7 +462,7 @@ function debounce(fn, wait = 500) {
 ```js
 function throttle(func, delay) {
   var prev = Date.now();
-  return function() {
+  return function () {
     var context = this;
     var args = arguments;
     var now = Date.now();
@@ -498,7 +498,7 @@ function throttle(func, delay) {
  * @param {number[]} nums
  * @return {number}
  */
-let maxSubArray = function(nums) {
+let maxSubArray = function (nums) {
   // 默认当前的最大和为第一个元素
   let sum = nums[0];
   // dp代表以当前元素结尾的最大和，默认也是第一个元素
@@ -647,7 +647,38 @@ const twoNum = (nums, target) => {
 
 ## 字符创连续最多字符
 
-## 用 ts 定义一个传入组件
+## 用 ts 定义一个高阶组件
+
+```js
+interface IVisible {
+  visible: boolean;
+}
+
+//排除 IVisible
+function withVisible<T>(
+  WrappedComponent: React.ComponentType<T & IVisible>
+): React.ComponentType<Omit<T, "visible">> {
+  return class extends Component<T> {
+    render() {
+      return <WrappedComponent {...this.props} visible={true} />;
+    }
+  };
+}
+
+interface IVisible {
+  visible: boolean;
+}
+
+function withVisible<T>(
+  WrapComponent: React.ComponentType<T & IVisible>
+): React.ConponentType<omit<T, "visible">> {
+  return class extends Component<T> {
+    render() {
+      return <WrapComponent {...this.props} visible={true} />;
+    }
+  };
+}
+```
 
 ## ts 中 type interfece 区别
 
@@ -666,7 +697,7 @@ const twoNum = (nums, target) => {
 var XHR = new XMLHttpRequest();
 XHR.open("get", "./a.php");
 XHR.send(null);
-XHR.onreadystatechange = function() {
+XHR.onreadystatechange = function () {
   if (XHR.readyState === 4) {
     if (XHR.status === 200) {
       alert(XHR.responseText);
@@ -686,7 +717,7 @@ XHR.onreadystatechange = function() {
 ```js
 function test() {
   var a = 0;
-  return function() {
+  return function () {
     a++;
     alert(a);
   };
@@ -707,7 +738,7 @@ obj = {
     console.log(this.a); //undefined
     console.log(this); //window
   },
-  c: function() {
+  c: function () {
     return () => {
       console.log(this.a); //10
     };
@@ -741,7 +772,25 @@ NodeJS 是 CommonJS 规范的实现，webpack 也是以 CommonJS 的形式来书
 
 ## 随机生成给定长度的字符串
 
-## .DOCTYPE 有哪些写法，有什么区别，什么是怪异模式，有哪些废弃掉的元素
+```js
+function randomName(len) {
+  len = len || 23;
+
+  var chars = "ABCDEFGHJKMNPQRSTWXYZabcdefhijkmnprstwxyz2345678";
+
+  var charsLength = chars.length;
+
+  var str = "";
+
+  for (i = 0; i < len; i++) {
+    str += chars.charAt(Math.floor(Math.random() * charsLength));
+  }
+
+  return new Date().getTime() + str;
+}
+```
+
+## DOCTYPE 有哪些写法，有什么区别，什么是怪异模式，有哪些废弃掉的元素
 
 ## 引入 css 有哪些方式，link 中的 media 属性是什么作用，有哪些取值
 
@@ -754,10 +803,62 @@ NodeJS 是 CommonJS 规范的实现，webpack 也是以 CommonJS 的形式来书
 ## 写一个计数器
 
 ```js
-var count = (function() {
+var count = (function () {
   var counter = 0;
-  return function() {
+  return function () {
     return ++counter;
   };
 })();
 ```
+
+## 合并两个有序数组
+
+```js
+function twoNumConcat(num1, num2) {
+  if (!(num1 instanceof Array)) {
+    num1 = [];
+  }
+
+  if (!(num2 instanceof Array)) {
+    num2 = [];
+  }
+
+  return num1
+    .concat(num2)
+    .filter((item) => item)
+    .sort((a, b) => a - b);
+}
+```
+
+## 代码输出
+
+```js
+function Foo() {
+  Foo.a = function () {
+    console.log(1);
+  };
+  this.a = function () {
+    console.log(2);
+  };
+}
+Foo.prototype.a = function () {
+  console.log(3);
+};
+Foo.a = function () {
+  console.log(4);
+};
+
+Foo.a(); // 4
+let obj = new Foo();
+obj.a(); // 2
+Foo.a(); // 4
+```
+
+## 数组去重
+
+const arr = [12, [12], { a: 1 }, { a: 1 }];
+
+function check(list) {
+const len = list.length;
+for (let i = 0; i < len; i++) {}
+}
