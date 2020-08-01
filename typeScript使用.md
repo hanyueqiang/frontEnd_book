@@ -89,3 +89,36 @@ User {
   sex: string
 }
 ```
+
+## 用 ts 定义一个高阶组件
+
+```js
+interface IVisible {
+  visible: boolean;
+}
+
+// 排除 IVisible
+function withVisible<T>(
+  WrappedComponent: React.ComponentType<T & IVisible>
+): React.ComponentType<Omit<T, "visible">> {
+  return class extends Component<T> {
+    render() {
+      return <WrappedComponent {...this.props} visible={true} />;
+    }
+  };
+}
+
+interface IVisible {
+  visible: boolean;
+}
+
+function withVisible<T>(
+  WrapComponent: React.ComponentType<T & IVisible>
+): React.ConponentType<omit<T, "visible">> {
+  return class extends Component<T> {
+    render() {
+      return <WrapComponent {...this.props} visible={true} />;
+    }
+  };
+}
+```

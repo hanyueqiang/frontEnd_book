@@ -560,3 +560,50 @@ map 方法返回一个新数组，数组中的元素为原始数组元素调用�
 #### 说说哈希算法(某站)
 
 #### js 中，不使用 es6 的 promise 异步方法，怎么进行异步请求？(某站)
+
+#### ES6 都有哪些新的 api，每一个都详细谈谈
+
+includes 第一个参数表示需要查找的字符串，第二个参数表示查找的起始下标位置
+
+```js
+let a = "abc";
+let result1 = a.includes("a"); // true
+let result2 = a.includes("d"); // false
+let result3 = a.includes("a", 1); // false
+```
+
+startsWith 第一个参数表示需要查找的字符串，第二个参数表示查找的起始下标位置
+
+```js
+let a = "abc";
+let result1 = a.startsWith("a"); // true
+let result2 = a.startsWith("b"); // false
+let result3 = a.startsWith("b", 1); // true
+```
+
+数值的方法
+Number.isInteger()
+
+```js
+Number.isInteger(2); // true
+Number.isInteger(2.1); // false
+```
+
+Array.form()方法
+用于将类数组的对象转为真实的数组，比如 dom
+
+```js
+let domList = document.getElementsByTagName("div");
+let result = Array.from(domList);
+console.log(resule, result instanceof Array); // [div, div, div] true
+```
+
+Array.of()
+用于将一组值转为数组
+
+```js
+let a = "123";
+let b = "456";
+let result = Array.of(a, b);
+console.log(result); // ['123', '456']
+```

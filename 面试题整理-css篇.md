@@ -254,3 +254,30 @@ div {
 
 css 的加载不会阻塞 DOM 的解析
 css 的加载会阻塞 DOM 的渲染
+
+## css 布局方式
+
+#### 文档流布局（单列布局）
+
+这是最基本的布局方式，就是按照文档的顺序一个一个显示出来，块元素独占一行，行内元素共享一行
+
+#### 浮动布局
+
+浮动方式布局就是使用 float 属性，使元素脱离文档流，浮动起来
+
+#### 定位布局
+
+我们也可以通过`position absolute`属性来进行定位
+
+#### flex 布局(弹性盒子布局)
+
+flex 只支持 ie 10+
+垂直居中`align-items:center; justify-content：center`
+水平两端对齐：`justify-content: space-between;`
+
+## call、apply、bind 区别，能手写一个 bind 和 apply 吗
+
+共同点：均改变函数执行时的上下文，再具体一点就是改变函数运行时的 this 指向
+不同： call 和 apply 改变了函数的 this 上下文后便执行该函数, 而 bind 则是返回改变了上下文后的一个函数
+call、apply 的区别
+call 和 aplly 的第一个参数都是要改变上下文的对象，而 call 从第二个参数开始以参数列表的形式展现，apply 则是把除了改变上下文对象的参数放在一个数组里面作为它的第二个参数。
