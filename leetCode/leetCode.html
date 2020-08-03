@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 1.两数之和
+      const nums = [2, 7, 14, 9, 8, 14];
+      const target = 15;
+
+      function sumsTwo(arr, target) {
+        const len = arr.length;
+        let i = 0;
+        while (i < len) {
+          let current = target - arr[i];
+          for (let j = i + 1; j < len; j++) {
+            if (arr[j] === current) {
+              return [i, j];
+            }
+          }
+          i++;
+        }
+        return [];
+      }
+
+      function sumsTwo1(arr, target) {
+        const maps = {};
+        const len = arr.length;
+        let i = 0;
+        while (i < len) {
+          let current = target - arr[i];
+          if (maps[current] > -1) {
+            return [maps[current], i];
+          }
+          maps[arr[i]] = i;
+          i++;
+        }
+        return [];
+      }
+    </script>
+  </body>
+</html>

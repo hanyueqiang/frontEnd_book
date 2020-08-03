@@ -28,6 +28,10 @@
 
 [01.ES6 新特性](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/01_ES6%E6%96%B0%E7%89%B9%E6%80%A7.md)
 
+#### 前端算法（LeetCode）
+
+[前端 LeetCode 刷题]()
+
 #### 面试知识点整理
 
 [js 基础篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/js_base.md)
@@ -38,7 +42,7 @@
 
 [浏览器篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/frame.md)
 
-[手写代码篇(算法)](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/write_code.md)
+[手写代码篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/write_code.md)
 
 [项目工程化篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/webpack.md)
 
