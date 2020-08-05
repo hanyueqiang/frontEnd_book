@@ -22,7 +22,9 @@ postStatus[postStatus['draft']="Draft"] = 'Draft'；
 
 ## 元祖类型
 
-const tuple: [number,string] = [18,'zed'];
+```js
+const tuple: [number, string] = [18, "zed"];
+```
 
 ## 泛型
 
