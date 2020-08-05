@@ -1,10 +1,10 @@
-### 前端学习手册
+## 前端学习手册
 
 > 今天不吃苦，明天就吃土！只要今天比昨天好，这就是希望！
 
 手册内容已同步更新到掘金社区 [我的专栏](https://juejin.im/user/5c242177f265da610e8022b2/posts)，欢迎查看！
 
-#### 技术分享
+### 技术分享
 
 [javascript 设计模式详解](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/javascript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3.md)
 
@@ -24,7 +24,7 @@
 
 [详解 webpack4 配置](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/%E8%AF%A6%E8%A7%A3webpack4%E9%85%8D%E7%BD%AE.md)
 
-#### 前端进阶(打牢基础，掌握实现原理)
+### 前端进阶(打牢基础，掌握实现原理)
 
 [01.ES6 新特性](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/01_ES6%E6%96%B0%E7%89%B9%E6%80%A7.md)
 
@@ -32,11 +32,11 @@
 
 [03.TypeScript 理解和应用](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/typescript.md)
 
-#### 前端算法(含答案解析)（LeetCode）
+### 前端算法(含答案解析)（LeetCode）
 
 [前端 LeetCode 刷题](https://github.com/hanyueqiang/frontEnd_book/blob/master/leetCode/leetCode.md)
 
-#### 面试官经常问的前端问题整理(含答案解析)
+### 面试官都喜欢问什么(含答案解析)
 
 [js 基础篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/js_base.md)
 
@@ -54,7 +54,7 @@
 
 [http 协议篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/http.md)
 
-## 参与贡献
+### 参与贡献
 
 非常欢迎你的贡献，你可以通过以下方式和我一起共建 :smiley:：
 
