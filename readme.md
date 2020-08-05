@@ -8,7 +8,7 @@
 
 [javascript 设计模式详解](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/javascript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3.md)
 
-[详解 webpack4 配置](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/%E8%AF%A6%E8%A7%A3webpack4%E9%85%8D%E7%BD%AE.md)
+[BFC 的理解和应用](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/BFC%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E5%BA%94%E7%94%A8.md)
 
 [基于 MQTT 协议开发 web 端物联网应用](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/%E5%9F%BA%E4%BA%8EMQTT%E5%8D%8F%E8%AE%AE%E5%BC%80%E5%8F%91web%E7%AB%AF%E7%89%A9%E8%81%94%E7%BD%91%E5%BA%94%E7%94%A8.md)
 
@@ -22,17 +22,21 @@
 
 [开发中常用的 moment 方法时间格式化](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/%E5%BC%80%E5%8F%91%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84moment%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E5%8C%96.md)
 
-[BFC 的理解和应用](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/BFC%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E5%BA%94%E7%94%A8.md)
+[详解 webpack4 配置](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/%E8%AF%A6%E8%A7%A3webpack4%E9%85%8D%E7%BD%AE.md)
 
-#### 前端进阶
+#### 前端进阶(打牢基础，掌握实现原理)
 
 [01.ES6 新特性](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/01_ES6%E6%96%B0%E7%89%B9%E6%80%A7.md)
 
-#### 前端算法（LeetCode）
+[02.Promise 异步编程](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/02_js%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B.md)
+
+[03.TypeScript 理解和应用](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/typescript.md)
+
+#### 前端算法(含答案解析)（LeetCode）
 
 [前端 LeetCode 刷题]()
 
-#### 面试知识点整理
+#### 面试官经常问的前端问题整理(含答案解析)
 
 [js 基础篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/js_base.md)
 
@@ -49,3 +53,11 @@
 [git 使用篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/git.md)
 
 [http 协议篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/http.md)
+
+## 参与贡献
+
+非常欢迎你的贡献，你可以通过以下方式和我一起共建 :smiley:：
+
+- 通过 [Issue](https://github.com/hanyueqiang/frontEnd_book/issues) 报告 bug 或进行咨询。
+- 提交 [Pull Request](https://github.com/hanyueqiang/frontEnd_book/pulls) 改进代码。
+- 微信交流（备注来自`Github`），微信号：han2013555888
