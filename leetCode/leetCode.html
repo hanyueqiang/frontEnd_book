@@ -42,6 +42,20 @@
       }
 
       // 2.无重复字符的最长子串 输入: "abcabcbb"; 输出: 3;摄入: "bbbbb"; 输出: 1;
+      var str = "abcebcbb";
+
+      function getRepeatStr(s) {
+        let arr = [];
+        let max = 0;
+        const len = s.length;
+        for (let i = 0; i < len; i++) {
+          if (arr.includes(s[i])) {
+            arr.splice(0);
+          }
+          arr.push(s[i]);
+          max = Math.max(arr.length, max);
+        }
+      }
 
       // 3.一个矩阵数组中寻找 x 值
       const arr = [[1, 4, 8], [9, 11, 12], [15, 18, 21]];
