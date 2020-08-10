@@ -40,6 +40,31 @@
         }
         return [];
       }
+
+      // 2.无重复字符的最长子串 输入: "abcabcbb"; 输出: 3;摄入: "bbbbb"; 输出: 1;
+
+      // 3.一个矩阵数组中寻找 x 值
+      const arr = [[1, 4, 8], [9, 11, 12], [15, 18, 21]];
+
+      function getX(arr, x) {
+        if (arr.length === 1) {
+          return arr[0].includes(x);
+        }
+        const len = arr.length;
+        const index = Math.floor(len / 2);
+        const left = arr.slice(0, index);
+        const right = arr.slice(index);
+        const leftLast = left[left.length - 1];
+        if (leftLast[leftLast.length - 1] < x) {
+          return getX(right, x);
+        } else if (leftLast[leftLast.length - 1] > x) {
+          return getX(left, x);
+        } else if (leftLast[leftLast.length - 1] === x) {
+          return true;
+        }
+      }
+
+      console.log(getX(arr, 10));
     </script>
   </body>
 </html>

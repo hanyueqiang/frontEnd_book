@@ -1,10 +1,14 @@
 ## 强类型与弱类型
 
-强类型不允许隐式类型转换
+描述下为什么 js 被称为弱类型语言
+
+强类型不允许隐式类型转换, 但`js`允许隐式类型转换，例如`a+b`,`a`和`b`是数字类型会加算，如果有一个是字符串类型会进行字符串拼接，其中的数字类型会先`toString()`转为字符串
 
 ## 静态类型与动态类型
 
-js 动态类型语言，是否允许随时修改变量类型
+描述下为什么 js 在类型检查中是动态类型
+
+`js`作为动态类型语言，是因为否允许随时修改变量类型，例如`var a = 100; a = 'foo'`,`a`的值先是数字类型，后面也可以以赋值为字符串类型
 
 ## 弱类型语问题
 
@@ -26,7 +30,7 @@ console.log(obj["true"]);
 
 ```js
 function render(element) {
-  return elements.inner;
+  return elements.inner; // 无法判断element是否含有属性inner
 }
 ```
 
@@ -34,7 +38,7 @@ function render(element) {
 
 小工具
 工作原理：进行标注
-类型注解
+功能: 类型注解
 
 ```js
 function sum(a: number, b: number) {
@@ -51,7 +55,6 @@ yarn flow init
 
 // 运行
 yarn flow
-
 
 // @flow
 function sum(a: number, b: number) {
