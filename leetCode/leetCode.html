@@ -42,20 +42,22 @@
       }
 
       // 2.无重复字符的最长子串 输入: "abcabcbb"; 输出: 3;摄入: "bbbbb"; 输出: 1;
-      var str = "abcebcbb";
+      var str = "pwwkew";
 
-      function getRepeatStr(s) {
+      function getMaxStr(str) {
         let arr = [];
         let max = 0;
-        const len = s.length;
+        const len = str.length;
         for (let i = 0; i < len; i++) {
-          if (arr.includes(s[i])) {
-            arr.splice(0);
+          if (arr.indexOf(str[i]) > -1) {
+            arr.splice(0, i + 1);
           }
-          arr.push(s[i]);
+          arr.push(str[i]);
           max = Math.max(arr.length, max);
         }
+        return max;
       }
+      console.log("getMaxStr", getMaxStr(str));
 
       // 3.一个矩阵数组中寻找 x 值
       const arr = [[1, 4, 8], [9, 11, 12], [15, 18, 21]];
@@ -79,6 +81,39 @@
       }
 
       console.log(getX(arr, 10));
+
+      // 4.三数求和问题
+      let nums1 = [-1, 0, 1, 2, -1, -4];
+
+      function threeSum(nums) {
+        const arr = nums.sort((a, b) => a - b);
+        console.log(arr);
+        let results = [];
+        const len = arr.length;
+        // 尾指针 i移动指针 j头指针
+        for (let i = 0; i < len; i++) {
+          let current = arr[i];
+          let j = i + 1;
+          let k = len - 1;
+          // 如果遇到重复的数字，则跳过
+          if (i > 0 && arr[i] === arr[i - 1]) {
+            continue;
+          }
+          while (j < k) {
+            if (current + arr[j] + arr[k] > 0) {
+              k--;
+            } else if (current + arr[j] + arr[k] < 0) {
+              j++;
+            } else {
+              results.push([current, arr[j], arr[k]]);
+              j++;
+              k--;
+            }
+          }
+        }
+        return results;
+      }
+      console.log(threeSum(nums1));
     </script>
   </body>
 </html>
