@@ -60,6 +60,20 @@ function sumsTwo1(arr, target) {
 输出: 1;
 输入: "pwwkew";
 输出: 3;
+
+function getMaxStr(str) {
+  let arr = [];
+  let max = 0;
+  const len = str.length;
+  for (let i = 0; i < len; i++) {
+    if (arr.indexOf(str[i]) > -1) {
+      arr.splice(0, i + 1);
+    }
+    arr.push(str[i]);
+    max = Math.max(arr.length, max);
+  }
+  return max;
+}
 ```
 
 ### 一个矩阵数组中寻找 x 值
