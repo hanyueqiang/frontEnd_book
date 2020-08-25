@@ -30,41 +30,6 @@ function render(element) {
 }
 ```
 
-## Flow 静态类型检查器
-
-小工具
-工作原理：进行标注
-类型注解
-
-```js
-function sum(a: number, b: number) {
-  return a + b;
-}
-```
-
-## 安装 Flow
-
-```js
-yarn add flow-bin --dev
-
-yarn flow init
-
-// 运行
-yarn flow
-
-
-// @flow
-function sum(a: number, b: number) {
-  return a + b;
-}
-
-```
-
-## 移除注解
-
-1.使用 flow-remove-types 插件
-2.babel/core babel/preset-flow 编译移除，建议 babel
-
 ## TypeScript 概述
 
 javaScript 超集，es6+类型系统=》编译为 JavaScript
@@ -107,7 +72,7 @@ yarn tsc --init
 并不单只对象，包括数组/函数
 
 ```js
-const foo: object = function () {};
+const foo: object = function() {};
 const obj: { foo: number, bar: string } = { foo: 123 };
 ```
 
@@ -126,10 +91,8 @@ const tuple: [number, string] = [18, "zed"];
 
 ## 枚举类型
 
-枚举类型会入侵代码，最终会编译一个双向简直对对象
-
-给一组数值定义
-一个枚举固定的值
+枚举类型会入侵代码，最终会编译一个双向键值对对象
+给一组数值定义，一个枚举固定的值
 
 ```js
 const postStatus = {
@@ -141,6 +104,7 @@ enum postStatus {
   draft,
   pushlish
 }
+
 // 建议使用常量枚举
 const enum postStatus {
   draft,
@@ -202,10 +166,10 @@ const num2 = <number>res  // jsx报错 不能使用 当作标签
 
 ```js
 interface Post {
+  readonly summary: string // 只读成员
   title: string;
   content: string;
   name?: string
-  readonly summary: string // 只读成员
 }
 
 // 设置缓存
@@ -213,7 +177,7 @@ interface cache {
   [prop: string]: string
 }
 
-const cache:cahe {};
+const cache: cahe {};
 cache.foo = 'value';
 cache.bar = 'value2';
 
@@ -243,10 +207,9 @@ class Person {
     console.log(this.name, msg);
   }
 
-  static create(name:string, age:number) {
+  static create(name: string, age: number) {
     return new Person(name, age)
   }
-
 }
 
 class Students = new Person();
@@ -288,7 +251,7 @@ abstract class Animal {
 }
 
 class Dog extends Animal {
-  run(distance:number): void {
+  run(distance: number): void {
     console.log(distance)
   }
 }
@@ -318,3 +281,21 @@ declare function camelCase(input: string): void
 
 yarn add @types/lodash --dev
 ```
+
+## 处理 Event 对象
+
+在工作中，可能经常会使用 Event 对象，change 事件可以使用 `React.ChangeEvent`, click 事件可以使用 `React.MouseEvent`
+
+```js
+onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+  // do something
+};
+
+onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // do something
+};
+```
+
+## 获取 dom 对象
+
+document.getElementById('root') as HTMLElement
