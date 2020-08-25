@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      // 冒泡排序
+      let arr1 = [1, 23, 43, 45, 66, 7, 9, 40, 15, 23, 0];
+
+      function sort1(arr) {
+        const length = arr.length;
+        for (let i = 0; i < length; i++) {
+          for (let j = 0; j < length - 1 - i; j++) {
+            let temp;
+            if (arr[j] > arr[j + 1]) {
+              temp = arr[j + 1];
+              arr[j + 1] = arr[j];
+              arr[j] = temp;
+              // 不引入地三个变量可使用
+              // [arr[j + 1], arr[j]] = [arr[j], arr[j + 1]];
+            }
+          }
+        }
+        return arr;
+      }
+      console.log(sort1(arr1));
+
+      // 选择排序
+      let arr2 = [1, 23, 43, 45, 66, 7, 9, 40, 15, 23, 0];
+      function selectSort(arr) {
+        const len = arr.length;
+        for (i = 0; i < len - 1; i++) {
+          let minIndex = i;
+          for (let j = i; j < len; j++) {
+            if (arr[j] < arr[minIndex]) {
+              minIndex = j;
+            }
+          }
+          if (i !== minIndex) {
+            let temp;
+            temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+          }
+        }
+        return arr;
+      }
+      console.log("选择排序", selectSort(arr2));
+
+      // 插入排序
+      let arr3 = [1, 23, 43, 45, 66, 7, 9, 40, 15, 23, 0];
+
+      function insertSort(arr) {
+        const len = arr.length;
+        for (let i = 1; i < len; i++) {
+          let temp = arr[i];
+          let j = i;
+          while (j > 0 && arr[j - 1] > temp) {
+            arr[j] = arr[j - 1];
+            j--;
+          }
+          arr[j] = temp;
+        }
+        return arr;
+      }
+      console.log("插入排序", insertSort(arr3));
+
+      // 归并排序
+      let arr4 = [1, 23, 43, 45, 66, 7, 9, 40, 15, 23, 0];
+      function merge1Sort(arr) {
+        const len = arr.length;
+        if (len <= 1) {
+          return arr;
+        }
+
+        let mid = Math.floor(len / 2);
+        let leftArr = merge1Sort(arr.slice(0, mid));
+        let rightArr = merge1Sort(arr.slice(mid, len));
+
+        arr = mergeArr(leftArr, rightArr);
+        return arr;
+      }
+      function mergeArr(left, right) {
+        let i = 0;
+        let j = 0;
+        let len1 = left.length;
+        let len2 = right.length;
+        let arr = [];
+        while (i < len1 && j < len2) {
+          if (left[i] < right[j]) {
+            arr.push(left[i]);
+            i++;
+          } else if (left[i] > right[j]) {
+            arr.push(right[j]);
+            j++;
+          } else {
+            arr.push(left[i]);
+            arr.push(right[j]);
+            i++;
+            j++;
+          }
+        }
+
+        if (i < len1) {
+          return arr.concat(left.slice(i));
+        }
+        if (j < len2) {
+          return arr.concat(right.slice(j));
+        }
+      }
+
+      console.log("mergeSort归并排序", merge1Sort(arr4));
+    </script>
+  </body>
+</html>

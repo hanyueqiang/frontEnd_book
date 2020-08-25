@@ -47,12 +47,13 @@
       function getMaxStr(str) {
         let arr = [];
         let max = 0;
-        const len = str.length;
+        const len = s.length;
         for (let i = 0; i < len; i++) {
-          if (arr.indexOf(str[i]) > -1) {
-            arr.splice(0, i + 1);
+          let index = arr.indexOf(s[i]);
+          if (index > -1) {
+            arr.splice(0, index + 1);
           }
-          arr.push(str[i]);
+          arr.push(s[i]);
           max = Math.max(arr.length, max);
         }
         return max;
@@ -142,7 +143,40 @@
       });
       console.log("script end");
 
-      //结果 "script start" "async1 start" "async2"  "promsie1"  "script end"  "async1 end"  "promise2" "settimeout"
+      // 结果 "script start" "async1 start" "async2"  "promsie1"  "script end"  "async1 end"  "promise2" "settimeout"
+
+      // 给定一个非空字符串 s，最多删除一个字符。判断是否能成为回文字符串。
+      // 示例 1: 输入: "aba"
+      // 输出: True
+      // 示例 2:
+      // 输入: "abca" 输出: True
+      let str1 = "acdbcca";
+      function isValidate(str) {
+        const len = str.length;
+        let k = len - 1;
+        for (i = 0; i < len; i++) {
+          if (str[i] === str[k]) {
+            k--;
+          } else {
+            if (!validateFunc(i + 1, k) || !validateFunc(i, k - 1)) {
+              return false;
+            }
+          }
+        }
+        function validateFunc(newI, newK) {
+          while (newI < newK) {
+            if (str[newI] !== str[newK]) {
+              return false;
+            }
+            newI++;
+            newK--;
+          }
+          return true;
+        }
+        return true;
+      }
+
+      console.log(isValidate(str1));
     </script>
   </body>
 </html>
