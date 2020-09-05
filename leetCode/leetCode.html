@@ -177,6 +177,37 @@
       }
 
       console.log(isValidate(str1));
+
+      // 100 栈解决算法问题
+      // 输入() 输出true; 输入()[]{} 输出true;
+      // 输入 (] 输出false; 输入([]) 输出true
+
+      function isValid_100(s) {
+        if (s.length % 2 === 1) {
+          return false;
+        }
+        const stack = [];
+        const left = ["(", "{", "["];
+        for (let i = 0; i < s.length; i++) {
+          const c = s[i];
+          if (left.includes(c)) {
+            stack.push(c);
+          } else {
+            const t = stack[stack.length - 1];
+            if (
+              (t === "(" && c === ")") ||
+              (t === "{" && c === "}") ||
+              (t === "[" && c === "]")
+            ) {
+              stack.pop();
+            } else {
+              return false;
+            }
+          }
+        }
+        return stack.length === 0;
+      }
+      console.log("isValid_100", isValid_100("([)"));
     </script>
   </body>
 </html>
