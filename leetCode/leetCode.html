@@ -182,7 +182,7 @@
       // 输入() 输出true; 输入()[]{} 输出true;
       // 输入 (] 输出false; 输入([]) 输出true
 
-      function isValid_100(s) {
+      function isValid_01(s) {
         if (s.length % 2 === 1) {
           return false;
         }
@@ -207,7 +207,7 @@
         }
         return stack.length === 0;
       }
-      console.log("isValid_100", isValid_100("([)"));
+      console.log("isValid_100", isValid_01("([)"));
     </script>
   </body>
 </html>
