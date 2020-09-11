@@ -204,7 +204,7 @@ function preorder(root) {
  * @param {number} target
  * @return {number[]}
  */
-const twoSum = function (nums, target) {
+const twoSum = function(nums, target) {
   // 这里我用对象来模拟 map 的能力
   const diffs = {};
   // 缓存数组长度
@@ -231,7 +231,7 @@ const twoSum = function (nums, target) {
 // nums1 = [1,2,3,0,0,0], m = 3
 // nums2 = [2,5,6], n = 3
 // 输出: [1,2,2,3,5,6]
-const merge = function (nums1, m, nums2, n) {
+const merge = function(nums1, m, nums2, n) {
   // 初始化两个指针的指向，初始化 nums1 尾部索引k
   let i = m - 1,
     j = n - 1,
@@ -312,7 +312,10 @@ function threeSum(nums) {
 ```js
 const str = "absdef";
 
-const result = str.split("").reverse().join();
+const result = str
+  .split("")
+  .reverse()
+  .join();
 ```
 
 判断一个字符串是否为回文串
@@ -321,7 +324,10 @@ const result = str.split("").reverse().join();
 const str = "sfefsfs";
 
 function isRepeat(str) {
-  const reverseStr = str.split("").reverse().join("");
+  const reverseStr = str
+    .split("")
+    .reverse()
+    .join("");
   return str === reverseStr;
 }
 isRepeat(str);

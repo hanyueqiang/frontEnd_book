@@ -2,11 +2,9 @@
 
 > 今天不吃苦，明天就吃土！只要今天比昨天好，这就是希望！
 
-手册内容已同步更新到掘金社区 [我的专栏](https://juejin.im/user/5c242177f265da610e8022b2/posts)，欢迎查看！
+手册部分内容已同步更新到掘金社区 [我的专栏](https://juejin.im/user/5c242177f265da610e8022b2/posts)，欢迎查看！
 
-### 技术分享
-
-[javascript 设计模式详解](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/javascript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3.md)
+[基于 React 实现一个调查问卷编辑器设计](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/questionnaire.md)
 
 [BFC 的理解和应用](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/BFC%E7%9A%84%E7%90%86%E8%A7%A3%E5%92%8C%E5%BA%94%E7%94%A8.md)
 
@@ -18,35 +16,38 @@
 
 [React Hooks 父组件中获取子组件实例值](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/React%20Hooks%E7%88%B6%E7%BB%84%E4%BB%B6%E4%B8%AD%E8%8E%B7%E5%8F%96%E5%AD%90%E7%BB%84%E4%BB%B6%E5%AE%9E%E4%BE%8B%E5%80%BC.md)
 
+[javascript 设计模式详解](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/javascript%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E8%AF%A6%E8%A7%A3.md)
+
 [开发中常用的正则表单校验](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/%E5%BC%80%E5%8F%91%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84%E6%AD%A3%E5%88%99%E6%A0%A1%E9%AA%8C.md)
 
 [开发中常用的 moment 方法时间格式化](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/%E5%BC%80%E5%8F%91%E4%B8%AD%E5%B8%B8%E7%94%A8%E7%9A%84moment%E6%97%B6%E9%97%B4%E6%A0%BC%E5%BC%8F%E5%8C%96.md)
 
 [详解 webpack4 配置](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/%E8%AF%A6%E8%A7%A3webpack4%E9%85%8D%E7%BD%AE.md)
 
-### 前端进阶(打牢基础，掌握实现原理)
+[ES6 新特性](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/01_ES6%E6%96%B0%E7%89%B9%E6%80%A7.md)
 
-[01.ES6 新特性](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/01_ES6%E6%96%B0%E7%89%B9%E6%80%A7.md)
+[Promise 异步编程详解](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/02_js%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B.md)
 
-[02.Promise 异步编程](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/02_js%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B.md)
+[TypeScript 理解和应用](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/03_typescript.md)
 
-[03.TypeScript 理解和应用](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/typescript.md)
+[函数式编程理解](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/04_func.md)
 
-### 前端算法(含答案解析)（LeetCode）
+[浏览器 V8 引擎 GC 算法原理](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/05_chromev8.md)
 
-[前端 LeetCode 刷题](https://github.com/hanyueqiang/frontEnd_book/blob/master/leetCode/leetCode.md)
+### 算法
 
-### 面试官都喜欢问什么(含答案解析)
+[前端数据结构与算法入门](https://github.com/hanyueqiang/frontEnd_book/blob/master/leetCode/algorithm.md)
+[LeetCode 刷题](https://github.com/hanyueqiang/frontEnd_book/blob/master/leetCode/leetCode.md)
 
-[js 基础篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/js_base.md)
+### 高频面试题
+
+[js 篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/js_base.md)
 
 [css 篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/css.md)
 
-[框架篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%95%B4%E7%90%86-%E6%A1%86%E6%9E%B6%E7%AF%87.md)
+[框架原理篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/%E9%9D%A2%E8%AF%95%E9%A2%98%E6%95%B4%E7%90%86-%E6%A1%86%E6%9E%B6%E7%AF%87.md)
 
 [浏览器篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/frame.md)
-
-[手写代码篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/write_code.md)
 
 [项目工程化篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/webpack.md)
 
@@ -54,10 +55,13 @@
 
 [http 协议篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/http.md)
 
+[手撕代码篇](https://github.com/hanyueqiang/frontEnd_book/blob/master/interview/write_code.md)
+
 ### 参与贡献
 
 非常欢迎你的贡献，你可以通过以下方式和我一起共建 :smiley:：
 
-- 通过 [Issue](https://github.com/hanyueqiang/frontEnd_book/issues) 报告 bug 或进行咨询。
-- 提交 [Pull Request](https://github.com/hanyueqiang/frontEnd_book/pulls) 改进代码。
-- 微信交流（备注来自`Github`），微信号：han2013555888
+- 转载需注明出处
+- 通过 [Issue](https://github.com/hanyueqiang/frontEnd_book/issues) 报告 bug 或进行咨询
+- 提交 [Pull Request](https://github.com/hanyueqiang/frontEnd_book/pulls) 改进
+- 交流，wx：han2013555888

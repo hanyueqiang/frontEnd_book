@@ -1,10 +1,16 @@
 ## 强类型与弱类型
 
-强类型不允许隐式类型转换
+描述下为什么 js 被称为弱类型语言
+
+强类型不允许隐式类型转换, 但`js`允许隐式类型转换，例如`a+b`,`a`和`b`是数字类型会加算，如果有一个是字符串类型会进行字符串拼接，其中的数字类型会先`toString()`转为字符串
 
 ## 静态类型与动态类型
 
-js 动态类型语言，是否允许随时修改变量类型
+js 动态类型语言，
+
+描述下为什么 js 在类型检查中是动态类型
+
+`js`作为动态类型语言，是因为否允许随时修改变量类型，例如`var a = 100; a = 'foo'`,`a`的值先是数字类型，后面也可以以赋值为字符串类型
 
 ## 弱类型语问题
 
@@ -17,7 +23,7 @@ sum(100, "100"); // '100100'
 
 let obj = {};
 obj[true] = 100;
-console.log(obj["true"]);
+console.log(obj["true"]); // 100
 ```
 
 ## 强类型优势
@@ -25,21 +31,22 @@ console.log(obj["true"]);
 1.错误更早暴露 2.代码更加智能，编码更准确 3.重构更可靠 4.减少不必要类型判断
 
 ```js
+// ym是什么未知
 function render(element) {
-  return elements.inner;
+  return elements.ym;
 }
 ```
 
 ## TypeScript 概述
 
-javaScript 超集，es6+类型系统=》编译为 JavaScript
+`javaScript` 超集，`es6`+类型系统=》编译为 `JavaScript`
 
 功能强大。生态健全
-vue3.0
-Angular
-TypeScript-前端领域对第二语言
+`vue3.0`
+`Angular`
+`TypeScript`-前端领域对第二语言
 缺点：本身很多概念
-缺点二：项目初期，ts 会增加一些成本
+缺点二：项目初期，`ts` 会增加一些成本
 
 ## 基本使用
 
@@ -52,6 +59,7 @@ const hello = name => {
 }
 hello('typescript');
 
+// 编译
 yarn tsc a.ts
 ```
 
@@ -73,7 +81,7 @@ yarn tsc --init
 
 ```js
 const foo: object = function() {};
-const obj: { foo: number, bar: string } = { foo: 123 };
+const obj: { foo: number, bar: string } = { foo: 123, bar: "ym" };
 ```
 
 ## 数组类型
@@ -83,7 +91,7 @@ const arr2: number[] = [2,3,4];
 
 ## 元组类型
 
-hooks 中 useState 是元组类型
+`hooks` 中 `useState` 是元组类型
 
 ```js
 const tuple: [number, string] = [18, "zed"];
@@ -111,7 +119,7 @@ const enum postStatus {
   pushlish
 }
 
-双向键值对 对象
+// 双向键值对对象
 postStatus[postStatus['draft']="Draft"] = 'Draft'；
 
 建议使用const 定义枚举 编译后会被移除
@@ -127,9 +135,9 @@ function func1(a: number, b?: number, ...rest: number[]): string {
 }
 ```
 
-## 任意类型
+## 任意类型 any
 
-stringify 或兼容老的代码
+`stringify` 或兼容老的代码
 
 ```js
 function stringify(value: any) {
@@ -152,7 +160,7 @@ foo = "str";
 
 ```js
 const nums = [100, 2, 34, 44];
-const res = nums.find(i => i>0);
+const res = nums.find(i => i > 0);
 
 const num1 = res as number;
 
@@ -161,8 +169,7 @@ const num2 = <number>res  // jsx报错 不能使用 当作标签
 
 ## 接口
 
-约束对象的结构
-约定成员
+约束对象的结构/约定成员
 
 ```js
 interface Post {
@@ -189,8 +196,7 @@ function post(post: Post) {
 
 ## 类
 
-描述具体事物的抽象特征
-类的属性在使用前必须声明
+描述具体事物的抽象特征、类的属性在使用前必须声明
 
 ```js
 class Person {
@@ -202,20 +208,16 @@ class Person {
     this.name = name;
     this.age = age;
   }
-
   sayHi(msg: string): void {
     console.log(this.name, msg);
   }
-
   static create(name: string, age: number) {
     return new Person(name, age)
   }
 }
 
 class Students = new Person();
-
 const tom = new Person('tom', 19);
-
 ```
 
 ## 接口与类
@@ -240,19 +242,19 @@ class Person implements Eat, Run {
 
 ## 抽象类
 
-使用 abstract 不能被 new 只能被继承
+使用 `abstract` 不能被 `new` 只能被继承
 
 ```js
 abstract class Animal {
   eat(food: string): void {
-    console.log(food)
+    console.log(food);
   }
   abstract run(distance: number): void
 }
 
 class Dog extends Animal {
   run(distance: number): void {
-    console.log(distance)
+    console.log(distance);
   }
 }
 const d = new Dog();
@@ -268,14 +270,18 @@ function create<T>(length: number, value: T): T[] {
   const arr = Array < T > （length）.fill(value);
   return arr;
 }
+const create = <T>(length: number, value: T): T[] => {
+  const arr = Array <T>(length).fill(value);
+  return arr;
+}
 const res = create < string > (3, "foo");
 ```
 
 ## 类型声明
 
 ```js
-lodash
-import {camelCase} from 'lodash';
+// lodash
+import { camelCase } from 'lodash';
 
 declare function camelCase(input: string): void
 
@@ -298,4 +304,4 @@ onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
 ## 获取 dom 对象
 
-document.getElementById('root') as HTMLElement
+`document.getElementById('root') as HTMLElement`

@@ -1,6 +1,6 @@
-## js 基础篇
+## js 篇
 
-#### 数组处理函数有哪些？ 创建数组新引用有哪些？(某团)
+#### 数组处理函数有哪些？ 创建数组新引用有哪些？
 
 ```
 // every(): 数组的每一项都满足给定条件则返回true
@@ -53,7 +53,7 @@ console.log(sum); // 15
 
 ```
 
-#### es6 let const 区别？(某团)
+#### es6 let const 区别？
 
 let 和 const 的相同点:
 
@@ -93,9 +93,18 @@ arr[0] = 1;
 arr[1] = 2;
 arr[2] = 3;
 console.log(arr.length); // 输出：0
+
+var tmp = new Date();
+function f() {
+  console.log(tmp); // 想打印外层的时间作用域
+  if (false) {
+    var tmp = 'hello world'; // 这里声明的作用域为整个函数,变量提升
+  }
+}
+f(); // undefined
 ```
 
-#### js 性能优化有哪些？(某团)
+#### js 性能优化有哪些？
 
 1. 减少 HTTP 请求
 2. 使用 HTTP2
@@ -128,7 +137,7 @@ console.log(arr.length); // 输出：0
 12. if-else 对比 switch
     当判断条件数量越来越多时，越倾向于使用 switch 而不是 if-else。
 
-#### Object 上有哪些常用的函数？(某团)
+#### Object 上有哪些常用的函数？
 
 1.hasOwnProperty(propertyName)
 
@@ -238,9 +247,9 @@ var f1 = new Foo;
 console.log(f1.__proto__ === Foo.prototype); // true
 ```
 
-#### 如何设计一个模块加载器(某团)
+#### 如何设计一个模块加载器
 
-#### 事件委托机制(某站)
+#### 事件委托机制
 
 事件委托就是利用冒泡的原理，把事件加到父元素或祖先元素上，触发执行效果。
 1、提高 JavaScript 性能。事件委托可以显著的提高事件的处理速度，减少内存的占用
@@ -276,7 +285,7 @@ document.getElementById('list').addEventListener('click', function (e) {
 
 2、mousemove、mouseout 虽然有事件冒泡，但是只能不断通过位置去计算定位，对性能消耗高，也不适合于事件委托
 
-#### 事件冒泡，阻止冒泡事件，阻止默认事件(某站)
+#### 事件冒泡，阻止冒泡事件，阻止默认事件
 
 首先说明什么是事件冒泡？当事件发生后，这个事件就要开始传播（从里到外，或者从外向里）。为什么要传播呢？因为事件源本身（可能）并没有处理事件的能力，或处理事件的函数并未绑定在该事件源上
 
@@ -308,7 +317,7 @@ window.event.returnValue = false;
 return false;
 ```
 
-#### ES6 异步请求方法 promise/async await/generator 等(某站)
+#### ES6 异步请求方法 promise/async await/generator 等
 
 类似于将一个异步方法封装在一个具有回调函数的函数里，Promise 实际上充当了这种封装作用。然后通过 resolve 和 reject 函数向外输出成功时的数据和失败时的错误信息
 
@@ -401,7 +410,7 @@ for (var f of flat(arr)) {
 // 1, 2, 3, 4, 5, 6
 ```
 
-#### var let 和 const 区别(某站)
+#### var let 和 const 区别
 
 1. 块级作用域
    ES5 只有全局作用域和函数作用域，没有块级作用域。
@@ -460,7 +469,7 @@ let b = 8;
 window.b // undefined
 ```
 
-#### 什么是作用域链 作用域 闭包?(某站)
+#### 什么是作用域链 作用域 闭包?
 
 作用域
 先来谈谈变量的作用域
@@ -491,7 +500,7 @@ window.b // undefined
 </script>
 ```
 
-#### 箭头函数的概念和普通函数的区别?(某站)
+#### 箭头函数的概念和普通函数的区别?
 
 箭头函数的 this 指向规则：
 
@@ -535,13 +544,13 @@ let b = new  a(); // a is not a constructor
 
 #### apply、call、bind 改变 this call 和 apply 与箭头函数有什么区别?(某站)
 
-#### js 的 toFixed 方法(某站)
+#### js 的 toFixed 方法
 
 toFixed(num) 方法可把 Number 四舍五入为指定小数位数的数字
 num 必需。规定小数的位数，是 0 ~ 20 之间的值，包括 0 和 20
 返回值：字符串 string
 
-#### js 的 map 方法(某站)
+#### js 的 map 方法
 
 map 方法返回一个新数组，数组中的元素为原始数组元素调用函数处理后的值
 
@@ -549,17 +558,15 @@ map 方法返回一个新数组，数组中的元素为原始数组元素调用�
 
 不会对空数组进行检测,不会改变原始数组,兼容 ie9+
 
-#### canvas 了解吗 webgl(某站)
+#### 油漆桶算法
 
-#### 油漆桶算法(某站)
+#### 最长公共子串怎么实现
 
-#### 最长公共子串怎么实现(某站)
+#### null 是什么类型 typeof null
 
-#### null 是什么类型 typeof null(某站)
+#### 说说哈希算法
 
-#### 说说哈希算法(某站)
-
-#### js 中，不使用 es6 的 promise 异步方法，怎么进行异步请求？(某站)
+#### js 中，不使用 es6 的 promise 异步方法，怎么进行异步请求？
 
 #### ES6 都有哪些新的 api，每一个都详细谈谈
 

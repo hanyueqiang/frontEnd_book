@@ -40,6 +40,7 @@ module.exports = (source) => {
 };
 ```
 
-##webpack 插件机制
+## webpack 插件机制
+
 plugin
 clean-webpack-plugin

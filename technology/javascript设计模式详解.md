@@ -41,7 +41,7 @@ const Yidashi = new Hero('易大师', '无极剑圣', '刺客');
 
 ### 创建型 - 简单工厂模式
 
-产品经理提到不同的英雄类型有不同的特性，比如射手的普攻距离是 500 码，战士是 125 码
+产品经理提到不同的英雄类型有不同的特性，比如射手的普攻距离是 `500` 码，战士是 `125` 码
 
 ```
 // 为了解决上述问题，把Hero拆成两个类别Shorter和Longer
@@ -51,6 +51,7 @@ function Longer(name, title, role) {
   this.role = '射手';
   this.attackDistance = 500;
 }
+
 function Shorter(name, title, role) {
   this.name = name;
   this.title = title;
