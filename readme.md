@@ -2,7 +2,9 @@
 
 > 今天不吃苦，明天就吃土！只要今天比昨天好，这就是希望！
 
-手册部分内容已同步更新到掘金社区 [我的专栏](https://juejin.im/user/5c242177f265da610e8022b2/posts)，欢迎查看！
+部分文章已更新到掘金社区 [我的专栏](https://juejin.im/user/5c242177f265da610e8022b2/posts)，欢迎查看！
+
+[手写 React Hooks](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/reacthooks.md)
 
 [基于 React 实现一个调查问卷编辑器设计](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/questionnaire.md)
 
@@ -37,6 +39,7 @@
 ### 算法
 
 [前端数据结构与算法入门](https://github.com/hanyueqiang/frontEnd_book/blob/master/leetCode/algorithm.md)
+
 [LeetCode 刷题](https://github.com/hanyueqiang/frontEnd_book/blob/master/leetCode/leetCode.md)
 
 ### 高频面试题
@@ -64,4 +67,4 @@
 - 转载需注明出处
 - 通过 [Issue](https://github.com/hanyueqiang/frontEnd_book/issues) 报告 bug 或进行咨询
 - 提交 [Pull Request](https://github.com/hanyueqiang/frontEnd_book/pulls) 改进
-- 交流，wx：han2013555888
+- wx 交流：han2013555888
