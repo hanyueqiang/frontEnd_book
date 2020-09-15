@@ -1,6 +1,10 @@
 ## TS 干货分享
 
-最近的项目中一直使用`TypeScript`开发,从最初的`anyTS`逐渐开始改进，到真正应用`TS`, 逐渐感受到`TS`为项目带来太多的好处，个人认为上手`TS`还是需要花费一些时间成本来学习的，不过强大的`any`在你解决不了一个类型约束时，可以帮你一程，但是使用`any`失去类型的约束，也抛弃了引入`TS`的初衷，所以在工作中边学习边总结，不断加强自己对`TS`的理解和使用
+> `TypeScript` 是一种由微软开发的自由和开源的编程语言。它是 `JavaScript` 的一个超集，而且本质上向这个语言添加了可选的静态类型和基于类的面向对象编程
+
+社区内或网上关于 `TS` 的文章大部分是对官方文档的解读，从头到尾介绍一遍 `TS` 的各种类型，这种对于已经有 `TS` 经验的开发者没有任何意义，对于初学者我建议阅读官方文档足够了，大部分读者包括我都在寻找能解决实际项目中遇到的问题文章，达到学以致用效果。
+
+最近一年开始使用`TypeScript`开发项目，从最初的`anyTS`，到真正应用`TS`, 逐渐感受到`TS`为项目带来太多的好处，个人认为完全掌握`TS`还是需要花费时间成本学习，不过强大的`any`在你解决不了的问题时可以帮你一把，但是使用`any`失去类型的约束，也抛弃了引入`TS`的初衷，所以在项目实战中遇到的问题总结起来供大家阅读参考，能让读者从中得到帮助是本文分享的初衷！
 
 ## 为什么 js 被称为弱类型语言
 
@@ -16,12 +20,12 @@
 function sum(a, b) {
   return a + b;
 }
-sum(100, 100); // 200
-sum(100, "100"); // '100100'
+sum(10, 10); // 20
+sum(10, "10"); // '1010'
 
 let obj = {};
 obj[true] = 100;
-console.log(obj["true"]); // 100
+console.log(obj["true"]); // 100， 对象字面量会对key经行.toString()
 ```
 
 ## 强类型优势
@@ -30,6 +34,8 @@ console.log(obj["true"]); // 100
 - 代码更加智能，编码更准确
 - 重构更可靠
 - 减少不必要类型判断
+
+举例：
 
 ```js
 // ym是啥？我哪知道
@@ -41,78 +47,63 @@ function render(element) {
 interface eleProps {
   ym: string;
 }
-function renderTs(element: eleProps) {
+function render1(element: eleProps) {
   return elements.ym;
 }
 ```
 
-## TypeScript 概述
-
-TypeScript 是一种由微软开发的自由和开源的编程语言。它是 JavaScript 的一个超集，而且本质上向这个语言添加了可选的静态类型和基于类的面向对象编程
-功能强大,生态健全
-
-## 安装
-
-```js
-yarn init --yes
-yarn add typescript --dev
-
-```
-
-## 配置文件
-
-tsconfig 配置项网上有详细配置说明，不做搬运
-
-```js
-yarn tsc --init
-
-```
-
-## 数组类型
-
-const arr1: Array<number> = [1,2,3];
-const arr2: number[] = [2,3,4];
-
-## 元组类型
-
-`hooks` 中 `useState` 是元组类型
-
-```js
-const tuple: [number, string] = [18, "zed"];
-```
-
 ## 枚举类型
 
-枚举类型会入侵代码，最终会编译一个双向键值对对象，-面试常问
+有必要说下枚举类型，因为枚举类型会入侵代码，大部分面试官喜欢问枚举类型编译成 js 是什么样,
+
+枚举类型会入侵代码，最终会编译成一个<strong>双向键值对对象</strong>，但是使用`const` 定义枚举 编译后会被移除
 
 ```js
-// 给一组数值定义，一个枚举固定的值
-const postStatus = {
-  Draft: 0,
-  pushlish: 1
+enum Status {
+  a,
+  b,
 }
+console.log(Status.a);
 
-enum postStatus {
-  draft,
-  pushlish
+// 编译成es5 js
+var Status;
+(function (Status) {
+    Status[Status["a"] = 0] = "a";
+    Status[Status["b"] = 1] = "b";
+})(Status || (Status = {}));
+console.log(Status.a);
+
+enum Status {
+  a = "ym",
+  b = "yn",
 }
+console.log(Status.a);
+
+// 编译成es5 js文件
+var Status;
+(function (Status) {
+    Status["a"] = "ym";
+    Status["b"] = "yn";
+})(Status || (Status = {}));
+console.log(Status.a);
 
 // 建议使用常量枚举
-const enum postStatus {
-  draft,
-  pushlish
+const enum Status {
+  a = "ym",
+  b = "yn",
 }
+console.log(Status.a);
 
-// 双向键值对对象
-postStatus[postStatus['draft']="Draft"] = 'Draft'；
+// 编译成es5 js文件 建议使用const 定义枚举 编译后会被移除
+console.log("ym" /* a */);
 
-// 建议使用const 定义枚举 编译后会被移除
 ```
 
 ## 函数类型约束
 
+注意可选参数放在最后
+
 ```js
-// 可选参数放在最后
 function func1(a: number, b?: number, ...rest: number[]): string {
   return "fun1";
 }
@@ -120,117 +111,143 @@ function func1(a: number, b?: number, ...rest: number[]): string {
 
 ## 任意类型 any
 
-在 TypeScript 中，任何类型都可以被归为 any 类型。这让 any 类型成为了类型系统的顶级类型（也被称作全局超级类型）
+在个别场合也需要`any`出场，比如`stringify`
 
 ```js
 function stringify(value: any) {
   return JSON.stringify(value);
 }
-```
-
-## 隐式类型推断
-
-```js
-let age = 18;
-age = "str"; // 类型错误
-
-let foo;
-foo = 100;
-foo = "str"; // 类型错误
+// 也可以这样
+function stringify<T>(value: T): string {
+  return JSON.stringify(value);
+}
 ```
 
 ## 类型断言
 
 类型断言好比其他语言里的类型转换，但是不进行特殊的数据检查和解构。它没有运行时的影响，只是在编译阶段起作用。
 
+在开发中我们定义`dom`时要使用
+
 ```js
 // as 语法
-const nums = [100, 2, 34, 44];
-const res = nums.find(i => i > 0);
+const [callName, setCallName] = useState('ym' as string);
 
-const num1 = res as number;
-// “尖括号” 语法
-const num2 = <number>res  // 注意：在jsx报错，不能使用,React当作标签
+// 获取 dom 对象
+const rootDom = document.getElementById('root') as HTMLElement;
+
+// 尖括号语法
+const [callName, setCallName] = useState<string>('ym');
+
+const res = 1;
+// 注意：在React报错，React认为是标签，需使用as语法
+const num = <number>res;
 ```
 
-## 接口
+## 定义对象字面量
 
-约束对象的结构/约定成员
+遇到设置缓存，需创建一个对象字面量，存储我们需要缓存的属性值
 
 ```js
-interface Post {
-  readonly summary: string // 只读成员
-  title: string;
-  content: string;
-  name?: string
-}
-
 // 设置缓存
-interface cache {
-  [prop: string]: string
+interface CacheProps {
+  [prop: string]: string;
 }
 
-const cache: cahe {};
-cache.foo = 'value';
-cache.bar = 'value2';
-
-function post(post: Post) {
-  console.log(post.title);
-  console.log(post.content);
-}
+const cache: CacheProps = {};
+cache.foo = "value";
+cache.bar = "value2";
 ```
 
-## 接口与类型别名的区别
+## interface vs type
 
-- 接口和类型别名都可以用来描述对象的形状或函数签名
+`interface`和`type`是一对好兄弟，有共同点也有区别
+建议能用`interface`定义的使用`interface`，定义不了的使用`type`
+
+- 共同点
+
+两者都可以用来描述对象或函数的类型
 
 ```js
-interface Ym {
+// interface
+interface Point {
   x: number;
   y: number;
 }
-
-interface SetYm {
+interface PointHandle {
   (x: number, y: number): void;
 }
 
-type Ym = {
-  x: number;
-  y: number;
-}
-
-type SetYm = (x: number, y: number): void;
-
+// type
+type Point = {
+  x: number,
+  y: number,
+};
+type PointHandle = (x: number, y: number) => void;
 ```
 
-- 与接口类型不一样，类型别名可以用于一些其他类型，比如原始类型、联合类型和元组
+均可以使用`extends`扩展属性
 
 ```js
-// primitive
-type Ym = string;
+interface User {
+  name: string;
+}
+interface UserProps extends User {
+  userId: number;
+}
 
-// union
-type UnionPoint = PartialPointX | PartialPointY;
+type User = { name: string };
+type UserProps = User & { userId: number };
+```
 
-// tuple
+- 不同点
+
+类型别名还可以用于其他类型，如基本类型（原始值）、联合类型、元组
+
+```js
+// 基本类型
+type State = string;
+// 函数
+type StateFun = () => string;
+// 联合类型
+type UnionState = State | StateFun;
+// 元祖
 type Data = [number, string];
 ```
 
-## 类
+type 能使用 in 关键字生成映射类型。interface 不可以
+
+```js
+type Keys = "ym" | "yn"
+
+type NameType = {
+  [key in Keys]: string
+}
+
+const demo: NameType = {
+  ym: "name1",
+  yn: "name2"
+}
+```
+
+## 类的使用
 
 描述具体事物的抽象特征、类的属性在使用前必须声明
 
 ```js
 class Person {
-  public name: string; // = 'init name'
-  private age: number; // 私有属性
-  protected gender: boolean // 区别 只允许在子类中访问成员
-  readonly sex: string // 只读属性
+  public name: string;
+  // 私有属性
+  private age: number;
+  // 与private区别 只允许在子类中访问成员
+  protected gender: boolean;
+  // 只读属性
+  readonly sex: string;
   constructor(name: string, age: number) {
     this.name = name;
     this.age = age;
   }
-  sayHi(msg: string): void {
+  say(msg: string): void {
     console.log(this.name, msg);
   }
   static create(name: string, age: number) {
@@ -239,10 +256,12 @@ class Person {
 }
 
 class Students = new Person();
-const tom = new Person('tom', 19);
+const ym = new Person('月陌', 20);
 ```
 
 ## 接口与类
+
+为增强接口的复用性，把可公共方法定义抽出
 
 ```js
 interface Eat {
@@ -271,21 +290,21 @@ abstract class Animal {
   eat(food: string): void {
     console.log(food);
   }
-  abstract run(distance: number): void
+  abstract like(action: string): void
 }
 
 class Dog extends Animal {
-  run(distance: number): void {
-    console.log(distance);
+  like(action: string): void {
+    console.log(`${action} ${this.eat}`);
   }
 }
-const d = new Dog();
-d.eat('dfd');
-d.run();
+const dog = new Dog();
+dog.eat('狗粮');
+dog.like('撒');
 
 ```
 
-## 泛型
+## 使用泛型定义函数
 
 ```js
 // 使用泛型定义一个函数
@@ -310,7 +329,3 @@ onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
   // do something
 };
 ```
-
-## 获取 dom 对象
-
-`document.getElementById('root') as HTMLElement`
