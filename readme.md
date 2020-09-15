@@ -4,6 +4,8 @@
 
 部分文章已更新到掘金社区 [我的专栏](https://juejin.im/user/5c242177f265da610e8022b2/posts)，欢迎查看！
 
+[TS 干货分享](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/03_typescript.md)
+
 [手写 React Hooks](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/reacthooks.md)
 
 [基于 React 实现一个调查问卷编辑器设计](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/questionnaire.md)
@@ -29,8 +31,6 @@
 [ES6 新特性](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/01_ES6%E6%96%B0%E7%89%B9%E6%80%A7.md)
 
 [Promise 异步编程详解](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/02_js%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B.md)
-
-[TypeScript 理解和应用](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/03_typescript.md)
 
 [函数式编程理解](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/04_func.md)
 
