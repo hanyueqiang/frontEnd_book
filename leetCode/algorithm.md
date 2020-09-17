@@ -1,26 +1,19 @@
 ## 前端数据结构与算法
 
-> 目的在有限的时间内，做对关键的已知题目；通过对关键的已知题目进行解构和反思，消化掉其中核心的算法思想和解题套路，从而最大化各位在真正面试时做对任意未知题目的可能性。[修言小册-前端算法与数据结构面试]
+> 目的在有限的时间内，做对关键的已知题目；通过对关键的已知题目进行解构和反思，消化掉其中核心的算法思想和解题套路，从而最大化各位在真正面试时做对任意未知题目的可能性。[—修言]
 
-数据结构层面
+## 栈（Stack）
 
-- 数组
-- 栈
-- 队列
-- 链表
-- 树（重点二叉树）
-
-## 数组
-
-## 栈（Stack）——只用 pop 和 push 完成增删的“数组”
-
-栈是一种后进先出(LIFO，Last In First Out)的数据结构
-我们看到这个过程有两个特征：
+栈是一种后进先出`(LIFO，Last In First Out)`的数据结构，
+使用数组的`pop` 和 `push` 模拟栈后进先出
+这个过程有两个特征：
 
 - 只允许从尾部添加元素
 - 只允许从尾部取出元素
-  举例搬砖，a 任务用砖砌一道墙，从底部开始往上码，b 任务把码好的砖转移到另一个地方，需要从上往下搬，即 a 最后摆上的被 b 最先取出。
-  模拟栈（后进先出）工作状态
+
+举例搬砖，a 任务用砖砌一道墙，从底部开始往上码，b 任务把码好的砖转移到另一个地方，需要从上往下搬，即 a 最后摆上的被 b 最先取出。
+
+举例模拟栈（后进先出）工作状态
 
 ```js
 // 初始状态，栈空
@@ -29,8 +22,7 @@ const stack = [];
 stack.push("第1层砖");
 stack.push("第2层砖");
 stack.push("第3层砖");
-stack.push("第4层砖");
-stack.push("第5层砖");
+
 // 出栈过程，栈不为空时才执行
 while (stack.length) {
   // 单纯访问栈顶元素（不出栈）
@@ -41,23 +33,27 @@ while (stack.length) {
 }
 
 // 栈空
-stack; // []
+console.log(stack); // []
 ```
 
-## 队列（Queue）——只用 push 和 shift 完成增删的“数组”
+## 队列（Queue）
 
 队列是一种先进先出（FIFO，First In First Out）的数据结构。
-它比较像咱们去肯德基排队点餐。先点餐的人先出餐，后点餐的人后出餐：
-这个过程的规律也很明显：
+使用数组的`push` 和 `shift`模拟队列的先进先出
+它比较像排队点餐。先点餐的人先出餐，后点餐的人后出餐：
+这个过程有两个特征：
 
 - 只允许从尾部添加元素
 - 只允许从头部移除元素
 
+使用场景：
+js 异步中任务队列（由于 js 单线程，无法处理异步中的并发任务，利用队列处理）
+
 ```js
 const queue = [];
-queue.push("一姐");
-queue.push("二姐");
-queue.push("三姐");
+queue.push("1号");
+queue.push("2号");
+queue.push("3号");
 
 while (queue.length) {
   // 单纯访问队头元素（不出队）
@@ -68,128 +64,10 @@ while (queue.length) {
 }
 
 // 队空
-queue; // []
+console.log(queue); // []
 ```
 
-## 链表
-
-链表和数组相似，它们都是有序的列表、都是线性结构（有且仅有一个前驱、有且仅有一个后继）。不同点在于，链表中，数据单位的名称叫做“结点”，而结点和结点的分布，在内存中可以是离散的。
-
-这个“离散”是相对于数组的“连续”来说的。
-在链表中，每一个结点的结构都包括了两部分的内容：数据域和指针域。JS 中的链表，是以嵌套的对象的形式来实现的：
-
-```js
-{
-  // 数据域
-  val: 1,
-  // 指针域，指向下一个结点
-  next: {
-    val:2,
-    next: ...
-  }
-}
-```
-
-创建链表结点，咱们需要一个构造函数：
-
-```js
-function ListNode(val) {
-  this.val = val;
-  this.next = null;
-}
-// 在使用构造函数创建结点时，传入 val （数据域对应的值内容）、指定 next （下一个链表结点）即可
-const node = new ListNode(1);
-node.next = new ListNode(2);
-```
-
-## 链表和数组的辨析
-
-我们假设数组的长度是 n，那么因增加/删除操作导致需要移动的元素数量，就会随着数组长度 n 的增大而增大，呈一个线性关系。所以说数组增加/删除操作对应的复杂度就是 O(n)。
-
-```js
-const arr = [1, 2, 3, 4]; // 它是一个纯数字数组，那么对应的确实是连续内存
-const arr = ["haha", 1, { a: 1 }];
-// 它对应的就是一段非连续的内存。此时，JS 数组不再具有数组的特征，其底层使用哈希映射分配内存空间，是由对象链表来实现的
-```
-
-相对于数组来说，链表有一个明显的优点，就是添加和删除元素都不需要挪动多余的元素。
-
-总结:
-结合上述分析，我们不难得出这样的结论：链表的插入/删除效率较高 O(1)，而访问效率较低 O(n)；数组的访问效率较高 O(1)，而插入效率较低 O(n)。这个特性需要大家牢记，可能会作为数据结构选型的依据来单独考察
-
-## 二叉树
-
-二叉树不能被简单定义为每个结点的度都是 2 的树。普通的树并不会区分左子树和右子树，但在二叉树中，左右子树的位置是严格约定、不能交换的
-
-```js
-// 二叉树结点的构造函数
-function TreeNode(val) {
-  this.val = val;
-  this.left = this.right = null;
-}
-onst node  = new TreeNode(1)
-```
-
-- [先序]根结点 -> 左子树 -> 右子树
-- [中序]左子树 -> 根结点 -> 右子树
-- [后序]左子树 -> 右子树 -> 根结点
-
-```js
-const root = {
-  val: 'A',
-  left: {
-    val: 'B',
-    left: {
-      val: 'D',
-    }
-    right: {
-      value: 'E'
-    }
-  },
-  right: {
-    val: "C",
-    right: {
-      val: "F"
-    }
-  }
-};
-// 先序遍历
-// 所有遍历函数的入参都是树的根结点对象
-function preorder(root) {
-  // 递归边界，root 为空
-  if(!root) {
-    return
-  }
-
-  // 前序-输出当前遍历的结点值
-  console.log('当前遍历的结点值是：', root.val)
-  // 递归遍历左子树
-  preorder(root.left)
-  // 递归遍历右子树
-  preorder(root.right)
-}
-
-// 中序遍历
-// 所有遍历函数的入参都是树的根结点对象
-function preorder(root) {
-  // 递归边界，root 为空
-  if(!root) {
-    return
-  }
-
-  // 递归遍历左子树
-  preorder(root.left)
-  // 中序-输出当前遍历的结点值
-  console.log('当前遍历的结点值是：', root.val)
-  // 递归遍历右子树
-  preorder(root.right)
-
-  // 后序遍历
-  // console.log('当前遍历的结点值是：', root.val)
-}
-```
-
-## 数组的应用
+## 数组
 
 ### 两数求和问题
 
@@ -204,7 +82,7 @@ function preorder(root) {
  * @param {number} target
  * @return {number[]}
  */
-const twoSum = function(nums, target) {
+const twoSum = function (nums, target) {
   // 这里我用对象来模拟 map 的能力
   const diffs = {};
   // 缓存数组长度
@@ -222,7 +100,7 @@ const twoSum = function(nums, target) {
 };
 ```
 
-### 强大的双指针法
+### 双指针法
 
 ```js
 // 真题描述：给你两个有序整数数组 nums1 和 nums2，请你将 nums2 合并到 nums1 中，使 nums1 成为一个有序数组。
@@ -231,7 +109,7 @@ const twoSum = function(nums, target) {
 // nums1 = [1,2,3,0,0,0], m = 3
 // nums2 = [2,5,6], n = 3
 // 输出: [1,2,2,3,5,6]
-const merge = function(nums1, m, nums2, n) {
+const merge = function (nums1, m, nums2, n) {
   // 初始化两个指针的指向，初始化 nums1 尾部索引k
   let i = m - 1,
     j = n - 1,
@@ -305,98 +183,7 @@ function threeSum(nums) {
 }
 ```
 
-## 字符串
-
-反转字符串
-
-```js
-const str = "absdef";
-
-const result = str
-  .split("")
-  .reverse()
-  .join();
-```
-
-判断一个字符串是否为回文串
-
-```js
-const str = "sfefsfs";
-
-function isRepeat(str) {
-  const reverseStr = str
-    .split("")
-    .reverse()
-    .join("");
-  return str === reverseStr;
-}
-isRepeat(str);
-
-// 解法2 利用对称特性
-function isPalindrome(str) {
-  // 缓存字符串的长度
-  const len = str.length;
-  // 遍历前半部分，判断和后半部分是否对称
-  for (let i = 0; i < len / 2; i++) {
-    if (str[i] !== str[len - i - 1]) {
-      return false;
-    }
-  }
-  return true;
-}
-```
-
-真题描述：给定一个非空字符串 s，最多删除一个字符。判断是否能成为回文字符串。
-
-```js
-示例 1: 输入: "aba"
-输出: True
-示例 2:
-输入: "abca"
-输出: True
-解释: 你可以删除c字符。
-注意: 字符串只包含从 a-z 的小写字母。字符串的最大长度是50000。
-
-const validPalindrome = function(s) {
-    // 缓存字符串的长度
-    const len = s.length
-
-    // i、j分别为左右指针
-    let i=0, j=len-1
-
-    // 当左右指针均满足对称时，一起向中间前进
-    while(i<j&&s[i]===s[j]) {
-        i++
-        j--
-    }
-
-    // 尝试判断跳过左指针元素后字符串是否回文
-    if(isPalindrome(i+1,j)) {
-      return true
-    }
-    // 尝试判断跳过右指针元素后字符串是否回文
-    if(isPalindrome(i,j-1)) {
-        return true
-    }
-
-    // 工具方法，用于判断字符串是否回文
-    function isPalindrome(st, ed) {
-        while(st<ed) {
-            if(s[st] !== s[ed]) {
-                return false
-            }
-            st++
-            ed--
-        }
-        return true
-    }
-
-    // 默认返回 false
-    return false
-};
-```
-
-## 数组排序
+### 数组排序
 
 ```js
 arr.sort((a, b) => {
@@ -476,7 +263,7 @@ function insertSort(arr) {
 }
 ```
 
-#### 归并排序
+### 归并排序
 
 归并排序是对分治思想的典型应用，它按照如下的思路对分治思想“三步走”的框架进行了填充
 
@@ -534,32 +321,132 @@ function mergeArr(left, right) {
 }
 ```
 
-#### 快速排序
+## 字符串
 
-## 栈
+反转字符串
 
-后进先出数据结构
-js 函数调用用栈
-使用 Array 实现栈多有功能
-栈操作 push pop stack[stack.length-1]
+```js
+const str = "absdef";
 
-## 队列
+const result = str.split("").reverse().join();
+```
 
-先进先出数据结构
-js 没有队列，使用 array 实现 push shift
-场景：
-js 异步中任务队列
-js 单线程，无法处理异步中的并发任务
+判断一个字符串是否为回文串
+
+```js
+const str = "sfefsfs";
+
+function isRepeat(str) {
+  const reverseStr = str.split("").reverse().join("");
+  return str === reverseStr;
+}
+isRepeat(str);
+
+// 解法2 利用对称特性
+function isPalindrome(str) {
+  // 缓存字符串的长度
+  const len = str.length;
+  // 遍历前半部分，判断和后半部分是否对称
+  for (let i = 0; i < len / 2; i++) {
+    if (str[i] !== str[len - i - 1]) {
+      return false;
+    }
+  }
+  return true;
+}
+```
+
+真题描述：给定一个非空字符串 s，最多删除一个字符。判断是否能成为回文字符串。
+
+```js
+示例 1: 输入: "aba"
+输出: True
+示例 2:
+输入: "abca"
+输出: True
+解释: 你可以删除c字符。
+注意: 字符串只包含从 a-z 的小写字母。字符串的最大长度是50000。
+
+const validPalindrome = function(s) {
+    // 缓存字符串的长度
+    const len = s.length
+
+    // i、j分别为左右指针
+    let i=0, j=len-1
+
+    // 当左右指针均满足对称时，一起向中间前进
+    while(i<j&&s[i]===s[j]) {
+        i++
+        j--
+    }
+
+    // 尝试判断跳过左指针元素后字符串是否回文
+    if(isPalindrome(i+1,j)) {
+      return true
+    }
+    // 尝试判断跳过右指针元素后字符串是否回文
+    if(isPalindrome(i,j-1)) {
+        return true
+    }
+
+    // 工具方法，用于判断字符串是否回文
+    function isPalindrome(st, ed) {
+        while(st<ed) {
+            if(s[st] !== s[ed]) {
+                return false
+            }
+            st++
+            ed--
+        }
+        return true
+    }
+
+    // 默认返回 false
+    return false
+};
+```
 
 ## 链表
 
-多个元素组成列表
-元素存储不连续，用 next 指针连在一起
-js 中没有链表数据结构，使用 object 模拟链表
-js 原型链也是一个链表 ，沿着**proto**
-遍历链表
+链表和数组相似，它们都是有序的列表、都是线性结构（有且仅有一个前驱、有且仅有一个后继）。不同点在于，链表中，数据单位的名称叫做“结点”，而结点和结点的分布，在内存中可以是离散的。
+在链表中，每一个结点的结构都包括了两部分的内容：数据域和指针域。`JS` 中的链表，是以嵌套的对象的形式来实现的，`js` 原型链也是一个链表 ，沿着`__proto__`
+特点：
+
+- 多个元素组成列表
+- 元素存储不连续，用 next 指针连在一起
 
 ```js
+{
+  // 数据域
+  val: 1,
+  // 指针域，指向下一个结点
+  next: {
+    val:2,
+    next: ...
+  }
+}
+```
+
+创建链表结点:
+
+```js
+// 需要一个构造函数
+function ListNode(val) {
+  this.val = val;
+  this.next = null;
+}
+
+// 在使用构造函数创建结点时，传入 val （数据域对应的值内容）、指定 next （下一个链表结点）即可
+const node = new ListNode(1);
+node.next = new ListNode(2);
+```
+
+### 链表和数组的辨析
+
+相对于数组来说，链表有一个明显的优点，就是添加和删除元素都不需要挪动多余的元素。
+
+```js
+// 遍历链表
 const a = { val: "a" };
 const b = { val: "b" };
 a.next = b;
@@ -568,7 +455,17 @@ while (p) {
   console.log(p.val);
   p = p.next;
 }
+
+// 它是一个纯数字数组，那么对应的确实是连续内存
+const arr = [1, 2, 3, 4];
+
+// 它对应的就是一段非连续的内存。
+// 此时，JS 数组不再具有数组的特征，其底层使用哈希映射分配内存空间，是由对象链表来实现的
+const arr = ["haha", 1, { a: 1 }];
 ```
+
+总结:
+结合上述分析，我们不难得出这样的结论：链表的插入/删除效率较高 O(1)，而访问效率较低 O(n)；数组的访问效率较高 O(1)，而插入效率较低 O(n)。这个特性需要大家牢记，可能会作为数据结构选型的依据来单独考察
 
 ## 原型链简介
 
@@ -618,7 +515,7 @@ path.forEach((k) => {
 console.log(p);
 ```
 
-## 集合
+## 集合 Set
 
 一种无序且唯一数据结构
 es6 有集合，Set
@@ -638,7 +535,7 @@ const arr3 = new Set([2, 3]);
 const filter = new Set([...set].filter((item) => arr3.has(item)));
 ```
 
-## 如何使用 set 对象
+### 如何使用 set 对象
 
 ```js
 let myset = new Set();
@@ -662,4 +559,90 @@ const myarr2 = Array.from(myset);
 
 // 交集
 const intersection = new Set([...myset].filter(x => myset2.has(x)))
+```
+
+## 字典 Map
+
+以键值对增删改查
+
+// 增
+const m = new Map();
+m.set('a','aa');
+// 查
+m.get('a') // 'aa'
+// 删
+m.delete('a')
+// 删除多有
+m.clear();
+
+## 二叉树
+
+二叉树不能被简单定义为每个结点的度都是 2 的树。普通的树并不会区分左子树和右子树，但在二叉树中，左右子树的位置是严格约定、不能交换的
+
+```js
+// 二叉树结点的构造函数
+function TreeNode(val) {
+  this.val = val;
+  this.left = this.right = null;
+}
+onst node  = new TreeNode(1)
+```
+
+- [先序]根结点 -> 左子树 -> 右子树
+- [中序]左子树 -> 根结点 -> 右子树
+- [后序]左子树 -> 右子树 -> 根结点
+
+```js
+const root = {
+  val: 'A',
+  left: {
+    val: 'B',
+    left: {
+      val: 'D',
+    }
+    right: {
+      value: 'E'
+    }
+  },
+  right: {
+    val: "C",
+    right: {
+      val: "F"
+    }
+  }
+};
+// 先序遍历
+// 所有遍历函数的入参都是树的根结点对象
+function preorder(root) {
+  // 递归边界，root 为空
+  if(!root) {
+    return
+  }
+
+  // 前序-输出当前遍历的结点值
+  console.log('当前遍历的结点值是：', root.val)
+  // 递归遍历左子树
+  preorder(root.left)
+  // 递归遍历右子树
+  preorder(root.right)
+}
+
+// 中序遍历
+// 所有遍历函数的入参都是树的根结点对象
+function preorder(root) {
+  // 递归边界，root 为空
+  if(!root) {
+    return
+  }
+
+  // 递归遍历左子树
+  preorder(root.left)
+  // 中序-输出当前遍历的结点值
+  console.log('当前遍历的结点值是：', root.val)
+  // 递归遍历右子树
+  preorder(root.right)
+
+  // 后序遍历
+  // console.log('当前遍历的结点值是：', root.val)
+}
 ```
