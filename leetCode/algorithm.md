@@ -530,7 +530,7 @@ const arr2 = [...new Set(arr)];
 const set = new Set(arr);
 const has = set.has(3);
 
-//求交集
+// 求交集
 const arr3 = new Set([2, 3]);
 const filter = new Set([...set].filter((item) => arr3.has(item)));
 ```
@@ -553,7 +553,7 @@ for(letm item of myset) {
 
 }
 
-//与arr互转
+// 与arr互转
 const myarr = [... myset];
 const myarr2 = Array.from(myset);
 
@@ -575,9 +575,59 @@ m.delete('a')
 // 删除多有
 m.clear();
 
-## 二叉树
+## 树
+
+一种分层数据抽象结构
+常见树：
+
+- Dom 树
+- 级联组件
+- Tree 树形结构
+  树的常用操作：深度/广度优先遍历/先中后序遍历
+
+### 什么是深度优先遍历
+
+尽可能访问深的搜索树的分支
+
+### 什么是广度优先遍历
+
+先访问离根结点最近的节点
+
+### 深度优先算法口诀
+
+- 访问根结点
+- 对根结点 children 挨个进行深度优先遍历
+
+```js
+const dfs = (root) => {
+  console.log(root.val);
+  root.children.forEach(dfs);
+};
+```
+
+### 广度优先算法口诀
+
+- 新建一个队列，把根结点入队
+- 对头出队并访问
+- 把队头的 children 挨个入队
+- 重复第二三步，直到队列为空
+
+```js
+const bfs = (root) => {
+  const q = [root];
+  while (q.length > 0) {
+    const n = q.shift();
+    console.log(n.val);
+    n.children.forEach((child) => q.push(child));
+  }
+};
+```
+
+### 二叉树
 
 二叉树不能被简单定义为每个结点的度都是 2 的树。普通的树并不会区分左子树和右子树，但在二叉树中，左右子树的位置是严格约定、不能交换的
+
+js 中用 object 模拟
 
 ```js
 // 二叉树结点的构造函数
@@ -587,6 +637,8 @@ function TreeNode(val) {
 }
 onst node  = new TreeNode(1)
 ```
+
+算法口诀
 
 - [先序]根结点 -> 左子树 -> 右子树
 - [中序]左子树 -> 根结点 -> 右子树
@@ -646,3 +698,7 @@ function preorder(root) {
   // console.log('当前遍历的结点值是：', root.val)
 }
 ```
+
+### 二叉树中的先中后序遍历（非递归版）
+
+用栈模拟
