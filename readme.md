@@ -4,7 +4,7 @@
 
 部分文章已更新到掘金社区 [我的专栏](https://juejin.im/user/5c242177f265da610e8022b2/posts)，欢迎查看！
 
-[TS 干货分享](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/03_typescript.md)
+[TypeScript 在 React 中使用总结](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/03_typescript.md)
 
 [手写 React Hooks](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/reacthooks.md)
 
