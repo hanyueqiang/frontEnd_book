@@ -82,7 +82,7 @@ console.log(queue); // []
  * @param {number} target
  * @return {number[]}
  */
-const twoSum = function(nums, target) {
+const twoSum = function (nums, target) {
   // 这里我用对象来模拟 map 的能力
   const diffs = {};
   // 缓存数组长度
@@ -109,7 +109,7 @@ const twoSum = function(nums, target) {
 // nums1 = [1,2,3,0,0,0], m = 3
 // nums2 = [2,5,6], n = 3
 // 输出: [1,2,2,3,5,6]
-const merge = function(nums1, m, nums2, n) {
+const merge = function (nums1, m, nums2, n) {
   // 初始化两个指针的指向，初始化 nums1 尾部索引k
   let i = m - 1,
     j = n - 1,
@@ -328,10 +328,7 @@ function mergeArr(left, right) {
 ```js
 const str = "absdef";
 
-const result = str
-  .split("")
-  .reverse()
-  .join();
+const result = str.split("").reverse().join();
 ```
 
 判断一个字符串是否为回文串
@@ -340,10 +337,7 @@ const result = str
 const str = "sfefsfs";
 
 function isRepeat(str) {
-  const reverseStr = str
-    .split("")
-    .reverse()
-    .join("");
+  const reverseStr = str.split("").reverse().join("");
   return str === reverseStr;
 }
 isRepeat(str);
@@ -830,7 +824,7 @@ function preorder(root) {
  * @param {TreeNode} root
  * @return {number}
  */
-var maxDepth = function(root) {
+var maxDepth = function (root) {
   let sum = 0;
   function dfs(n, l) {
     if (!n) {
@@ -845,4 +839,92 @@ var maxDepth = function(root) {
   dfs(root, 1);
   return sum;
 };
+```
+
+#### 111. 二叉树的最小深度
+
+给定一个二叉树，找出其最小深度。
+
+最小深度是从根节点到最近叶子节点的最短路径上的节点数量。
+
+说明: 叶子节点是指没有子节点的节点。
+示例:
+
+给定二叉树 [3,9,20,null,null,15,7],
+返回它的最小深度 2.
+来源：力扣（LeetCode）
+
+利用广度优先遍历
+
+```js
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var minDepth = function (root) {
+  if (!root) {
+    return 0;
+  }
+  const q = [[root, 1]];
+  while (q.length) {
+    const [n, l] = q.shift();
+    if (!n.left && !n.right) {
+      return l;
+    }
+    if (n.left) {
+      q.push([n.left, l + 1]);
+    }
+    if (n.right) {
+      q.push([n.right, l + 1]);
+    }
+  }
+};
+```
+
+#### 102. 二叉树的层序遍历
+
+给你一个二叉树，请你返回其按 层序遍历 得到的节点值。 （即逐层地，从左到右访问所有节点）。
+示例：
+二叉树：[3,9,20,null,null,15,7],
+返回其层次遍历结果：
+
+```js
+[[3], [9, 20], [15, 7]];
+```
+
+来源：力扣（LeetCode）
+
+所谓层序遍历就是广度优先遍历
+利用广度优先遍历
+
+```js
+/**
+ * @param {TreeNode} root
+ * @return {number[][]}
+ */
+var levelOrder = function (root) {
+  if (!root) {
+    return [];
+  }
+  const q = [[root, 0]];
+  const res = [];
+  while (q.length) {
+    const [n, l] = q.shift();
+    if (!res[l]) {
+      res.push([n.val]);
+    } else {
+      res[l].push(n.val);
+    }
+
+    if (n.left) {
+      q.push([n.left, l + 1]);
+    }
+    if (n.right) {
+      q.push([n.right, l + 1]);
+    }
+  }
+  return res;
+};
+
+// 解法2
 ```
