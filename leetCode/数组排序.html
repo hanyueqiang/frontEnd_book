@@ -113,6 +113,113 @@
       }
 
       console.log("mergeSort归并排序", merge1Sort(arr4));
+
+      const root = {
+        val: "A",
+        left: {
+          val: "B",
+          left: {
+            val: "D",
+          },
+          right: {
+            val: "E",
+          },
+        },
+        right: {
+          val: "C",
+          right: {
+            val: "F",
+          },
+        },
+      };
+      // 先序遍历
+      // function preorder(root) {
+      //   // 递归边界，root 为空
+      //   if (!root) {
+      //     return;
+      //   }
+
+      //   // 前序-输出当前遍历的结点值
+      //   console.log("当前遍历的结点值是：", root.val);
+      //   // 递归遍历左子树
+      //   preorder(root.left);
+      //   // 递归遍历右子树
+      //   preorder(root.right);
+      // }
+      // 非递归版先序遍历
+      // function preorder(root) {
+      //   if (!root) {
+      //     return;
+      //   }
+      //   const stack = [root];
+      //   while (stack.length) {
+      //     const n = stack.pop();
+      //     console.log(n.val);
+      //     if (n.right) {
+      //       stack.push(n.right);
+      //     }
+      //     if (n.left) {
+      //       stack.push(n.left);
+      //     }
+      //   }
+      // }
+      // 非递归版中序遍历
+      // function preorder(root) {
+      //   if (!root) {
+      //     return;
+      //   }
+      //   const stack = [];
+      //   let p = root;
+      //   while (stack.length || p) {
+      //     while (p) {
+      //       stack.push(p);
+      //       p = p.left;
+      //     }
+      //     const n = stack.pop();
+      //     console.log(n.val);
+      //     p = n.right;
+      //   }
+      // }
+      // 递归版中序遍历
+      // function preorder(root) {
+      //   // 递归边界，root 为空
+      //   if (!root) {
+      //     return;
+      //   }
+
+      //   // 递归遍历左子树
+      //   preorder(root.left);
+      //   // 中序-输出当前遍历的结点值
+      //   // console.log("当前遍历的结点值是：", root.val);
+      //   // 递归遍历右子树
+      //   preorder(root.right);
+
+      //   // 后序遍历
+      //   console.log("当前遍历的结点值是：", root.val);
+      // }
+      function preorder(root) {
+        if (!root) {
+          return;
+        }
+        const stack = [root];
+        const outStack = [];
+        while (stack.length) {
+          const n = stack.pop();
+          outStack.push(n);
+          if (n.left) {
+            stack.push(n.left);
+          }
+          if (n.right) {
+            stack.push(n.right);
+          }
+        }
+
+        while (outStack.length) {
+          const n = outStack.pop();
+          console.log(n.val);
+        }
+      }
+      preorder(root);
     </script>
   </body>
 </html>

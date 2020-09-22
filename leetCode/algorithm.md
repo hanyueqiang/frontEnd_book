@@ -82,7 +82,7 @@ console.log(queue); // []
  * @param {number} target
  * @return {number[]}
  */
-const twoSum = function (nums, target) {
+const twoSum = function(nums, target) {
   // 这里我用对象来模拟 map 的能力
   const diffs = {};
   // 缓存数组长度
@@ -109,7 +109,7 @@ const twoSum = function (nums, target) {
 // nums1 = [1,2,3,0,0,0], m = 3
 // nums2 = [2,5,6], n = 3
 // 输出: [1,2,2,3,5,6]
-const merge = function (nums1, m, nums2, n) {
+const merge = function(nums1, m, nums2, n) {
   // 初始化两个指针的指向，初始化 nums1 尾部索引k
   let i = m - 1,
     j = n - 1,
@@ -328,7 +328,10 @@ function mergeArr(left, right) {
 ```js
 const str = "absdef";
 
-const result = str.split("").reverse().join();
+const result = str
+  .split("")
+  .reverse()
+  .join();
 ```
 
 判断一个字符串是否为回文串
@@ -337,7 +340,10 @@ const result = str.split("").reverse().join();
 const str = "sfefsfs";
 
 function isRepeat(str) {
-  const reverseStr = str.split("").reverse().join("");
+  const reverseStr = str
+    .split("")
+    .reverse()
+    .join("");
   return str === reverseStr;
 }
 isRepeat(str);
@@ -608,7 +614,7 @@ const dfs = (root) => {
 ### 广度优先算法口诀
 
 - 新建一个队列，把根结点入队
-- 对头出队并访问
+- 队头出队并访问
 - 把队头的 children 挨个入队
 - 重复第二三步，直到队列为空
 
@@ -635,10 +641,12 @@ function TreeNode(val) {
   this.val = val;
   this.left = this.right = null;
 }
-onst node  = new TreeNode(1)
+const node = new TreeNode(1);
 ```
 
-算法口诀
+### 遍历二叉树（递归版）
+
+遍历二叉树算法口诀
 
 - [先序]根结点 -> 左子树 -> 右子树
 - [中序]左子树 -> 根结点 -> 右子树
@@ -646,59 +654,195 @@ onst node  = new TreeNode(1)
 
 ```js
 const root = {
-  val: 'A',
+  val: "A",
   left: {
-    val: 'B',
+    val: "B",
     left: {
-      val: 'D',
-    }
+      val: "D",
+    },
     right: {
-      value: 'E'
-    }
+      val: "E",
+    },
   },
   right: {
     val: "C",
     right: {
-      val: "F"
-    }
-  }
+      val: "F",
+    },
+  },
 };
+
 // 先序遍历
 // 所有遍历函数的入参都是树的根结点对象
 function preorder(root) {
   // 递归边界，root 为空
-  if(!root) {
-    return
+  if (!root) {
+    return;
   }
 
-  // 前序-输出当前遍历的结点值
-  console.log('当前遍历的结点值是：', root.val)
+  // 先序-输出当前遍历的结点值
+  console.log("当前遍历的结点值是：", root.val);
   // 递归遍历左子树
-  preorder(root.left)
+  preorder(root.left);
   // 递归遍历右子树
-  preorder(root.right)
+  preorder(root.right);
 }
 
 // 中序遍历
-// 所有遍历函数的入参都是树的根结点对象
 function preorder(root) {
   // 递归边界，root 为空
-  if(!root) {
-    return
+  if (!root) {
+    return;
   }
 
   // 递归遍历左子树
-  preorder(root.left)
+  preorder(root.left);
   // 中序-输出当前遍历的结点值
-  console.log('当前遍历的结点值是：', root.val)
+  console.log("当前遍历的结点值是：", root.val);
   // 递归遍历右子树
-  preorder(root.right)
+  preorder(root.right);
+}
 
-  // 后序遍历
-  // console.log('当前遍历的结点值是：', root.val)
+// 后序遍历
+function preorder(root) {
+  // 递归边界，root 为空
+  if (!root) {
+    return;
+  }
+
+  // 递归遍历左子树
+  preorder(root.left);
+  // 递归遍历右子树
+  preorder(root.right);
+
+  console.log("当前遍历的结点值是：", root.val);
 }
 ```
 
 ### 二叉树中的先中后序遍历（非递归版）
 
-用栈模拟
+递归调用实质是利用堆栈，下面利用栈模拟
+
+先序遍历
+
+- 顺序：根节点 -> 左子树 -> 右子树
+
+```js
+// 先序遍历
+function preorder(root) {
+  if (!root) {
+    return;
+  }
+  const stack = [root];
+  while (stack.length) {
+    const n = stack.pop();
+    console.log(n.val);
+    // 这里注意栈是后进先出，要想让左子树先出栈，先让右子树入栈，左子树后入栈
+    if (n.right) {
+      stack.push(n.right);
+    }
+    if (n.left) {
+      stack.push(n.left);
+    }
+  }
+}
+```
+
+中序遍历
+
+- 顺序：左子树 -> 根节点 -> 右子树
+
+```js
+function preorder(root) {
+  if (!root) {
+    return;
+  }
+  const stack = [];
+  let p = root;
+  // 此处循环继续到右子树内寻找左子树
+  while (stack.length || p) {
+    // 此处把所有左子树入栈
+    while (p) {
+      stack.push(p);
+      p = p.left;
+    }
+    // 左子树出栈并访问
+    const n = stack.pop();
+    console.log(n.val);
+    // 右子树入栈
+    p = n.right;
+  }
+}
+```
+
+后序遍历
+
+- 顺序：左子树 -> 右子树 -> 根节点
+- 规律：利用先序遍历访问根、左、右进行改造
+
+```js
+function preorder(root) {
+  if (!root) {
+    return;
+  }
+  // 使用两个栈，一个作为先序栈，一个做后序遍历出栈使用
+  const stack = [root];
+  const outStack = [];
+  // 先序遍历改造
+  while (stack.length) {
+    const n = stack.pop();
+    outStack.push(n);
+
+    if (n.left) {
+      stack.push(n.left);
+    }
+    // 注意这里顺序变化，入栈变成 根->右子树->左子树
+    if (n.right) {
+      stack.push(n.right);
+    }
+  }
+  // 后序出栈 左、右、根出栈
+  while (outStack.length) {
+    const n = outStack.pop();
+    console.log(n.val);
+  }
+}
+```
+
+### leetCode 题目练习
+
+#### 104. 二叉树的最大深度
+
+给定一个二叉树，找出其最大深度。
+
+二叉树的深度为根节点到最远叶子节点的最长路径上的节点数。
+
+说明:  叶子节点是指没有子节点的节点。
+
+示例：
+给定二叉树 [3,9,20,null,null,15,7]，返回它的最大深度 3 。
+来源：力扣（LeetCode）
+
+利用深度优先遍历做该题
+
+```js
+/**
+ * @param {TreeNode} root
+ * @return {number}
+ */
+var maxDepth = function(root) {
+  let sum = 0;
+  function dfs(n, l) {
+    if (!n) {
+      return;
+    }
+    if (!n.left && !n.right) {
+      sum = Math.max(sum, l);
+    }
+    dfs(n.left, l + 1);
+    dfs(n.right, l + 1);
+  }
+  dfs(root, 1);
+  return sum;
+};
+```
