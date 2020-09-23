@@ -82,7 +82,7 @@ console.log(queue); // []
  * @param {number} target
  * @return {number[]}
  */
-const twoSum = function (nums, target) {
+const twoSum = function(nums, target) {
   // 这里我用对象来模拟 map 的能力
   const diffs = {};
   // 缓存数组长度
@@ -109,7 +109,7 @@ const twoSum = function (nums, target) {
 // nums1 = [1,2,3,0,0,0], m = 3
 // nums2 = [2,5,6], n = 3
 // 输出: [1,2,2,3,5,6]
-const merge = function (nums1, m, nums2, n) {
+const merge = function(nums1, m, nums2, n) {
   // 初始化两个指针的指向，初始化 nums1 尾部索引k
   let i = m - 1,
     j = n - 1,
@@ -328,7 +328,10 @@ function mergeArr(left, right) {
 ```js
 const str = "absdef";
 
-const result = str.split("").reverse().join();
+const result = str
+  .split("")
+  .reverse()
+  .join();
 ```
 
 判断一个字符串是否为回文串
@@ -337,7 +340,10 @@ const result = str.split("").reverse().join();
 const str = "sfefsfs";
 
 function isRepeat(str) {
-  const reverseStr = str.split("").reverse().join("");
+  const reverseStr = str
+    .split("")
+    .reverse()
+    .join("");
   return str === reverseStr;
 }
 isRepeat(str);
@@ -578,12 +584,14 @@ m.clear();
 ## 树
 
 一种分层数据抽象结构
+
 常见树：
 
 - Dom 树
 - 级联组件
 - Tree 树形结构
-  树的常用操作：深度/广度优先遍历/先中后序遍历
+
+树的常用操作：深度/广度优先遍历/先中后序遍历
 
 ### 什么是深度优先遍历
 
@@ -803,6 +811,73 @@ function preorder(root) {
 }
 ```
 
+### 遍历 JSON 的所有节点值
+
+深度优先遍历
+
+```js
+const json = {
+  a: {
+    b: {
+      c: 1,
+    },
+  },
+  d: [1, 2],
+};
+
+const dfs = (n, path) => {
+  console.log(n, path);
+  Object.keys(n).forEach((k) => {
+    dfs(n[k], path.concat(k));
+  });
+};
+dfs(json, []);
+```
+
+### 渲染树组件
+
+深度优先遍历
+
+```js
+import { Tree } from "antd";
+const { TreeNode } = Tree;
+const treeData = [
+  {
+    title: "一级菜单",
+    key: "1",
+    children: [
+      {
+        title: "二级菜单",
+        key: "2",
+        children: [
+          {
+            title: "三级菜单",
+            key: "3",
+            children: [],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    title: "一级菜单2",
+    key: "4",
+    children: [],
+  },
+];
+
+const TreeComp = () => {
+  const dfs = (n) => {
+    return (
+      <TreeNode title={n.title} key={n.key}>
+        {n.children.map(dfs)}
+      </TreeNode>
+    );
+  };
+  return <Tree>{treeData.map(dfs)}</Tree>;
+};
+```
+
 ### leetCode 题目练习
 
 #### 104. 二叉树的最大深度
@@ -824,7 +899,7 @@ function preorder(root) {
  * @param {TreeNode} root
  * @return {number}
  */
-var maxDepth = function (root) {
+var maxDepth = function(root) {
   let sum = 0;
   function dfs(n, l) {
     if (!n) {
@@ -861,7 +936,7 @@ var maxDepth = function (root) {
  * @param {TreeNode} root
  * @return {number}
  */
-var minDepth = function (root) {
+var minDepth = function(root) {
   if (!root) {
     return 0;
   }
@@ -902,18 +977,18 @@ var minDepth = function (root) {
  * @param {TreeNode} root
  * @return {number[][]}
  */
-var levelOrder = function (root) {
+var levelOrder = function(root) {
   if (!root) {
     return [];
   }
   const q = [[root, 0]];
   const res = [];
   while (q.length) {
-    const [n, l] = q.shift();
-    if (!res[l]) {
+    const [n, level] = q.shift();
+    if (!res[level]) {
       res.push([n.val]);
     } else {
-      res[l].push(n.val);
+      res[level].push(n.val);
     }
 
     if (n.left) {
@@ -927,4 +1002,102 @@ var levelOrder = function (root) {
 };
 
 // 解法2
+var levelOrder = function(root) {
+  if (!root) {
+    return [];
+  }
+
+  const q = [root];
+  const res = [];
+  while (q.length) {
+    let len = q.length;
+    res.push([]);
+    // 把所有同级节点进入队列
+    while (len--) {
+      const n = q.shift();
+      res[res.length - 1].push(n.val);
+      if (n.left) {
+        q.push(n.left);
+      }
+      if (n.right) {
+        q.push(n.right);
+      }
+    }
+  }
+  return res;
+};
+```
+
+#### 94. 二叉树的中序遍历
+
+给定一个二叉树，返回它的中序 遍历。
+输入: [1,null,2,3]
+输出: [1,3,2]
+进阶: 递归算法很简单，你可以通过迭代算法完成吗？
+来源：力扣（LeetCode）
+
+```js
+/**
+ * @param {TreeNode} root
+ * @return {number[]}
+ */
+var inorderTraversal = function(root) {
+  if (!root) {
+    return [];
+  }
+  const res = [];
+  const stack = [];
+
+  let p = root;
+  while (p || stack.length) {
+    while (p) {
+      stack.push(p);
+      p = p.left;
+    }
+    const n = stack.pop();
+    res.push(n.val);
+    p = n.right;
+  }
+  return res;
+};
+```
+
+#### 112.路径总和
+
+给定一个二叉树和一个目标和，判断该树中是否存在根节点到叶子节点的路径，这条路径上所有节点值相加等于目标和。
+说明: 叶子节点是指没有子节点的节点。
+示例:
+给定如下二叉树，以及目标和 sum = 22，
+返回 true, 因为存在目标和为 22 的根节点到叶子节点的路径 5->4->11->2。
+来源：力扣（LeetCode）
+
+利用深度优先遍历，递归，时间复杂度 O(n)，空间复杂度 O(n)
+
+```js
+/**
+ * @param {TreeNode} root
+ * @param {number} sum
+ * @return {boolean}
+ */
+var hasPathSum = function(root, sum) {
+  if (!root) {
+    return false;
+  }
+  let res = false;
+  function dfs(n, s) {
+    console.log(n.val, s);
+    if (!n.left && !n.right && s === sum) {
+      res = true;
+    }
+    if (n.left) {
+      dfs(n.left, s + n.left.val);
+    }
+    if (n.right) {
+      dfs(n.right, s + n.right.val);
+    }
+  }
+  dfs(root, root.val);
+
+  return res;
+};
 ```
