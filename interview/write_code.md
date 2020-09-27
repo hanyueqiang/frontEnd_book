@@ -625,3 +625,23 @@ function check(list) {
   for (let i = 0; i < len; i++) {}
 }
 ```
+
+## 写一个计数器
+
+```js
+var count = (function() {
+  var counter = 0;
+  return function() {
+    return ++counter;
+  };
+})();
+```
+
+## 实现一个 repeat
+
+## call、apply、bind 区别，能手写一个 bind 和 apply 吗
+
+共同点：均改变函数执行时的上下文，再具体一点就是改变函数运行时的 this 指向
+不同： call 和 apply 改变了函数的 this 上下文后便执行该函数, 而 bind 则是返回改变了上下文后的一个函数
+call、apply 的区别
+call 和 aplly 的第一个参数都是要改变上下文的对象，而 call 从第二个参数开始以参数列表的形式展现，apply 则是把除了改变上下文对象的参数放在一个数组里面作为它的第二个参数。

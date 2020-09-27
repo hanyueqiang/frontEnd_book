@@ -1,6 +1,6 @@
 ## 浏览器篇
 
-#### localstorage sessionstorage cookie 区别 大小限制？(某团)
+#### localstorage sessionstorage cookie 区别 大小限制？
 
 ##### 生命周期：
 
@@ -51,7 +51,7 @@ if(navigator.cookieEnabled) {
 
 ```
 
-#### 跨域的问题 说了 jsonp domain cors postmessage，iframe 怎么在开发中实现跨域不在后端设置(node)(某站)
+#### 跨域的问题 说了 jsonp domain cors postmessage，iframe 怎么在开发中实现跨域不在后端设置(node)
 
 1.JSONP
 全称：JSON with Padding；
@@ -80,11 +80,20 @@ window.postMessage(message,targetOrigin) 此方法是 html5 新引进的特性�
 优点：可以使用它来向其它的 window 对象发送消息，无论这个 window 对象是属于同源或不同源(目前 IE8+、FireFox、Chrome、Opera 等浏览器都已经支持)。
 缺点：缺点是 IE6、IE7 不支持，所以用不用还得根据实际需要来决定。
 
-#### 介绍一下对浏览器内核的理解 v8 引擎(某站)
+#### 介绍一下对浏览器内核的理解 v8 引擎
 
-#### 缓存 浏览器缓存 http 缓存(某站)
+#### 说下缓存 浏览器缓存 http 缓存
 
-#### 浏览器从输入 URL 到渲染完页面的整个过程 越详细越好(某站)
+浏览器缓存是有 header 决定的
+
+1.缓存介绍
+常见的 http 缓存只存储 get 响应，
+浏览器每次 get url 时会先检查 url 对应的缓存，除非你不使用缓存(强制刷新或者 Disable Cache)
+
+参考：
+https://segmentfault.com/a/1190000008377508
+
+#### 浏览器从输入 URL 到渲染完页面的整个过程 越详细越好
 
 1. DNS 解析
    以 chrome 浏览器为例，当输入 baidu.com 的时候，我们实际访问的是 14.215.177.39，这是百度的 IP 地址，从 baidu.com 到 14.215.177.39 的过程就是一个 DNS 解析的过程，首先会从浏览器里 DNS 缓存查找，chrome://dns/，一旦查找到了就完成了这个解析过程，但是如果没有呢？ 那么接着会从电脑本地的 hosts 文件中查找 2.三次握手
