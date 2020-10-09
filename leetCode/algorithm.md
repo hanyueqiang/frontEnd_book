@@ -1031,8 +1031,8 @@ var levelOrder = function(root) {
 #### 94. 二叉树的中序遍历
 
 给定一个二叉树，返回它的中序 遍历。
-输入: [1,null,2,3]
-输出: [1,3,2]
+输入: [1, null, 2, 3]
+输出: [1, 3, 2]
 进阶: 递归算法很简单，你可以通过迭代算法完成吗？
 来源：力扣（LeetCode）
 
@@ -1101,3 +1101,47 @@ var hasPathSum = function(root, sum) {
   return res;
 };
 ```
+
+## 堆
+
+堆是一种特殊的完全二叉树
+所有的节点都大于等于或者小于等于子节点
+js 中通常使用数组表示堆
+
+## 排序和搜索
+
+排序：就是某个乱序的数组变成升序或者降序的数组
+
+搜索：就是找某个元素的下标
+
+数组的 sort
+搜索 indexOf
+排序
+
+- 冒泡排序
+
+```js
+const bubbleSort = (arr) => {
+  const length = arr.length;
+  for (let i = 0; i < length - 1; i++) {
+    for (let j = 0; j < length - 1 - i; j++) {
+      if (arr[j] > arr[j + 1]) {
+        const temp = arr[j + 1];
+        arr[j + 1] = arr[j];
+        arr[j] = temp;
+      }
+    }
+  }
+  return arr;
+};
+```
+
+- 选择排序
+- 插入排序
+- 归并排序
+- 快速排序
+
+搜索
+
+- 顺序搜索
+- 二分搜索

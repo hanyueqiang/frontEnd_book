@@ -432,6 +432,8 @@ var isPalindrome = function(s) {
 ## 手写防抖和节流
 
 防抖 debounce
+非立即执行:，如果你在一个事件触发的 n 秒内又触发了这个事件，那我就以新的事件的时间为准，n 秒后才执行
+立即执行：我不希望非要等到事件停止触发后才执行，我希望立刻执行函数，然后等到停止触发 n 秒后，才可以重新触发执行
 
 ```js
 function debounce(fn, wait = 500) {
@@ -446,6 +448,7 @@ function debounce(fn, wait = 500) {
 ```
 
 节流 throttle
+持续触发事件，每隔一段时间，只执行一次事件。
 
 ```js
 function throttle(func, delay) {
