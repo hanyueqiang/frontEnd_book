@@ -80,14 +80,17 @@ const arr = [];
 // 报错，[1,2,3]与[]不是同一个地址
 arr = [1,2,3];
 const arr = [];
+
 // 不报错，变量名arr指向的地址不变，只是数据改变
 arr[0] = 1;
 arr[1] = 2;
 arr[2] = 3;
 console.log(arr.length); // 输出：3
+
 // 若想让定义的对象或数组的数据也不能改变，可以使用object.freeze(arr)进行冻结。冻结指的是不能向这个对象或数组添加新的属性，不能修改已有属性的值，不能删除已有属性。
 const arr = [];
 Object.freeze(arr);
+
 // 不报错，但数据改变无效
 arr[0] = 1;
 arr[1] = 2;
@@ -215,7 +218,8 @@ var date = new Date();
 console.log(date.valueOf()); // 1456638436303
 ```
 
-js 在 Object 常用属性
+#### js 在 Object 常用属性
+
 1.prototype(原型对象)
 构造函数有一个 prototype 属性，指向实例对象的原型对象。通过同一个构造函数实例化的多个对象具有相同的原型对象。(经常使用原型对象来实现继承)
 
@@ -246,8 +250,6 @@ function Foo(){};
 var f1 = new Foo;
 console.log(f1.__proto__ === Foo.prototype); // true
 ```
-
-#### 如何设计一个模块加载器
 
 #### 事件委托机制
 
@@ -477,7 +479,7 @@ window.b // undefined
 全局作用域：
 最外层函数定义的变量拥有全局作用域，即对任何内部函数来说，都是可以访问的：
 
-```
+```js
 <script>
   var outerVar = "hello";
   function fn(){
@@ -490,7 +492,7 @@ window.b // undefined
 局部作用域：
 和全局作用域相反，局部作用域一般只在固定的代码片段内可访问到，而对于函数外部是无法访问的，最常见的例如函数内部
 
-```
+```js
 <script>
   function fn(){
     var innerVar = "inner";
@@ -515,7 +517,7 @@ console.log(a.prototype); // undefined
 3. 不能直接修改箭头函数的 this 指向
 4. 箭头函数外层没有普通函数，严格模式和非严格模式下它的 this 都会指向 window(全局对象)
 
-```
+```js
 const obj = {
   array: [1, 2, 3],
   sum: () => {
@@ -535,18 +537,16 @@ sum: function() {
 ```
 
 5. 使用 new 调用箭头函数会报错
-   无论箭头函数的 thsi 指向哪里，使用 new 调用箭头函数都会报错，因为箭头函数没有 constructor
+   无论箭头函数的 this 指向哪里，使用 new 调用箭头函数都会报错，因为箭头函数没有 constructor
 
-```
+```js
 let a = () => {};
-let b = new  a(); // a is not a constructor
+let b = new a(); // a is not a constructor
 ```
-
-#### apply、call、bind 改变 this call 和 apply 与箭头函数有什么区别?(某站)
 
 #### js 的 toFixed 方法
 
-toFixed(num) 方法可把 Number 四舍五入为指定小数位数的数字
+Number.toFixed(num) 方法可把 Number 四舍五入为指定小数位数的数字
 num 必需。规定小数的位数，是 0 ~ 20 之间的值，包括 0 和 20
 返回值：字符串 string
 
@@ -557,16 +557,6 @@ map 方法返回一个新数组，数组中的元素为原始数组元素调用�
 方法按照原始数组元素顺序依次处理元素
 
 不会对空数组进行检测,不会改变原始数组,兼容 ie9+
-
-#### 油漆桶算法
-
-#### 最长公共子串怎么实现
-
-#### null 是什么类型 typeof null
-
-#### 说说哈希算法
-
-#### js 中，不使用 es6 的 promise 异步方法，怎么进行异步请求？
 
 #### ES6 都有哪些新的 api，每一个都详细谈谈
 
@@ -615,22 +605,12 @@ let result = Array.of(a, b);
 console.log(result); // ['123', '456']
 ```
 
-## 判断数据类型的几种方法，优缺点，实现方式
+#### 判断数据类型的几种方法，优缺点，实现方式
 
 1.typeof 直接返回数据类型字符串，无法判断数组，对象，null,其中 null、{}、[] 都返回 object
 2.instanceof 判断某个实例是不是属于原型
 
-## react 中 setState 以后，是子树渲染还是整颗树渲染还是其他情况？
-
-## setState 是异步的还是同步的，内部采用的是什么机制
-
-## react 事件了解吗？ (合成事件) 和普通事件有什么区别，实现原理
-
-## react Fibber 了解吗？ (只答了时间片轮转算法，调度策略)
-
-## react diff 采用的什么原则， (重点 last_index)
-
-## 算法，最大连续子序列(dp)
+#### 算法，最大连续子序列(dp)
 
 当子序列的某个元素之前的元素和为负数时，他对后边的最大和一定是一个负向增益，没有该元素本身大,利用这个特点，我们把目光投向整个数组，如果我们从前向后遍历，当遇到前方和为负数时，就可以抛点前边的元素，从当前元素继续向后去计算，也可以总结成一个动态规划的公式:`dp = Math.max(dp + current, current)`
 
@@ -655,55 +635,30 @@ let maxSubArray = function(nums) {
 };
 ```
 
-## instanceOf 原理，手写一个 instanceOf
+#### instanceOf 原理，手写一个 instanceOf
 
 instanceof 可以检测某个对象是不是另一个对象的实例
 如果一个对象是数组，应该怎么判断？用 arr instanceof Array
 
-## react 开发的几种方式
-
-## react 函数式写法和类写法的优缺点
-
-## react 类组件新增的两个生命周期是哪两个，作用是什么
-
-## react hook 使用过吗？ 使用过哪些 hook
-
-React 现在的渲染都是由 Fiber 来调度
-Fiber 调度过程中的两个阶段(以 Render 为界)
-
-## react 高阶组件有哪几种方式，如何写一个高阶组件
-
-## 什么时候使用 useRef，可以做到什么事情
-
-## 算法，链表反转
-
-## 二维码扫描登录实现原理
+#### 二维码扫描登录实现原理
 
 移动端基于 token 的认证机制。
 二维码扫码登录的原理。
 
-## 大体积文件上传【分片、断点续传】
+#### 大体积文件上传【分片、断点续传】
 
 使用 webuploader 组件实现大文件分片上传，断点续传,webuploader：是一个以 HTML5 为主， Flash 为辅的文件上传组件，采用大文件分片/并发上传的方式，极大地提高了文件上传的效率，同时兼容多种浏览器版本；
 
-## 洗牌算法
-
-## node 为什么适合做高并发
-
-I/O 密集型任务
-
-## 一个无限长有序可重复数组 N，查 X 最后出现的位置
-
-## treeshaking 原理
+#### treeshaking 原理
 
 Tree-shaking 的本质是消除无用的 js 代码。无用代码消除在广泛存在于传统的编程语言编译器中，编译器可以判断出某些代码根本不影响输出
 ES6 模块依赖关系是确定的，和运行时的状态无关，可以进行可靠的静态分析，这就是 tree-shaking 的基础。
 
-## node 如何捕获异常
+#### node 如何捕获异常
 
-## 尾递归函数优化
+#### 尾递归函数优化
 
-## 给定一个整数数组和一个目标值，找出数组中和为目标值的两个数
+#### 给定一个整数数组和一个目标值，找出数组中和为目标值的两个数
 
 你可以假设每个输入只对应一种答案，且同样的元素不能被重复利用
 给定 nums = [2, 7, 11, 15], target = 9
@@ -724,11 +679,9 @@ const twoNum = (nums, target) => {
 };
 ```
 
-## 字符创连续最多字符
+#### redux 的设计
 
-## redux 的设计
-
-### 闭包 什么时候用,有什么特点
+#### 闭包 什么时候用,有什么特点
 
 1、函数嵌套函数
 
@@ -748,7 +701,7 @@ var atest = new test(); //引用返回的函数
 atest(); // 1
 ```
 
-### 箭头函数和普通函数有什么区别
+#### 箭头函数和普通函数有什么区别
 
 .箭头函数相当于匿名函数，是不能作为构造函数的，不能使用 new 2.箭头函数不绑定 arguments,取而代之用 rest 参数…解决 3.箭头函数会捕获其所在上下文的 this 值，作为自己的 this 值。即箭头函数的作用域会继承自外围的作用域。 4.箭头函数当方法使用的时候没有定义 this 的绑定
 .箭头函数没有函数原型
@@ -770,40 +723,17 @@ obj.b();
 obj.c(); // 10
 ```
 
-## JS 原型链与继承
+#### JS 原型链与继承
 
 > 每个构造函数(constructor)都有一个原型对象(prototype),原型对象都包含一个指向构造函数的指针,而实例(instance)都包含一个指向原型对象的内部指针.
 
 确定原型和实例的关系,使用 instanceof 操作符
 
-## CommonJS、AMD、CMD 和 ES6 模块化区别
+#### CommonJS、AMD、CMD 和 ES6 模块化区别
 
 NodeJS 是 CommonJS 规范的实现，webpack 也是以 CommonJS 的形式来书写。node.js 将 javascript 语言用于服务器端编程。
 
-## 随机生成给定长度的字符串
-
-## DOCTYPE 有哪些写法，有什么区别，什么是怪异模式，有哪些废弃掉的元素
-
-## 引入 css 有哪些方式，link 中的 media 属性是什么作用，有哪些取值
-
-## async，await 的理解
-
-## 实现一个 repeat
-
-## 事件代理
-
-## 写一个计数器
-
-```js
-var count = (function() {
-  var counter = 0;
-  return function() {
-    return ++counter;
-  };
-})();
-```
-
-## 代码输出
+#### 代码输出
 
 ```js
 function Foo() {
@@ -824,5 +754,115 @@ Foo.a = function() {
 Foo.a(); // 4
 let obj = new Foo();
 obj.a(); // 2
-Foo.a(); // 4
+Foo.a(); // 1
 ```
+
+#### DOCTYPE 有哪些写法，有什么区别，什么是怪异模式，有哪些废弃掉的元素
+
+#### async，await 的理解
+
+#### 如何获取数组中最大的数
+
+1.排序法
+
+```js
+var arr = [5, 7, 1, 3, 9];
+
+// 从小到大排序
+arr.sort(function(a, b) {
+  return a - b;
+});
+
+var min = arr[0]; // 1
+
+var max = arr[arr.length - 1]; // 9
+```
+
+2.使用 apply 实现
+
+apply 传入的是一个数组
+
+```js
+Math.max.apply(null, [2, 9, 78]); // 78
+```
+
+3.es6 扩展运算符
+
+```js
+var arr = [5, 7, 1, 3, 9];
+console.log(Math.max(...arr)); // 9
+```
+
+#### 数组和链表的使用场景
+
+数组内元素在内存中是连续存储的，也有特例，数组内有对象、字符创、数字等，由于数组元素在内存中连续 ，访问元素很快，而删除增加需要移动其他元素。
+链表在内存中并不是连续的，但是数据的增加、删除比较灵活，而读取某一个元素不好查找，要从根节点进行查找。
+因此数组在进行频繁读取、访问时使用、而频繁删除、添加元素链表更适合
+
+#### 了解哪些排序算法，说说冒泡排序和快排的区别
+
+冒泡排序：是从最底层元素开始比较,（与其上的元素比较）
+小于就往上再比,大于就交换,再用较小的往上比较,直到最高层
+
+```js
+function sort1(arr) {
+  const length = arr.length;
+  for (let i = 0; i < length; i++) {
+    for (let j = 0; j < length - 1 - i; j++) {
+      let temp;
+      if (arr[j] > arr[j + 1]) {
+        temp = arr[j + 1];
+        arr[j + 1] = arr[j];
+        arr[j] = temp;
+        // 不引入地三个变量可使用
+        // [arr[j + 1], arr[j]] = [arr[j], arr[j + 1]];
+      }
+    }
+  }
+  return arr;
+}
+```
+
+快速排序：是先找到一个轴值,比较时把所有比轴值小的放到轴值的左边,
+比轴值大的放到右边,再在两边各自选取轴值再按前面排序,直到完成
+
+#### XSS 和 CSRF 攻击
+
+> XSS，即 Cross Site Script，中译是跨站脚本攻击。XSS 本质是 Html 注入，攻击者在网站上注入恶意的 js 代码，对客户端页面进行篡改，进而窃取隐私数据比如 cookie、session，或者重定向到不好的网站等。
+
+- XSS 场景再现:
+
+使用 url 参数攻击：https://www.baidu.com?jarttoTest=<script>alert(document.cookie)</script>，这种是反射型的 XSS，攻击是一次性的。简单来说就是：引导用户点击恶意链接，链接上的 js 代码被发送至服务器，而服务器将不加处理的脚本又返回至客户端，此时用户客户端就会执行 js 代码。
+
+有人在留言内容中插入恶意 js，服务器将该内容放入数据库中，此时，每当有人访问这个留言，就会执行这个恶意 js。这是存储型 XSS。
+
+- XSS 注入方法
+
+在 HTML 中内嵌的文本中，恶意内容以 script 标签形成注入。在内联的 JavaScript 中，拼接的数据突破了原本的限制（字符串，变量，方法名等）
+
+在标签属性中，恶意内容包含引号，从而突破属性值的限制，注入其他属性或者标签。
+在标签的 href、src 等属性中，包含 javascript: 等可执行代码。
+
+在 onload、onerror、onclick 等事件中，注入不受控制代码。
+在 style 属性和标签中，包含类似 background-image:url("javascript:..."); 的代码（新版本浏览器已经可以防范）。
+
+在 style 属性和标签中，包含类似 expression(...) 的 CSS 表达式代码（新版本浏览器已经可以防范）。
+
+防范措施：
+不要相信用户输入： 对用户输入内容进行过滤。对特殊字符进行实体转义。
+不要完全信任服务端：对服务端输出进行转义。
+
+使用 HttpOnly Cookie：将重要的 cookie 标记为 httponly，这样就无法使用 js 代码获取 cookie。
+
+需要转义的字符有
+
+- CSRF
+  > 即 Cross Site Request Forgery，中译是跨站请求伪造。未经用户许可，偷偷的使用用户名义，发送恶意请求的攻击。通常情况下借助用户 cookie 来骗取服务器信任。
+
+CSRF 特点:
+CSRF（通常）发生在第三方域名。
+CSRF 攻击者（通常）不能获取到 Cookie 等信息，只是使用。
+
+防范措施：
+同源监测
+CSRF Token: 需要服务端生成一个 Token，然后放在页面中，页面提交请求的时候，带上这个 Token。服务端  把 Token 从 Session 中拿出，与请求中的 Token 进行比对验证。

@@ -125,13 +125,9 @@ var lengthOfLongestSubstring = function(s) {
 其中每个数组内有序排列，数组与数组间上下有序排列，寻找是否存在 x 值，返回 true/false
 
 ```js
-const arr = [
-  [1, 4, 8],
-  [9, 11, 13],
-  [15, 18, 21]
-];
+const arr = [[1, 4, 8], [9, 11, 13], [15, 18, 21]];
 
-例如 x= 9 ，输出 true
+// 例如 x= 9 ，输出 true
 function getX(arr, x) {
   if (arr.length === 1) {
     return arr[0].includes(x);
@@ -152,3 +148,13 @@ function getX(arr, x) {
 
 console.log(getX(arr, 19)); // true
 ```
+
+## 算法，链表反转
+
+## 洗牌算法
+
+## 一个无限长有序可重复数组 N，查 X 最后出现的位置
+
+## 随机生成给定长度的字符串
+
+#### 字符创连续最多字符
