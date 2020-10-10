@@ -825,3 +825,44 @@ function sort1(arr) {
 
 快速排序：是先找到一个轴值,比较时把所有比轴值小的放到轴值的左边,
 比轴值大的放到右边,再在两边各自选取轴值再按前面排序,直到完成
+
+#### XSS 和 CSRF 攻击
+
+> XSS，即 Cross Site Script，中译是跨站脚本攻击。XSS 本质是 Html 注入，攻击者在网站上注入恶意的 js 代码，对客户端页面进行篡改，进而窃取隐私数据比如 cookie、session，或者重定向到不好的网站等。
+
+- XSS 场景再现:
+
+使用 url 参数攻击：https://www.baidu.com?jarttoTest=<script>alert(document.cookie)</script>，这种是反射型的 XSS，攻击是一次性的。简单来说就是：引导用户点击恶意链接，链接上的 js 代码被发送至服务器，而服务器将不加处理的脚本又返回至客户端，此时用户客户端就会执行 js 代码。
+
+有人在留言内容中插入恶意 js，服务器将该内容放入数据库中，此时，每当有人访问这个留言，就会执行这个恶意 js。这是存储型 XSS。
+
+- XSS 注入方法
+
+在 HTML 中内嵌的文本中，恶意内容以 script 标签形成注入。在内联的 JavaScript 中，拼接的数据突破了原本的限制（字符串，变量，方法名等）
+
+在标签属性中，恶意内容包含引号，从而突破属性值的限制，注入其他属性或者标签。
+在标签的 href、src 等属性中，包含 javascript: 等可执行代码。
+
+在 onload、onerror、onclick 等事件中，注入不受控制代码。
+在 style 属性和标签中，包含类似 background-image:url("javascript:..."); 的代码（新版本浏览器已经可以防范）。
+
+在 style 属性和标签中，包含类似 expression(...) 的 CSS 表达式代码（新版本浏览器已经可以防范）。
+
+防范措施：
+不要相信用户输入： 对用户输入内容进行过滤。对特殊字符进行实体转义。
+不要完全信任服务端：对服务端输出进行转义。
+
+使用 HttpOnly Cookie：将重要的 cookie 标记为 httponly，这样就无法使用 js 代码获取 cookie。
+
+需要转义的字符有
+
+- CSRF
+  > 即 Cross Site Request Forgery，中译是跨站请求伪造。未经用户许可，偷偷的使用用户名义，发送恶意请求的攻击。通常情况下借助用户 cookie 来骗取服务器信任。
+
+CSRF 特点:
+CSRF（通常）发生在第三方域名。
+CSRF 攻击者（通常）不能获取到 Cookie 等信息，只是使用。
+
+防范措施：
+同源监测
+CSRF Token: 需要服务端生成一个 Token，然后放在页面中，页面提交请求的时候，带上这个 Token。服务端  把 Token 从 Session 中拿出，与请求中的 Token 进行比对验证。
