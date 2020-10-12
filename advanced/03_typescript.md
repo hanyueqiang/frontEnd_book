@@ -314,6 +314,12 @@ const ym = new Person('name1', 20);
 
 为增强接口的复用性，把可公共方法定义抽出
 
+- extends 与 implements 的不同
+
+extends 是继承某个类, 继承之后可以使用父类的方法, 也可以重写父类的方法
+
+implements 是实现多个接口, 接口的方法一般为空的, 必须重写才能使用
+
 ```js
 interface Eat {
   eat(food: string): void;
@@ -363,6 +369,9 @@ change 事件可以使用 `React.ChangeEvent`, click 事件可以使用 `React.M
 ```js
 // 鼠标事件
 onClick = (e: React.MouseEvent<HTMLDivElement>) => {
+  // do something
+};
+onClick = (e: React.MouseEvent<HTMLSpanElement>) => {
   // do something
 };
 // input change事件

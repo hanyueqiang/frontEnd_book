@@ -30,7 +30,7 @@ loader 机制是核心
 
 ## 开发一个 loader
 
-laoder 是管道的概念 可以组合
+loader 是管道的概念 可以组合
 markdown-loader
 
 ```js
