@@ -1,4 +1,4 @@
-## 前端数据结构与算法
+## 前端数据结构与算法入门
 
 > 目的在有限的时间内，做对关键的已知题目；通过对关键的已知题目进行解构和反思，消化掉其中核心的算法思想和解题套路，从而最大化各位在真正面试时做对任意未知题目的可能性。[—修言]
 
@@ -82,7 +82,7 @@ console.log(queue); // []
  * @param {number} target
  * @return {number[]}
  */
-const twoSum = function(nums, target) {
+const twoSum = function (nums, target) {
   // 这里我用对象来模拟 map 的能力
   const diffs = {};
   // 缓存数组长度
@@ -109,7 +109,7 @@ const twoSum = function(nums, target) {
 // nums1 = [1,2,3,0,0,0], m = 3
 // nums2 = [2,5,6], n = 3
 // 输出: [1,2,2,3,5,6]
-const merge = function(nums1, m, nums2, n) {
+const merge = function (nums1, m, nums2, n) {
   // 初始化两个指针的指向，初始化 nums1 尾部索引k
   let i = m - 1,
     j = n - 1,
@@ -328,10 +328,7 @@ function mergeArr(left, right) {
 ```js
 const str = "absdef";
 
-const result = str
-  .split("")
-  .reverse()
-  .join();
+const result = str.split("").reverse().join();
 ```
 
 判断一个字符串是否为回文串
@@ -340,10 +337,7 @@ const result = str
 const str = "sfefsfs";
 
 function isRepeat(str) {
-  const reverseStr = str
-    .split("")
-    .reverse()
-    .join("");
+  const reverseStr = str.split("").reverse().join("");
   return str === reverseStr;
 }
 isRepeat(str);
@@ -899,7 +893,7 @@ const TreeComp = () => {
  * @param {TreeNode} root
  * @return {number}
  */
-var maxDepth = function(root) {
+var maxDepth = function (root) {
   let sum = 0;
   function dfs(n, l) {
     if (!n) {
@@ -936,7 +930,7 @@ var maxDepth = function(root) {
  * @param {TreeNode} root
  * @return {number}
  */
-var minDepth = function(root) {
+var minDepth = function (root) {
   if (!root) {
     return 0;
   }
@@ -977,7 +971,7 @@ var minDepth = function(root) {
  * @param {TreeNode} root
  * @return {number[][]}
  */
-var levelOrder = function(root) {
+var levelOrder = function (root) {
   if (!root) {
     return [];
   }
@@ -1002,7 +996,7 @@ var levelOrder = function(root) {
 };
 
 // 解法2
-var levelOrder = function(root) {
+var levelOrder = function (root) {
   if (!root) {
     return [];
   }
@@ -1041,7 +1035,7 @@ var levelOrder = function(root) {
  * @param {TreeNode} root
  * @return {number[]}
  */
-var inorderTraversal = function(root) {
+var inorderTraversal = function (root) {
   if (!root) {
     return [];
   }
@@ -1079,7 +1073,7 @@ var inorderTraversal = function(root) {
  * @param {number} sum
  * @return {boolean}
  */
-var hasPathSum = function(root, sum) {
+var hasPathSum = function (root, sum) {
   if (!root) {
     return false;
   }
@@ -1100,6 +1094,203 @@ var hasPathSum = function(root, sum) {
 
   return res;
 };
+```
+
+## 图
+
+图是网络结构的抽象模型，是一组由边连接的节点，图可以表示任何二元关系，比如道路、航班
+
+js 中没有图,但可以是使用 object 和 array 构建
+
+图的常用操作
+
+- 深度优先遍历
+  尽可能搜索图的分支，
+  访问根节点
+  对根对没访问对相邻节点挨个进行深度优先遍历
+
+```js
+const graph = {
+  0: [1, 2],
+  1: [2],
+  2: [0, 3],
+  3: [3],
+};
+
+const grapgDfs = (n) => {
+  const set = new Set();
+
+  function dfs(root) {
+    console.log(root);
+    set.add(root);
+    graph[root].forEach((item) => {
+      if (!set.has(item)) {
+        dfs(item);
+      }
+    });
+  }
+  dfs(n);
+};
+grapgDfs(2);
+```
+
+- 广度优先遍历
+  先访问离根结点最近的节点
+  新建一个队列，把根节点入队
+  把队头出队并访问
+  把队头的没访问相邻节点入队
+
+```js
+const graph = {
+  0: [1,2],
+  1: [2],
+  2: [0,3],
+  3: [3]
+};
+
+const graphBfs = (root) {
+  const set = new Set();
+  const q = [root];
+  set.add(root);
+  while(q.length) {
+    const n = q.shift();
+    console.log(n);
+    graph[n].forEach(c => {
+      if(!set.has(c)) {
+        q.push(c)
+      }
+    })
+  }
+}
+graphBfs(2)
+```
+
+## 堆
+
+一种特殊的完全二叉树
+缺少只会缺少右节点
+所有节点都大于等于(最大堆) 或小于等于节点（最小堆）
+
+js 中使用数组表示堆
+左侧节点位置 2n+1
+右侧节点位置 2n+2
+父节点堆位置(n-1)/2
+时间复杂度 O(1)
+
+## 排序
+
+#### 选择排序
+
+思想是遍历数组找到最小值，把最小值放到素组的左面
+
+```js
+function selectSort(arr) {
+  const length = arr.length;
+  for (let i = 0; i < length - 1; i++) {
+    let indexMin = i;
+    for (let j = i; j < length; j++) {
+      if (arr[indexMin] > arr[j]) {
+        indexMin = j;
+      }
+    }
+    if (indexMin !== i) {
+      const temp = arr[i];
+      arr[i] = arr[indexMin];
+      arr[indexMin] = temp;
+    }
+  }
+  return arr;
+}
+```
+
+#### 插入排序
+
+时间复杂度 O(n\*2)
+思路
+
+- 从第二个数开始往前比
+- 比他大就往后排
+- 依次类推到最后一个数
+
+```js
+function insertSort(arr) {
+  const length = arr.length;
+  for (let i = 1; i < length; i++) {
+    const temp = arr[i];
+    let index = i;
+    while (index > 0) {
+      if (arr[index - 1] > arr[index]) {
+        arr[index] = arr[index - 1];
+      } else {
+        break;
+      }
+      index--;
+    }
+    arr[index] = temp;
+  }
+
+  return arr;
+}
+```
+
+#### 归并排序
+
+nlogn
+分：数组分为两半，再递归对子数组排序
+合：两个数进行合并，在对有序数组进行合并，直到子数组合并一个完整数组
+
+新建一个空数组 res,用于存放最终排序后的数组
+
+```js
+function mergeSort(arr) {
+  if (arr.length === 1) {
+    return arr;
+  }
+  const mid = Math.floor(arr.length / 2);
+  const left = arr.slice(0, mid);
+  const right = arr.slice(mid, arr.length);
+  const orderLeft = mergeSort(left);
+  const orderRight = mergeSort(right);
+  const res = [];
+  while (orderLeft.length || orderRight.length) {
+    if (orderLeft.length && orderRight.length) {
+      res.push(
+        orderLeft[0] < orderRight[0] ? orderLeft.shift() : orderRight.shift()
+      );
+    } else if (orderLeft.length) {
+      res.push(orderLeft.shift());
+    } else if (orderRight.length) {
+      res.push(orderRight.shift());
+    }
+  }
+  return res;
+}
+```
+
+#### 快速排序
+
+chrome 做 sort 排序算法
+分区： 从数组中选择任意一个基准，所有比基准小的元素放在基准前面，比基准大的元素当奥基准的后面
+
+递归：递归对基准前后对子数组进行分区
+
+```js
+function quickSort(arr) {
+  if (arr.length === 1) {
+    return arr;
+  }
+  const left = [];
+  const right = [];
+  const mid = arr[0];
+  for (let i = 1; i < arr.length; i++) {
+    if (arr[i] > mid) {
+      right.push(arr[i]);
+    } else {
+      left.push(arr[i]);
+    }
+  }
+  return [...quickSort(left), mid, ...quickSort(right)];
+}
 ```
 
 ## 堆
