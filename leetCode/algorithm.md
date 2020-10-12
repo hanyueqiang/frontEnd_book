@@ -84,7 +84,7 @@ console.log(queue); // []
  * @param {number} target
  * @return {number[]}
  */
-const twoSum = function(nums, target) {
+const twoSum = function (nums, target) {
   // 这里我用对象来模拟 map 的能力
   const diffs = {};
   // 缓存数组长度
@@ -111,7 +111,7 @@ const twoSum = function(nums, target) {
 // nums1 = [1,2,3,0,0,0], m = 3
 // nums2 = [2,5,6], n = 3
 // 输出: [1,2,2,3,5,6]
-const merge = function(nums1, m, nums2, n) {
+const merge = function (nums1, m, nums2, n) {
   // 初始化两个指针的指向，初始化 nums1 尾部索引k
   let i = m - 1,
     j = n - 1,
@@ -192,10 +192,7 @@ function threeSum(nums) {
 ```js
 const str = "absdef";
 
-const result = str
-  .split("")
-  .reverse()
-  .join();
+const result = str.split("").reverse().join();
 ```
 
 判断一个字符串是否为回文串
@@ -204,10 +201,7 @@ const result = str
 const str = "sfefsfs";
 
 function isRepeat(str) {
-  const reverseStr = str
-    .split("")
-    .reverse()
-    .join("");
+  const reverseStr = str.split("").reverse().join("");
   return str === reverseStr;
 }
 isRepeat(str);
@@ -763,7 +757,7 @@ const TreeComp = () => {
  * @param {TreeNode} root
  * @return {number}
  */
-var maxDepth = function(root) {
+var maxDepth = function (root) {
   let sum = 0;
   function dfs(n, l) {
     if (!n) {
@@ -800,7 +794,7 @@ var maxDepth = function(root) {
  * @param {TreeNode} root
  * @return {number}
  */
-var minDepth = function(root) {
+var minDepth = function (root) {
   if (!root) {
     return 0;
   }
@@ -841,7 +835,7 @@ var minDepth = function(root) {
  * @param {TreeNode} root
  * @return {number[][]}
  */
-var levelOrder = function(root) {
+var levelOrder = function (root) {
   if (!root) {
     return [];
   }
@@ -866,7 +860,7 @@ var levelOrder = function(root) {
 };
 
 // 解法2
-var levelOrder = function(root) {
+var levelOrder = function (root) {
   if (!root) {
     return [];
   }
@@ -905,7 +899,7 @@ var levelOrder = function(root) {
  * @param {TreeNode} root
  * @return {number[]}
  */
-var inorderTraversal = function(root) {
+var inorderTraversal = function (root) {
   if (!root) {
     return [];
   }
@@ -943,7 +937,7 @@ var inorderTraversal = function(root) {
  * @param {number} sum
  * @return {boolean}
  */
-var hasPathSum = function(root, sum) {
+var hasPathSum = function (root, sum) {
   if (!root) {
     return false;
   }
@@ -1117,7 +1111,7 @@ function insertSort(arr) {
     const temp = arr[i];
     let index = i;
     while (index > 0) {
-      if (arr[index - 1] > arr[index]) {
+      if (arr[index - 1] > temp) {
         arr[index] = arr[index - 1];
       } else {
         break;
@@ -1200,4 +1194,31 @@ function quickSort(arr) {
   }
   return [...quickSort(left), mid, ...quickSort(right)];
 }
+```
+
+- 顺序搜索
+  O(n)
+
+```js
+function search(arr, str) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === str) {
+      return i;
+    }
+  }
+  return -1;
+}
+```
+
+- 二分搜索
+  O(logN)
+  折半搜索
+  前提 数组有序
+
+思路
+从数组中间元素开始
+如果目标值大于或小于中间元素，择在另一半数组搜索
+
+```js
+function secondSort(arr, str) {}
 ```

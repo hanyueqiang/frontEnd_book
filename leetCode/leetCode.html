@@ -61,7 +61,11 @@
       //console.log("getMaxStr", getMaxStr(str));
 
       // 3.一个矩阵数组中寻找 x 值
-      const arr = [[1, 4, 8], [9, 11, 12], [15, 18, 21]];
+      const arr = [
+        [1, 4, 8],
+        [9, 11, 12],
+        [15, 18, 21],
+      ];
 
       function getX(arr, x) {
         if (arr.length === 1) {
@@ -129,16 +133,16 @@
 
       console.log("script start");
 
-      setTimeout(function() {
+      setTimeout(function () {
         console.log("settimeout");
       });
 
       async1();
 
-      new Promise(function(resolve) {
+      new Promise(function (resolve) {
         console.log("promsie1");
         resolve();
-      }).then(function() {
+      }).then(function () {
         console.log("promise2");
       });
       console.log("script end");
@@ -208,6 +212,55 @@
         return stack.length === 0;
       }
       console.log("isValid_100", isValid_01("([)"));
+
+      let arr3 = [1, 23, 4, 56, 23, 4, 12, 56, 89, 7];
+
+      function insertSort(arr) {
+        const len = arr.length;
+        for (let i = 1; i < len; i++) {
+          const temp = arr[i];
+          let index = i;
+          while (index > 0) {
+            if (arr[index - 1] > temp) {
+              arr[index] = arr[index - 1];
+            } else {
+              break;
+            }
+            index--;
+          }
+          arr[index] = temp;
+        }
+        return arr;
+      }
+      console.log("插入排序", insertSort(arr3));
+
+      let arr4 = [1, 23, 43, 56, 23, 14, 12, 56, 89, 27];
+      function mergeSort(arr) {
+        if (arr.length === 1) {
+          return arr;
+        }
+
+        const mid = Math.floor(arr.length / 2);
+        const left = arr.slice(0, mid);
+        const right = arr.slice(mid, arr.length);
+
+        const leftArr = mergeSort(left);
+        const rightArr = mergeSort(right);
+        const res = [];
+        while (leftArr.length || rightArr.length) {
+          if (leftArr.length && rightArr.length) {
+            res.push(
+              leftArr[0] < rightArr[0] ? leftArr.shift() : rightArr.shift()
+            );
+          } else if (leftArr.length) {
+            res.push(leftArr.shift());
+          } else if (rightArr.length) {
+            res.push(rightArr.shift());
+          }
+        }
+        return res;
+      }
+      console.log("归并排序", mergeSort(arr4));
     </script>
   </body>
 </html>
