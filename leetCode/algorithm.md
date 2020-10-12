@@ -2,6 +2,8 @@
 
 > 目的在有限的时间内，做对关键的已知题目；通过对关键的已知题目进行解构和反思，消化掉其中核心的算法思想和解题套路，从而最大化各位在真正面试时做对任意未知题目的可能性。[—修言]
 
+学习算法应付面试为主，追求的是快、准、量
+
 ## 栈（Stack）
 
 栈是一种后进先出`(LIFO，Last In First Out)`的数据结构，
@@ -82,7 +84,7 @@ console.log(queue); // []
  * @param {number} target
  * @return {number[]}
  */
-const twoSum = function (nums, target) {
+const twoSum = function(nums, target) {
   // 这里我用对象来模拟 map 的能力
   const diffs = {};
   // 缓存数组长度
@@ -109,7 +111,7 @@ const twoSum = function (nums, target) {
 // nums1 = [1,2,3,0,0,0], m = 3
 // nums2 = [2,5,6], n = 3
 // 输出: [1,2,2,3,5,6]
-const merge = function (nums1, m, nums2, n) {
+const merge = function(nums1, m, nums2, n) {
   // 初始化两个指针的指向，初始化 nums1 尾部索引k
   let i = m - 1,
     j = n - 1,
@@ -183,144 +185,6 @@ function threeSum(nums) {
 }
 ```
 
-### 数组排序
-
-```js
-arr.sort((a, b) => {
-  return a - b;
-});
-```
-
-#### 冒泡排序
-
-时间复杂度`O(n*2)`
-
-```js
-function sort1(arr) {
-  const length = arr.length;
-  for (let i = 0; i < length; i++) {
-    for (let j = 0; j < length - 1 - i; j++) {
-      let temp;
-      if (arr[j] > arr[j + 1]) {
-        temp = arr[j + 1];
-        arr[j + 1] = arr[j];
-        arr[j] = temp;
-        // 不引入地三个变量可使用
-        // [arr[j + 1], arr[j]] = [arr[j], arr[j + 1]];
-      }
-    }
-  }
-  return arr;
-}
-```
-
-#### 选择排序
-
-时间复杂度 `O(n*2)`
-
-选择排序关键是最小值，循环遍历数组，每次找到范围内最小值，放在当前范围头部，然后缩小排序范围
-也要走两层循环，时间复杂度`（O(n*2)）`
-
-```js
-function selectSort(arr) {
-  const len = arr.length;
-  for (i = 0; i < len - 1; i++) {
-    let minIndex = i;
-    for (let j = i; j < len; j++) {
-      if (arr[j] < arr[minIndex]) {
-        minIndex = j;
-      }
-    }
-    if (i !== minIndex) {
-      let temp;
-      temp = arr[i];
-      arr[i] = arr[minIndex];
-      arr[minIndex] = temp;
-    }
-  }
-  return arr;
-}
-```
-
-#### 插入排序
-
-插入排序的核心思想是“找到元素在它前面那个序列中的正确位置”。
-具体来说，插入排序所有的操作都基于一个这样的前提：当前元素前面的序列是有序的。基于这个前提，从后往前去寻找当前元素在前面那个序列里的正确位置。
-
-```js
-function insertSort(arr) {
-  const len = arr.length;
-  for (let i = 1; i < len; i++) {
-    let temp = arr[i];
-    let j = i;
-    while (j > 0 && arr[j - 1] > temp) {
-      arr[j] = arr[j - 1];
-      j--;
-    }
-    arr[j] = temp;
-  }
-  return arr;
-}
-```
-
-### 归并排序
-
-归并排序是对分治思想的典型应用，它按照如下的思路对分治思想“三步走”的框架进行了填充
-
-- 分解子问题：将需要被排序的数组从中间分割为两半，然后再将分割出来的每个子数组各分割为两半，重复以上操作，直到单个子数组只有一个元素为止。
-- 求解每个子问题：从粒度最小的子数组开始，两两合并、确保每次合并出来的数组都是有序的。（这里的“子问题”指的就是对每个子数组进行排序）。
-- 合并子问题的解，得出大问题的解：当数组被合并至原有的规模时，就得到了一个完全排序的数组
-
-合并是将原子项反复地组装回原有的大数组。整个过程符合两个特征： 1.重复（令人想到递归或迭代） 2.有去有回（令人想到回溯，进而明确递归这条路）
-
-因此，归并排序在实现上依托的就是递归思想。
-除此之外，这里还涉及到另一个小小的知识点——两个有序数组的合并(双指针)
-归并排序的时间复杂度是 `O(nlog(n))`
-
-```js
-function merge1Sort(arr) {
-  const len = arr.length;
-  if (len <= 1) {
-    return arr;
-  }
-
-  let mid = Math.floor(len / 2);
-  let leftArr = merge1Sort(arr.slice(0, mid));
-  let rightArr = merge1Sort(arr.slice(mid, len));
-
-  arr = mergeArr(leftArr, rightArr);
-  return arr;
-}
-function mergeArr(left, right) {
-  let i = 0;
-  let j = 0;
-  let len1 = left.length;
-  let len2 = right.length;
-  let arr = [];
-  while (i < len1 && j < len2) {
-    if (left[i] < right[j]) {
-      arr.push(left[i]);
-      i++;
-    } else if (left[i] > right[j]) {
-      arr.push(right[j]);
-      j++;
-    } else {
-      arr.push(left[i]);
-      arr.push(right[j]);
-      i++;
-      j++;
-    }
-  }
-
-  if (i < len1) {
-    return arr.concat(left.slice(i));
-  }
-  if (j < len2) {
-    return arr.concat(right.slice(j));
-  }
-}
-```
-
 ## 字符串
 
 反转字符串
@@ -328,7 +192,10 @@ function mergeArr(left, right) {
 ```js
 const str = "absdef";
 
-const result = str.split("").reverse().join();
+const result = str
+  .split("")
+  .reverse()
+  .join();
 ```
 
 判断一个字符串是否为回文串
@@ -337,7 +204,10 @@ const result = str.split("").reverse().join();
 const str = "sfefsfs";
 
 function isRepeat(str) {
-  const reverseStr = str.split("").reverse().join("");
+  const reverseStr = str
+    .split("")
+    .reverse()
+    .join("");
   return str === reverseStr;
 }
 isRepeat(str);
@@ -893,7 +763,7 @@ const TreeComp = () => {
  * @param {TreeNode} root
  * @return {number}
  */
-var maxDepth = function (root) {
+var maxDepth = function(root) {
   let sum = 0;
   function dfs(n, l) {
     if (!n) {
@@ -930,7 +800,7 @@ var maxDepth = function (root) {
  * @param {TreeNode} root
  * @return {number}
  */
-var minDepth = function (root) {
+var minDepth = function(root) {
   if (!root) {
     return 0;
   }
@@ -971,7 +841,7 @@ var minDepth = function (root) {
  * @param {TreeNode} root
  * @return {number[][]}
  */
-var levelOrder = function (root) {
+var levelOrder = function(root) {
   if (!root) {
     return [];
   }
@@ -996,7 +866,7 @@ var levelOrder = function (root) {
 };
 
 // 解法2
-var levelOrder = function (root) {
+var levelOrder = function(root) {
   if (!root) {
     return [];
   }
@@ -1035,7 +905,7 @@ var levelOrder = function (root) {
  * @param {TreeNode} root
  * @return {number[]}
  */
-var inorderTraversal = function (root) {
+var inorderTraversal = function(root) {
   if (!root) {
     return [];
   }
@@ -1073,7 +943,7 @@ var inorderTraversal = function (root) {
  * @param {number} sum
  * @return {boolean}
  */
-var hasPathSum = function (root, sum) {
+var hasPathSum = function(root, sum) {
   if (!root) {
     return false;
   }
@@ -1105,9 +975,10 @@ js 中没有图,但可以是使用 object 和 array 构建
 图的常用操作
 
 - 深度优先遍历
-  尽可能搜索图的分支，
-  访问根节点
-  对根对没访问对相邻节点挨个进行深度优先遍历
+
+尽可能搜索图的分支，
+访问根节点
+对根对没访问对相邻节点挨个进行深度优先遍历
 
 ```js
 const graph = {
@@ -1135,10 +1006,11 @@ grapgDfs(2);
 ```
 
 - 广度优先遍历
-  先访问离根结点最近的节点
-  新建一个队列，把根节点入队
-  把队头出队并访问
-  把队头的没访问相邻节点入队
+
+先访问离根结点最近的节点
+新建一个队列，把根节点入队
+把队头出队并访问
+把队头的没访问相邻节点入队
 
 ```js
 const graph = {
@@ -1165,21 +1037,47 @@ const graphBfs = (root) {
 graphBfs(2)
 ```
 
-## 堆
+## 排序和搜索
 
-一种特殊的完全二叉树
-缺少只会缺少右节点
-所有节点都大于等于(最大堆) 或小于等于节点（最小堆）
+数组排序
 
-js 中使用数组表示堆
-左侧节点位置 2n+1
-右侧节点位置 2n+2
-父节点堆位置(n-1)/2
-时间复杂度 O(1)
+```js
+arr.sort((a, b) => {
+  return a - b;
+});
+```
 
-## 排序
+排序
 
-#### 选择排序
+选择排序
+插入排序
+归并排序
+快速排序
+
+搜索
+
+顺序搜索
+二分搜索
+
+- 冒泡排序
+
+```js
+const bubbleSort = (arr) => {
+  const length = arr.length;
+  for (let i = 0; i < length - 1; i++) {
+    for (let j = 0; j < length - 1 - i; j++) {
+      if (arr[j] > arr[j + 1]) {
+        const temp = arr[j + 1];
+        arr[j + 1] = arr[j];
+        arr[j] = temp;
+      }
+    }
+  }
+  return arr;
+};
+```
+
+- 选择排序
 
 思想是遍历数组找到最小值，把最小值放到素组的左面
 
@@ -1203,7 +1101,7 @@ function selectSort(arr) {
 }
 ```
 
-#### 插入排序
+- 插入排序
 
 时间复杂度 O(n\*2)
 思路
@@ -1233,12 +1131,24 @@ function insertSort(arr) {
 }
 ```
 
-#### 归并排序
+- 归并排序
 
-nlogn
+归并排序是对分治思想的典型应用，它按照如下的思路对分治思想进行：
+
+1.分解子问题：将需要被排序的数组从中间分割为两半，然后再将分割出来的每个子数组各分割为两半，重复以上操作，直到单个子数组只有一个元素为止。
+
+2.求解每个子问题：从粒度最小的子数组开始，两两合并、确保每次合并出来的数组都是有序的。（这里的“子问题”指的就是对每个子数组进行排序）。
+
+3.合并子问题的解，得出大问题的解：当数组被合并至原有的规模时，就得到了一个完全排序的数组
+
+合并是将原子项反复地组装回原有的大数组。整个过程符合两个特征： 1.重复（令人想到递归或迭代） 2.有去有回（令人想到回溯，进而明确递归这条路）
+
+因此，归并排序在实现上依托的就是递归思想。除此之外，这里还涉及到另一个小小的知识点——两个有序数组的合并(双指针)
+归并排序的时间复杂度是 `O(nlog(n))`
+
+思路：
 分：数组分为两半，再递归对子数组排序
 合：两个数进行合并，在对有序数组进行合并，直到子数组合并一个完整数组
-
 新建一个空数组 res,用于存放最终排序后的数组
 
 ```js
@@ -1267,11 +1177,10 @@ function mergeSort(arr) {
 }
 ```
 
-#### 快速排序
+- 快速排序
 
 chrome 做 sort 排序算法
-分区： 从数组中选择任意一个基准，所有比基准小的元素放在基准前面，比基准大的元素当奥基准的后面
-
+分区：从数组中选择任意一个基准，所有比基准小的元素放在基准前面，比基准大的元素当奥基准的后面
 递归：递归对基准前后对子数组进行分区
 
 ```js
@@ -1292,47 +1201,3 @@ function quickSort(arr) {
   return [...quickSort(left), mid, ...quickSort(right)];
 }
 ```
-
-## 堆
-
-堆是一种特殊的完全二叉树
-所有的节点都大于等于或者小于等于子节点
-js 中通常使用数组表示堆
-
-## 排序和搜索
-
-排序：就是某个乱序的数组变成升序或者降序的数组
-
-搜索：就是找某个元素的下标
-
-数组的 sort
-搜索 indexOf
-排序
-
-- 冒泡排序
-
-```js
-const bubbleSort = (arr) => {
-  const length = arr.length;
-  for (let i = 0; i < length - 1; i++) {
-    for (let j = 0; j < length - 1 - i; j++) {
-      if (arr[j] > arr[j + 1]) {
-        const temp = arr[j + 1];
-        arr[j + 1] = arr[j];
-        arr[j] = temp;
-      }
-    }
-  }
-  return arr;
-};
-```
-
-- 选择排序
-- 插入排序
-- 归并排序
-- 快速排序
-
-搜索
-
-- 顺序搜索
-- 二分搜索
