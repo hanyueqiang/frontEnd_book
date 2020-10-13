@@ -1,28 +1,28 @@
 ## 手撕代码篇
 
-#### 考察 new 和闭包(某节)
+#### 考察 new 和闭包
 
-```
+```js
 // 不使用全局变量前提下实现如下逻辑
-let a = new Foo() //a.id -> 1
-let b = new Foo() //b.id -> 2
+let a = new Foo(); //a.id -> 1
+let b = new Foo(); //b.id -> 2
 
 // 使用闭包
 const Foo = (function() {
   let index = 1;
   return function() {
     this.id = index++;
-  }
+  };
 })();
 
-let a = new Foo() // a.id -> 1
-let b = new Foo() // b.id -> 2
+let a = new Foo(); // a.id -> 1
+let b = new Foo(); // b.id -> 2
 
 // 增加难度,考察`new`和直接调用的区别
-let a = Foo() // a.id -> 1
-let b = new Foo() // b.id -> 2
-let c = new Foo() // c.id -> 3
-let d = Foo() // d.id -> 4
+let a = Foo(); // a.id -> 1
+let b = new Foo(); // b.id -> 2
+let c = new Foo(); // c.id -> 3
+let d = Foo(); // d.id -> 4
 
 // 分析
 // d就是函数Foo()执行的返回值，没有返回值也就是undefined. 在函数执行过程中，属性被加到全局作用域或者Foo方法所属的对象上
@@ -31,30 +31,29 @@ let d = Foo() // d.id -> 4
 const Foo = (function() {
   let index = 1;
   return function() {
-    if(this instanceof Foo) {
+    if (this instanceof Foo) {
       // 使用new
       this.id = index++;
-    }else {
+    } else {
       // 没有使用new, 直接返回一个对象
       return {
-        id: index++
-      }
+        id: index++,
+      };
     }
-  }
+  };
 })();
 
-let a = Foo() // a.id -> 1
-let b = new Foo() // b.id -> 2
-let c = new Foo() // c.id -> 3
-let d = Foo() // d.id -> 4
-
+let a = Foo(); // a.id -> 1
+let b = new Foo(); // b.id -> 2
+let c = new Foo(); // c.id -> 3
+let d = Foo(); // d.id -> 4
 ```
 
-#### 写一个正则匹配字符转成驼峰？(某团)
+#### 写一个正则匹配字符转成驼峰？
 
 实现: border-bottom-color 》 borderBottomColor
 
-```
+```js
 let str = "border-bottom-color";
 
 // 使用正则
@@ -63,7 +62,7 @@ let str = "border-bottom-color";
 
 function toCaml(str) {
   let reg = /-(\w)/g;
-  return str.replace(reg, function($0, $1){
+  return str.replace(reg, function($0, $1) {
     return $1.toUpperCase();
   });
 }
@@ -75,7 +74,7 @@ console.log(toCaml(str));
 function test(str) {
   var arr = str.split("-");
   // 从数组的第二项开始循环，charAt(0)找到第一个字母。substring(1)截掉第一个字母
-  for(let i = 1; i < arr.length; i++) {
+  for (let i = 1; i < arr.length; i++) {
     arr[i] = arr[i].charAt(0).toUpperCase() + arr[i].substring(1);
   }
   return arr.join("");
@@ -86,20 +85,49 @@ console.log(test(str));
 
 扩展：驼峰转连字符
 
-```
-let str = 'strArrTest';
+```js
+let str = "strArrTest";
 function test(str) {
-  let str1 = str.replace(/([A-Z])/g, function ($1) {
-    return '-' + $1.toLocaleLowerCase();
+  let str1 = str.replace(/([A-Z])/g, function($1) {
+    return "-" + $1.toLocaleLowerCase();
   });
   return str1;
 }
 
 console.log(test(str));
-
 ```
 
-#### 实现一个 ajax 方法(某站)
+#### 实现一个 ajax 方法
+
+```js
+function ajax(url) {
+  return new Promise(function(resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", url);
+    xhr.responseType = "json";
+    xhr.onload = function() {
+      if (this.status === 200) {
+        resolve(this.response);
+      } else {
+        reject(new Error(this.statusText));
+      }
+    };
+  });
+}
+```
+
+#### call、apply、bind 区别
+
+- 共同点：
+
+均改变函数执行时的上下文，再具体一点就是改变函数运行时的 this 指向
+
+- 不同：
+
+call 和 apply 改变了函数的 this 上下文后便执行该函数, 而 bind 则是返回改变了上下文后的一个函数
+
+call、apply 的区别：
+call 和 aplly 的第一个参数都是要改变上下文的对象，而 call 从第二个参数开始以参数列表的形式展现，apply 则是把除了改变上下文对象的参数放在一个数组里面作为它的第二个参数。
 
 #### 手写 call
 
@@ -339,57 +367,14 @@ Promise.prototype.race = function(promiseArr) {
 
 ## 实现 js 的 sort api
 
-#### 使用冒泡排序
-
-```js
-Array.prototype.csSort = function() {
-  var newarr = this;
-  /** 2、 冒泡法排序
-   * 插入发排序，即那数组的前一项和后一项对比，如果前面一项小于后面
-   * 一项，则将两者位置互换，从数组第1个元素开始对比；如下示例
-   */
-  for (let i = 0; i < newarr.length; i++) {
-    for (let j = 0; j < newarr.length - i; j++) {
-      if (newarr[j] > newarr[j + 1]) {
-        let pre = newarr[j];
-        newarr[j] = newarr[j + 1];
-        newarr[j + 1] = pre;
-      }
-    }
-  }
-  return newarr;
-};
-
-function sort(arr) {
-  var smallOne;
-  for (var i = 0; i < arr.length; i++) {
-    for (var j = 0; j < arr.length - i; j++) {
-      if (arr[j] - arr[j + 1] > 0) {
-        smallOne = arr[j + 1];
-        arr[j + 1] = arr[j];
-        arr[j] = smallOne;
-      }
-    }
-  }
-}
-```
-
 ## 算法，合并两个有序链表
 
 ```js
-/**
- * Definition for singly-linked list.
- * function ListNode(val) {
- *     this.val = val;
- *     this.next = null;
- * }
- */
 /**
  * @param {ListNode} l1
  * @param {ListNode} l2
  * @return {ListNode}
  */
-
 var mergeTwoLists = function(l1, l2) {
   if (l1 == null) return l2;
   if (l2 == null) return l1;
@@ -527,7 +512,7 @@ const cacheRquest = (url) => {
 };
 ```
 
-## ajax 是什么？ 原理 步骤
+#### ajax 是什么？ 原理 步骤
 
 (1)创建 XMLHttpRequest 对象,也就是创建一个异步调用对象.
 (2)创建一个新的 HTTP 请求,并指定该 HTTP 请求的方法、URL 及验证信息.
@@ -582,21 +567,7 @@ function randomName(len) {
 ## 合并两个有序数组
 
 ```js
-function twoNumConcat(num1, num2) {
-  if (!(num1 instanceof Array)) {
-    num1 = [];
-  }
-
-  if (!(num2 instanceof Array)) {
-    num2 = [];
-  }
-
-  return num1
-    .concat(num2)
-    .filter((item) => item)
-    .sort((a, b) => a - b);
-}
-
+// 双指针
 function newArr(arr1, arr2) {
   let [i, j] = [0, 0];
   let newArr = [];
@@ -618,18 +589,7 @@ function newArr(arr1, arr2) {
 }
 ```
 
-## 数组去重
-
-```js
-const arr = [12, [12], { a: 1 }, { a: 1 }];
-
-function check(list) {
-  const len = list.length;
-  for (let i = 0; i < len; i++) {}
-}
-```
-
-## 写一个计数器
+#### 写一个计数器
 
 ```js
 var count = (function() {
@@ -639,12 +599,3 @@ var count = (function() {
   };
 })();
 ```
-
-## 实现一个 repeat
-
-## call、apply、bind 区别，能手写一个 bind 和 apply 吗
-
-共同点：均改变函数执行时的上下文，再具体一点就是改变函数运行时的 this 指向
-不同： call 和 apply 改变了函数的 this 上下文后便执行该函数, 而 bind 则是返回改变了上下文后的一个函数
-call、apply 的区别
-call 和 aplly 的第一个参数都是要改变上下文的对象，而 call 从第二个参数开始以参数列表的形式展现，apply 则是把除了改变上下文对象的参数放在一个数组里面作为它的第二个参数。
