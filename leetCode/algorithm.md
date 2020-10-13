@@ -1177,6 +1177,48 @@ function mergeSort(arr) {
 }
 ```
 
+#### 合并两个有序链表 (leetCode21)
+
+将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的
+
+```js
+/**
+ * Definition for singly-linked list.
+ * function ListNode(val, next) {
+ *     this.val = (val===undefined ? 0 : val)
+ *     this.next = (next===undefined ? null : next)
+ * }
+ */
+/**
+ * @param {ListNode} l1
+ * @param {ListNode} l2
+ * @return {ListNode}
+ */
+var mergeTwoLists = function(l1, l2) {
+  let res = new ListNode(0);
+  let p1 = l1;
+  let p2 = l2;
+  let p = res;
+  while (p1 && p2) {
+    if (p1.val < p2.val) {
+      p.next = p1;
+      p1 = p1.next;
+    } else {
+      p.next = p2;
+      p2 = p2.next;
+    }
+    p = p.next;
+  }
+  if (p1) {
+    p.next = p1;
+  }
+  if (p2) {
+    p.next = p2;
+  }
+  return res.next;
+};
+```
+
 - 快速排序
 
 chrome 做 sort 排序算法
@@ -1218,13 +1260,72 @@ function search(arr, str) {
 
 - 二分搜索
   O(logN)
-  折半搜索
-  前提 数组有序
+  也称折半搜索
+  前提是数组有序
 
-思路
+思路：
+
 从数组中间元素开始
 如果目标值大于或小于中间元素，择在另一半数组搜索
 
 ```js
-function secondSort(arr, str) {}
+function secondSort(arr, str) {
+  let low = 0;
+  let high = arr.length - 1;
+
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2);
+    const element = arr[mid];
+    if (element < str) {
+      low = mid + 1;
+    } else if (element > str) {
+      high = mid - 1;
+    } else {
+      return mid;
+    }
+    return -1;
+  }
+}
+```
+
+#### 猜数字大小(leetcode374)
+
+猜数字游戏的规则如下：
+
+每轮游戏，我都会从  1  到  n 随机选择一个数字。 请你猜选出的是哪个数字。
+如果你猜错了，我会告诉你，你猜测的数字比我选出的数字是大了还是小了。
+你可以通过调用一个预先定义好的接口 int guess(int num) 来获取猜测结果，返回值一共有 3 种可能的情况（-1，1  或 0）：
+
+-1：我选出的数字比你猜的数字小 pick < num
+1：我选出的数字比你猜的数字大 pick > num
+0：我选出的数字和你猜的数字一样。恭喜！你猜对了！pick == num
+
+```js
+/**
+ * Forward declaration of guess API.
+ * @param {number} num   your guess
+ * @return 	            -1 if num is lower than the guess number
+ *			             1 if num is higher than the guess number
+ *                       otherwise return 0
+ * var guess = function(num) {}
+ */
+/**
+ * @param {number} n
+ * @return {number}
+ */
+var guessNumber = function(n) {
+  let low = 1;
+  let high = n;
+  while (low <= high) {
+    let mid = Math.floor((low + high) / 2);
+    const res = guess(mid);
+    if (res === 0) {
+      return mid;
+    } else if (res === -1) {
+      high = mid - 1;
+    } else {
+      low = mid + 1;
+    }
+  }
+};
 ```
