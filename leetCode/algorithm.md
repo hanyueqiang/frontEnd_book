@@ -1,8 +1,6 @@
-## 前端数据结构与算法入门
+## 前端算法系统学习(含 leetcode 真题)
 
-> 目的在有限的时间内，做对关键的已知题目；通过对关键的已知题目进行解构和反思，消化掉其中核心的算法思想和解题套路，从而最大化各位在真正面试时做对任意未知题目的可能性。[—修言]
-
-学习算法应付面试为主，追求的是快、准、量
+> 前端学习算法的目的在有限的时间内，做对关键的已知题目；通过真题消化其中核心的算法思想和解题套路，从而最大化各位在真正面试时做对任意未知题目的可能性。[—修言]
 
 ## 栈（Stack）
 
@@ -1329,3 +1327,212 @@ var guessNumber = function(n) {
   }
 };
 ```
+
+## 分而治之
+
+是算法设计中一种方法
+递归解决小问题，在将结果合并解决原来的问题
+
+场景一：归并排序
+
+分：把数组从中间一份为二
+解：递归对两个子数组进行归并排序
+合：合并有序子数组
+
+场景二：快速排序
+
+分：选基准，按基准把数组分为两个子数组
+解：递归对两个子数组进行快速排序
+合：对两个子数组进行合并
+
+#### 翻转二叉树(leetcode226)
+
+翻转一棵二叉树。
+
+解题思路：
+先翻转左右子树，再将子树换个位置
+符合分解合特性
+分：获取左右子树 `root.right`
+解：递归翻转左右子树 `invertTree(root.right)`
+合：将翻转后的左右子树放到根节点 `left: invertTree(root.right)`
+
+```js
+/**
+ * Definition for a binary tree node.
+ * function TreeNode(val) {
+ *     this.val = val;
+ *     this.left = this.right = null;
+ * }
+ */
+/**
+ * @param {TreeNode} root
+ * @return {TreeNode}
+ */
+var invertTree = function(root) {
+  if (!root) {
+    return null;
+  }
+  return {
+    val: root.val,
+    left: invertTree(root.right),
+    right: invertTree(root.left),
+  };
+};
+```
+
+#### 相同的树(leetcode100)
+
+给定两个二叉树，编写一个函数来检验它们是否相同。
+如果两个树在结构上相同，并且节点具有相同的值，则认为它们是相同的
+
+解题思路：
+两个树：根节点值相同，左子树相同，右子树相同
+符合：分解合特性
+分：获取两个树的左子树、右子树 `p.left`
+解：递归判断是否相同 `isSameTree(p.left, q.left)`
+合：根节点是否相同 `p.val === q.val`
+时间复杂度 O(n)
+
+```js
+/**
+ * @param {TreeNode} p
+ * @param {TreeNode} q
+ * @return {boolean}
+ */
+var isSameTree = function(p, q) {
+  if (!p && !q) {
+    return true;
+  }
+  if (
+    p &&
+    q &&
+    p.val === q.val &&
+    isSameTree(p.left, q.left) &&
+    isSameTree(p.right, q.right)
+  ) {
+    return true;
+  }
+  return false;
+};
+```
+
+#### 对称二叉树(leetcode101)
+
+给定一个二叉树，检查它是否是镜像对称的。
+例如，二叉树 [1,2,2,3,4,4,3] 是对称的
+
+解题思路：
+转化为：左右子树是否镜像
+分解为：树 1 的左子树与树 2 的右子树是否镜像，
+分：获取两个树的左子树和右子树
+解：递归判断树 1 左和树 2 右是否镜像，树 1 右与树 2 左是否镜像
+时间复杂度 O(n)
+
+```js
+/**
+ * @param {TreeNode} root
+ * @return {boolean}
+ */
+var isSymmetric = function(root) {
+  if (!root) {
+    return true;
+  }
+  function isMirror(l, r) {
+    if (!l && !r) {
+      return true;
+    }
+    if (
+      l &&
+      r &&
+      l.val === r.val &&
+      isMirror(l.left, r.right) &&
+      isMirror(l.right, r.left)
+    ) {
+      return true;
+    }
+    return false;
+  }
+  return isMirror(root.left, root.right);
+};
+```
+
+## 动态规划
+
+动态规划是算法设计的中一种方法
+将一个问题分解相互重叠的子问题，通过反复求解子问题来解决相同问题
+
+斐波那契数列
+定义子问题：`F(n) = F(n-1)+F(n-2)`
+
+#### 爬楼梯(leetcode70)
+
+解题思路：
+爬到第 n 阶可以第 n-1 阶爬一个台阶，或者 n-2 阶爬两个台阶
+
+```js
+var climbStairs = function(n) {
+  if (n < 2) {
+    return 1;
+  }
+  let dp0 = 1;
+  let dp1 = 1;
+  for (let i = 2; i <= n; i++) {
+    const temp = dp0;
+    dp0 = dp1;
+    dp1 = dp0 + temp;
+  }
+  return dp1;
+};
+```
+
+#### 打家劫舍(leetcode198)
+
+你是一个专业的小偷，计划偷窃沿街的房屋。每间房内都藏有一定的现金，影响你偷窃的唯一制约因素就是相邻的房屋装有相互连通的防盗系统，如果两间相邻的房屋在同一晚上被小偷闯入，系统会自动报警。
+
+给定一个代表每个房屋存放金额的非负整数数组，计算你 不触动警报装置的情况下 ，一夜之内能够偷窃到的最高金额。
+
+解题思路：
+
+f(k) = 从前 K 个房屋能偷窃的最大数额
+
+ak=第 k 个房屋钱数
+取最大值前一位加当前金额与前一个房间最大金额
+f(k) = max(f(k-2)+Ak, f(k-1))
+
+```js
+var rob = function(nums) {
+  if (nums.length === 0) {
+    return 0;
+  }
+  const dp = [0, nums[0]];
+
+  for (let i = 2; i <= nums.length; i++) {
+    dp[i] = Math.max(dp[i - 2] + nums[i - 1], dp[i - 1]);
+  }
+  return dp[nums.length];
+};
+// 优化
+var rob = function(nums) {
+  if (nums.length === 0) {
+    return 0;
+  }
+  let dp0 = 0;
+  let dp1 = nums[0];
+
+  for (let i = 2; i <= nums.length; i++) {
+    const dp2 = Math.max(dp0 + nums[i - 1], dp1);
+    dp0 = dp1;
+    dp1 = dp2;
+  }
+  return dp1;
+};
+```
+
+#### 零钱兑换(leetcode322)
+
+## 贪心算法
+
+是算法设计中的一种方法
+
+期盼每个阶段的局部最优选择，从而达到全局的最优
+结果并不一定是最优
