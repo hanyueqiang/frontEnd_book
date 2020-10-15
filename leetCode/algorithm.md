@@ -67,47 +67,17 @@ while (queue.length) {
 console.log(queue); // []
 ```
 
-## 数组
+## 双指针
 
-### 两数求和问题
+指的是在遍历对象的过程中，不是普通的使用单个指针进行访问，而是使用两个相同方向（快慢指针）或者相反方向（对撞指针）的指针进行扫描，从而达到相应的目的。
 
-采用空间换时间，使用 Map
+#### 合并两个有序数组(leetcode88)
 
-```js
-// 示例: 给定 nums = [2, 7, 11, 15], target = 9
-// 因为 nums[0] + nums[1] = 2 + 7 = 9 所以返回 [0, 1]
-
-/**
- * @param {number[]} nums
- * @param {number} target
- * @return {number[]}
- */
-const twoSum = function(nums, target) {
-  // 这里我用对象来模拟 map 的能力
-  const diffs = {};
-  // 缓存数组长度
-  const len = nums.length;
-  // 遍历数组
-  for (let i = 0; i < len; i++) {
-    // 判断当前值对应的 target 差值是否存在（是否已遍历过）
-    if (diffs[target - nums[i]] !== undefined) {
-      // 若有对应差值，那么答案get！
-      return [diffs[target - nums[i]], i];
-    }
-    // 若没有对应差值，则记录当前值
-    diffs[nums[i]] = i;
-  }
-};
-```
-
-### 双指针法
+给你两个有序整数数组 nums1 和 nums2，请你将 nums2 合并到 nums1 中，使 nums1 成为一个有序数组。
+说明: 初始化 nums1 和 nums2 的元素数量分别为 m 和 n 。 你可以假设 nums1 有足够的空间（空间大小大于或等于 m + n）来保存 nums2 中的元素。
 
 ```js
-// 真题描述：给你两个有序整数数组 nums1 和 nums2，请你将 nums2 合并到 nums1 中，使 nums1 成为一个有序数组。
-// 说明: 初始化 nums1 和 nums2 的元素数量分别为 m 和 n 。 你可以假设 nums1 有足够的空间（空间大小大于或等于 m + n）来保存 nums2 中的元素。
-// 示例: 输入:
-// nums1 = [1,2,3,0,0,0], m = 3
-// nums2 = [2,5,6], n = 3
+// 示例: nums1 = [1,2,3,0,0,0], m = 3; nums2 = [2,5,6], n = 3
 // 输出: [1,2,2,3,5,6]
 const merge = function(nums1, m, nums2, n) {
   // 初始化两个指针的指向，初始化 nums1 尾部索引k
@@ -127,7 +97,6 @@ const merge = function(nums1, m, nums2, n) {
       k--;
     }
   }
-
   // nums2 留下的情况，特殊处理一下
   while (j >= 0) {
     nums1[k] = nums2[j];
@@ -137,30 +106,28 @@ const merge = function(nums1, m, nums2, n) {
 };
 ```
 
-### 三数求和问题
+### 三数之和(leetcode15)
 
+给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有满足条件且不重复的三元组。
+注意：答案中不可以包含重复的三元组。
+解题思路：
 三数之和延续两数之和的思路，我们可以把求和问题变成求差问题——固定其中一个数，在剩下的数中寻找是否有两个数和这个固定数相加是等于 0 的。
-双指针法用在涉及求和、比大小类的数组题目里时，大前提往往是：该数组必须有序。否则双指针根本无法帮助我们缩小定位的范围，压根没有意义。因此这道题的第一步是将数组排序
+双指针法用在涉及求和、比大小类的数组题目里时，大前提往往是：<strong>该数组必须有序。</strong>否则双指针根本无法帮助我们缩小定位的范围，压根没有意义。
+因此这道题的第一步是将数组排序
 
 ```js
+// 数组排序
 nums = nums.sort((a, b) => {
   return a - b;
 });
-```
 
-```js
-// 真题描述：给你一个包含 n 个整数的数组 nums，判断 nums 中是否存在三个元素 a，b，c ，使得 a + b + c = 0 ？请你找出所有满足条件且不重复的三元组。
-// 注意：答案中不可以包含重复的三元组。
 // 示例： 给定数组 nums = [-1, 0, 1, 2, -1, -4]， 满足要求的三元组集合为： [ [-1, 0, 1], [-1, -1, 2] ]
-
-function threeSum(nums) {
+var threeSum = function(nums) {
   const arr = nums.sort((a, b) => a - b);
-  console.log(arr);
-  let results = [];
   const len = arr.length;
-  // 尾指针 i移动指针 j头指针
+  const result = [];
   for (let i = 0; i < len; i++) {
-    let current = arr[i];
+    const current = arr[i];
     let j = i + 1;
     let k = len - 1;
     // 如果遇到重复的数字，则跳过
@@ -170,17 +137,30 @@ function threeSum(nums) {
     while (j < k) {
       if (current + arr[j] + arr[k] > 0) {
         k--;
+        // 如果遇到重复的数字，则跳过
+        while (j < k && arr[k] === arr[k + 1]) {
+          k--;
+        }
       } else if (current + arr[j] + arr[k] < 0) {
         j++;
+        while (j < k && arr[j] === arr[j - 1]) {
+          j++;
+        }
       } else {
-        results.push([current, arr[j], arr[k]]);
+        result.push([current, arr[j], arr[k]]);
         j++;
         k--;
+        while (j < k && arr[k] === arr[k + 1]) {
+          k--;
+        }
+        while (j < k && arr[j] === arr[j - 1]) {
+          j++;
+        }
       }
     }
   }
-  return results;
-}
+  return result;
+};
 ```
 
 ## 字符串
@@ -442,6 +422,38 @@ m.get('a') // 'aa'
 m.delete('a')
 // 删除多有
 m.clear();
+
+#### 两数求和问题(leetcode01)
+
+采用空间换时间，使用 Map
+
+```js
+// 示例: 给定 nums = [2, 7, 11, 15], target = 9
+// 因为 nums[0] + nums[1] = 2 + 7 = 9 所以返回 [0, 1]
+
+/**
+ * @param {number[]} nums
+ * @param {number} target
+ * @return {number[]}
+ */
+const twoSum = function(nums, target) {
+  // 这里我用对象来模拟 map 的能力
+  const diffs = {};
+  // 缓存数组长度
+  const len = nums.length;
+  // 遍历数组
+  for (let i = 0; i < len; i++) {
+    // 判断当前值对应的 target 差值是否存在（是否已遍历过）
+    if (diffs[target - nums[i]] > -1) {
+      // 若有对应差值，那么答案get！
+      return [diffs[target - nums[i]], i];
+    }
+    // 若没有对应差值，则记录当前值
+    diffs[nums[i]] = i;
+  }
+  return [];
+};
+```
 
 ## 树
 
