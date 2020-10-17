@@ -191,6 +191,8 @@ Function.prototype.newBind = function(context) {
 
 #### 手写 Promise 简版
 
+符合 A+规范
+
 ```js
 function myPromise(constructor) {
   let self = this;

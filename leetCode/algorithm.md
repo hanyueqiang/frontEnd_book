@@ -1,4 +1,4 @@
-## 前端算法系统学习(含 leetcode 真题)
+## 前端算法学习笔记 (含 leetcode 真题)
 
 > 前端学习算法的目的在有限的时间内，做对关键的已知题目；通过真题消化其中核心的算法思想和解题套路，从而最大化各位在真正面试时做对任意未知题目的可能性。[—修言]
 
@@ -163,6 +163,50 @@ var threeSum = function(nums) {
 };
 ```
 
+#### 排序矩阵查找 x 值(leetcode)
+
+[排序矩阵查找](https://leetcode-cn.com/problems/sorted-matrix-search-lcci/)
+
+给定 M×N 矩阵，每一行、每一列都按升序排列，请编写代码找出某元素。
+
+解题思路：双指针，一个指针负责行，一个负责列，从右上角开始查找
+时间复杂度 O(m+n)
+
+```js
+// 示例:
+// 现有矩阵 matrix 如下：
+[
+  [1, 4, 7, 11, 15],
+  [2, 5, 8, 12, 19],
+  [3, 6, 9, 16, 22],
+  [10, 13, 14, 17, 24],
+  [18, 21, 23, 26, 30],
+];
+/**
+ * @param {number[][]} matrix
+ * @param {number} target
+ * @return {boolean}
+ */
+var searchMatrix = function(matrix, target) {
+  const len = matrix.length;
+  if (len === 0) {
+    return false;
+  }
+  let rowIndex = 0;
+  let colIndex = matrix[0].length - 1;
+  while (rowIndex < len && colIndex >= 0) {
+    if (matrix[rowIndex][colIndex] === target) {
+      return true;
+    } else if (matrix[rowIndex][colIndex] > target) {
+      colIndex--;
+    } else {
+      rowIndex++;
+    }
+  }
+  return false;
+};
+```
+
 ## 字符串
 
 字符串的题出现回文串大部分使用双指针解法
@@ -174,7 +218,7 @@ const str = "absdef";
 const result = str
   .split("")
   .reverse()
-  .join();
+  .join("");
 ```
 
 判断一个字符串是否为回文串
@@ -279,6 +323,37 @@ const validPalindrome = function(s) {
 };
 ```
 
+#### 无重复字符的最长子串(leetcode.3)
+
+给定一个字符串，找出其中不含有重复字符的最长子串长度
+解题思路：
+利用数组移动滑块解决此题
+
+```js
+// 输入: "abcabcbb"; 输出: 3;
+// 输入: "bbbbb";输出: 1;因为无重复字符的最长子串是 "b"，所以其长度为 1
+// 输入: "pwwkew";输出: 3;最长子串是 "wke"，所以其长度为 3。
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLongestSubstring = function(s) {
+  const length = s.length;
+  const arr = [];
+  let max = 0;
+  for (let i = 0; i < length; i++) {
+    const index = arr.indexOf(s[i]);
+    if (index > -1) {
+      arr.splice(0, index + 1);
+    }
+    arr.push(s[i]);
+    max = Math.max(max, arr.length);
+  }
+  return max;
+};
+```
+
 ## 链表
 
 链表和数组相似，它们都是有序的列表、都是线性结构（有且仅有一个前驱、有且仅有一个后继）。不同点在于，链表中，数据单位的名称叫做“结点”，而结点和结点的分布，在内存中可以是离散的。
@@ -314,7 +389,7 @@ const node = new ListNode(1);
 node.next = new ListNode(2);
 ```
 
-### 链表和数组的辨析
+#### 链表和数组的辨析
 
 相对于数组来说，链表有一个明显的优点，就是添加和删除元素都不需要挪动多余的元素。
 
@@ -338,9 +413,9 @@ const arr = ["haha", 1, { a: 1 }];
 ```
 
 总结:
-结合上述分析，我们不难得出这样的结论：链表的插入/删除效率较高 O(1)，而访问效率较低 O(n)；数组的访问效率较高 O(1)，而插入效率较低 O(n)。这个特性需要大家牢记，可能会作为数据结构选型的依据来单独考察
+结合上述分析，我们不难得出这样的结论：<strong>链表的插入/删除效率较高 O(1)，而访问效率较低 O(n)；数组的访问效率较高 O(1)，而插入效率较低 O(n)。</strong>
 
-## 原型链简介
+#### 原型链简介
 
 obj -> Object.prototype -> null
 func -> Function.prototype -> Object.prototype -> null
@@ -359,7 +434,7 @@ const arr = [];
 const instanceof = (A, B) => {
   let p = A;
   while (p) {
-    if (p === B.proto ptype) {
+    if (p === B.prototype) {
       return true;
     }
     p = p.__proto__;
@@ -368,7 +443,7 @@ const instanceof = (A, B) => {
 };
 ```
 
-## 使用链表指针获取 json
+#### 使用链表指针获取 json
 
 ```js
 const json = {
@@ -392,7 +467,7 @@ console.log(p);
 
 一种无序且唯一数据结构
 es6 有集合，Set
-去重，判断是否在集合中，求交集
+使用：去重，判断是否在集合中，求交集
 
 ```js
 // 去重
@@ -422,16 +497,12 @@ myset.delete(5);
 
 myset.keys() === myset.values();
 
-for(letm item of myset) {
-
-}
-
 // 与arr互转
-const myarr = [... myset];
+const myarr = [...myset];
 const myarr2 = Array.from(myset);
 
 // 交集
-const intersection = new Set([...myset].filter(x => myset2.has(x)))
+const intersection = new Set([...myset].filter((x) => myset2.has(x)));
 ```
 
 ## 字典 Map
