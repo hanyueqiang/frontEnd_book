@@ -38,9 +38,11 @@
 
 ### 算法
 
-[前端数据结构与算法入门](https://github.com/hanyueqiang/frontEnd_book/blob/master/leetCode/algorithm.md)
+[前端算法学习笔记](https://github.com/hanyueqiang/frontEnd_book/blob/master/leetCode/algorithm.md)
 
-[LeetCode 刷题](https://github.com/hanyueqiang/frontEnd_book/blob/master/leetCode/leetCode.md)
+### 每日一练
+
+[前端必会手写代码题](https://github.com/hanyueqiang/frontEnd_book/blob/master/leetCode/practice.md)
 
 ### 高频面试题
 
