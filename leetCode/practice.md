@@ -257,17 +257,48 @@ Promise.prototype.race = function(promiseArr) {
 
 #### 手写防抖
 
-非立即执行:，如果你在一个事件触发的 n 秒内又触发了这个事件，那我就以新的事件的时间为准，n 秒后才执行
-立即执行：我不希望非要等到事件停止触发后才执行，我希望立刻执行函数，然后等到停止触发 n 秒后，才可以重新触发执行
+作用是在短时间内多次触发同一个函数，只执行最后一次，或者只在开始时执行。 1.非立即执行:，如果你在一个事件触发的 n 秒内又触发了这个事件，那我就以新的事件的时间为准，n 秒后才执行
 
 ```js
-function debounce(fn, wait = 500) {
-  var timeout = null;
+function debounce(fn, delay) {
+  let timeout;
   return function() {
-    if (timeout !== null) {
+    let context = this;
+    let args = arguments;
+
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      fn.apply(context, args);
+    }, delay);
+  };
+}
+```
+
+2.立即执行：我不希望非要等到事件停止触发后才执行，我希望立刻执行函数，然后等到停止触发 n 秒后，才可以重新触发执行, 我们也可以为 debounce 函数加一个参数，可以选择是否立即执行函数
+
+```js
+function debounce(fn, delay, immediate) {
+  let timeout = null;
+  return function() {
+    let context = this;
+    let args = arguments;
+    if (timeout) {
       clearTimeout(timeout);
     }
-    timeout = setTimeout(fn, wait);
+    if (immediate) {
+      const callNow = !timeout;
+      timeout = setTimeout(() => {
+        timeout = null;
+      }, delay);
+
+      if (callNow) {
+        fn.apply(context, args);
+      }
+    } else {
+      timeout = setTimeout(() => {
+        fn.apply(context, args);
+      }, delay);
+    }
   };
 }
 ```
