@@ -76,8 +76,8 @@ bind() 方法创建一个新的函数，在 bind() 被调用时，这个新函�
 
 ```js
 Function.prototype.newBind = function(context) {
-  if(typeof this !== function) {
-    throw new Error('不是一个函数');
+  if (typeof this !== "function") {
+    throw new Error("不是一个函数");
   }
   const self = this;
   const args1 = [...arguments].slice(1);
@@ -86,8 +86,8 @@ Function.prototype.newBind = function(context) {
     // 函数科里化
     const args2 = [...arguments];
     self.apply(context, args1.concat(args2));
-  }
-}
+  };
+};
 ```
 
 #### 手写 Promise 简版
@@ -320,6 +320,22 @@ function throttle(func, delay) {
     }
   };
 }
+
+// 定时器实现
+var throttle = function(func, delay) {
+  var timer = null;
+
+  return function() {
+    var context = this;
+    var args = arguments;
+    if (!timer) {
+      timer = setTimeout(function() {
+        func.apply(context, args);
+        timer = null;
+      }, delay);
+    }
+  };
+};
 ```
 
 #### 手写浅拷贝
@@ -342,6 +358,8 @@ function deepClone(obj) {
   if (typeof obj !== "object" || obj === null) {
     return obj;
   }
+  if (obj instanceof Date) return new Date(obj);
+  if (obj instanceof RegExp) return new RegExp(obj);
 
   // 定义结果对象
   let copy = {};
@@ -358,6 +376,26 @@ function deepClone(obj) {
     }
   }
   return copy;
+}
+
+function deepClone(obj, hash = new WeakMap()) {
+  if (obj === null) return obj; // 如果是null或者undefined我就不进行拷贝操作
+  if (obj instanceof Date) return new Date(obj);
+  if (obj instanceof RegExp) return new RegExp(obj);
+  // 可能是对象或者普通的值  如果是函数的话是不需要深拷贝
+  if (typeof obj !== "object") return obj;
+  // 是对象的话就要进行深拷贝
+  if (hash.get(obj)) return hash.get(obj);
+  let cloneObj = new obj.constructor();
+  // 找到的是所属类原型上的constructor,而原型上的 constructor指向的是当前类本身
+  hash.set(obj, cloneObj);
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      // 实现一个递归拷贝
+      cloneObj[key] = deepClone(obj[key], hash);
+    }
+  }
+  return cloneObj;
 }
 ```
 

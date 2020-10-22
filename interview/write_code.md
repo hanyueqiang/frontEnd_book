@@ -418,18 +418,50 @@ var isPalindrome = function(s) {
 
 ## 手写防抖和节流
 
-防抖 debounce
-非立即执行:，如果你在一个事件触发的 n 秒内又触发了这个事件，那我就以新的事件的时间为准，n 秒后才执行
-立即执行：我不希望非要等到事件停止触发后才执行，我希望立刻执行函数，然后等到停止触发 n 秒后，才可以重新触发执行
+防抖
+
+作用是在短时间内多次触发同一个函数，只执行最后一次，或者只在开始时执行。 1.非立即执行:，如果你在一个事件触发的 n 秒内又触发了这个事件，那我就以新的事件的时间为准，n 秒后才执行
 
 ```js
-function debounce(fn, wait = 500) {
-  var timeout = null;
+function debounce(fn, delay) {
+  let timeout;
   return function() {
-    if (timeout !== null) {
+    let context = this;
+    let args = arguments;
+
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      fn.apply(context, args);
+    }, delay);
+  };
+}
+```
+
+2.立即执行：我不希望非要等到事件停止触发后才执行，我希望立刻执行函数，然后等到停止触发 n 秒后，才可以重新触发执行, 我们也可以为 debounce 函数加一个参数，可以选择是否立即执行函数
+
+```js
+function debounce(fn, delay, immediate) {
+  let timeout = null;
+  return function() {
+    let context = this;
+    let args = arguments;
+    if (timeout) {
       clearTimeout(timeout);
     }
-    timeout = setTimeout(fn, wait);
+    if (immediate) {
+      const callNow = !timeout;
+      timeout = setTimeout(() => {
+        timeout = null;
+      }, delay);
+
+      if (callNow) {
+        fn.apply(context, args);
+      }
+    } else {
+      timeout = setTimeout(() => {
+        fn.apply(context, args);
+      }, delay);
+    }
   };
 }
 ```
@@ -450,6 +482,22 @@ function throttle(func, delay) {
     }
   };
 }
+
+// 定时器实现
+var throttle = function(func, delay) {
+  var timer = null;
+
+  return function() {
+    var context = this;
+    var args = arguments;
+    if (!timer) {
+      timer = setTimeout(function() {
+        func.apply(context, args);
+        timer = null;
+      }, delay);
+    }
+  };
+};
 ```
 
 ## 实现浅拷贝、深拷贝
@@ -474,6 +522,8 @@ function deepClone(obj) {
   if (typeof obj !== "object" || obj === null) {
     return obj;
   }
+  if (obj instanceof Date) return new Date(obj);
+  if (obj instanceof RegExp) return new RegExp(obj);
 
   // 定义结果对象
   let copy = {};
@@ -490,6 +540,26 @@ function deepClone(obj) {
     }
   }
   return copy;
+}
+
+function deepClone(obj, hash = new WeakMap()) {
+  if (obj === null) return obj; // 如果是null或者undefined我就不进行拷贝操作
+  if (obj instanceof Date) return new Date(obj);
+  if (obj instanceof RegExp) return new RegExp(obj);
+  // 可能是对象或者普通的值  如果是函数的话是不需要深拷贝
+  if (typeof obj !== "object") return obj;
+  // 是对象的话就要进行深拷贝
+  if (hash.get(obj)) return hash.get(obj);
+  let cloneObj = new obj.constructor();
+  // 找到的是所属类原型上的constructor,而原型上的 constructor指向的是当前类本身
+  hash.set(obj, cloneObj);
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      // 实现一个递归拷贝
+      cloneObj[key] = deepClone(obj[key], hash);
+    }
+  }
+  return cloneObj;
 }
 ```
 
