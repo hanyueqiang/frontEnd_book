@@ -2,7 +2,7 @@
 
 #### 数组处理函数有哪些？ 创建数组新引用有哪些？
 
-```
+```js
 // every(): 数组的每一项都满足给定条件则返回true
 var arr = [1, 2, 3, 4, 5];
 var everyResult = arr.every(function(item, index, array) {
@@ -40,17 +40,16 @@ console.log(arr); // [1, 2, 3, 4, 5]
 // forEach(): 数组遍历，与for循环一样
 var arr = [1, 2, 3, 4, 5];
 arr.forEach(function(item, index, array) {
-// 执行某些操作
+  // 执行某些操作
 });
 
 // reduce()和reduceRight(), 这两个方法只是遍历方向不同
 var arr = [1, 2, 3, 4, 5];
-var sum = arr.reduce(function(prev, cur, index, array){
+var sum = arr.reduce(function(prev, cur, index, array) {
   return prev + cur;
 }, 0);
 // 注意初始值不设的话，遇到空数组会报错
 console.log(sum); // 15
-
 ```
 
 #### es6 let const 区别？
@@ -67,7 +66,7 @@ let 和 const 的不同点:
 
 1.let 声明的变量可以改变，值和类型都可以改变；const 声明的常量不可以改变，这意味着，const 一旦声明，就必须立即初始化，不能以后再赋值;
 
-```
+```js
 const i ; // 报错，一旦声明，就必须立即初始化
 const j = 5;
 j = 10; // 报错，常量不可以改变
@@ -75,10 +74,10 @@ j = 10; // 报错，常量不可以改变
 
 2.数组和对象等复合类型的变量，变量名不指向数据，而是指向数据所在的地址。const 只保证变量名指向的地址不变，并不保证该地址的数据不变，所以将一个复合类型的变量声明为常量必须非常小心
 
-```
+```js
 const arr = [];
 // 报错，[1,2,3]与[]不是同一个地址
-arr = [1,2,3];
+arr = [1, 2, 3];
 const arr = [];
 
 // 不报错，变量名arr指向的地址不变，只是数据改变
@@ -101,7 +100,7 @@ var tmp = new Date();
 function f() {
   console.log(tmp); // 想打印外层的时间作用域
   if (false) {
-    var tmp = 'hello world'; // 这里声明的作用域为整个函数,变量提升
+    var tmp = "hello world"; // 这里声明的作用域为整个函数,变量提升
   }
 }
 f(); // undefined
@@ -146,7 +145,7 @@ f(); // undefined
 
 hasOwnProperty 方法接收一个字符串参数，该参数表示属性名称，用来判断该属性是否在当前对象实例中，而不是在对象的原型链中。直白点儿说就是检测当前对象有没有某个属性，返回一个布尔值
 
-```
+```js
 var arr = [];
 console.log(arr.hasOwnProperty("length")); // true
 console.log(arr.hasOwnProperty("hasOwnProperty")); // false
@@ -158,7 +157,7 @@ isPrototype 方法接收一个对象，用来判断当前对象是否在传入�
 
 这个检测的就是 Object 的原型对象是否在 obj 的原型链上，MyObject 是继承自 Object 对象的，而在 JS 中，继承是通过 prototype 来实现的，所以 Object 的 prototype 必定在 MyObject 对象实例的原型链上。所以结果是肯定的
 
-```
+```js
 function MyObject() {}
 var obj = new MyObject();
 console.log(Object.prototype.isPrototypeOf(obj)); // true
@@ -167,10 +166,10 @@ console.log(Object.prototype.isPrototypeOf(obj)); // true
 3.propertyIsEnumerable(prototypeName)
 prototypeIsEnumerable 用来判断给定的属性是否可以被 for..in 语句给枚举出来(个人感觉可以理解为是否可以被 for..in 语句遍历到)出来，返回一个布尔值
 
-```
+```js
 var obj = {
-  name: "objName"
-}
+  name: "objName",
+};
 for (var i in obj) {
   console.log(i); // name
 }
@@ -183,7 +182,7 @@ console.log(obj.propertyIsEnumerable("constructor")); // false
 
 toLocalString 方法返回对象的字符串表示，和代码的执行环境有关。
 
-```
+```js
 var obj = {};
 console.log(obj.toLocaleString()); // [object Object]
 
@@ -194,7 +193,7 @@ console.log(date.toLocaleString()); // 2020/4/26 上午11:04:50 输出的就是�
 5.toString()
 toString 用来返回对象的字符串表示
 
-```
+```js
 var obj = {};
 console.log(obj.toString()); // [object Object]
 
@@ -205,9 +204,9 @@ console.log(date.toString()); // Sun Apr 26 2020 11:04:35 GMT+0800 (中国标准
 6.valueOf()
 valueOf 方法返回对象的原始值，根据对象的不同，返回的可能是字符串、数值或 boolean 值等
 
-```
+```js
 var obj = {
-  name: "obj"
+  name: "obj",
 };
 console.log(obj.valueOf()); // Object {name: "obj"}
 
@@ -223,11 +222,11 @@ console.log(date.valueOf()); // 1456638436303
 1.prototype(原型对象)
 构造函数有一个 prototype 属性，指向实例对象的原型对象。通过同一个构造函数实例化的多个对象具有相同的原型对象。(经常使用原型对象来实现继承)
 
-```
-function Foo() {};
+```js
+function Foo() {}
 Foo.prototype.a = 1;
-var f1 = new Foo;
-var f2 = new Foo;
+var f1 = new Foo();
+var f2 = new Foo();
 
 console.log(Foo.prototype.a); // 1
 console.log(f1.a); // 1
@@ -257,28 +256,27 @@ console.log(f1.__proto__ === Foo.prototype); // true
 1、提高 JavaScript 性能。事件委托可以显著的提高事件的处理速度，减少内存的占用
 2、 动态绑定事件
 
-```
+```js
 <ul id="list">
   <li>item 1</li>
   <li>item 2</li>
   <li>item 3</li>
   ......
   <li>item n</li>
-</ul>
+</ul>;
 
 // 给父层元素绑定事件
-document.getElementById('list').addEventListener('click', function (e) {
+document.getElementById("list").addEventListener("click", function(e) {
   // 兼容性处理
   var event = e || window.event;
   var target = event.target || event.srcElement;
 
   // 判断是否匹配目标元素
-  if (target.nodeName.toLocaleLowerCase === 'li') {
+  if (target.nodeName.toLocaleLowerCase === "li") {
     console.log(target.innerHTML);
   }
 });
 // target 元素则是在 #list 元素之下具体被点击的元素，然后通过判断 target 的一些属性（比如：nodeName，id 等等）
-
 ```
 
 局限性
@@ -293,23 +291,23 @@ document.getElementById('list').addEventListener('click', function (e) {
 
 阻止冒泡事件
 
-```
-function bubbles(e){
+```js
+function bubbles(e) {
   var ev = e || window.event;
-  if(ev && ev.stopPropagation) {
+  if (ev && ev.stopPropagation) {
     //非IE浏览器
     ev.stopPropagation();
   } else {
     //IE浏览器(IE11以下)
     ev.cancelBubble = true;
   }
-  console.log("最底层盒子被点击了")
+  console.log("最底层盒子被点击了");
 }
 ```
 
 阻止默认事件
 
-```
+```js
 // 谷歌及IE8以上
 e.preventDefault();
 
@@ -323,12 +321,12 @@ return false;
 
 类似于将一个异步方法封装在一个具有回调函数的函数里，Promise 实际上充当了这种封装作用。然后通过 resolve 和 reject 函数向外输出成功时的数据和失败时的错误信息
 
-```
+```js
 const p = new Promise((resolve, reject) => {
-  setTimeout(function(){
-    const name = 'joyitsai';
+  setTimeout(function() {
+    const name = "joyitsai";
     resolve(name);
-  /*
+    /*
   如果失败reject输出错误信息
     reject(`error_info`)
   */
@@ -336,7 +334,7 @@ const p = new Promise((resolve, reject) => {
 });
 p.then((data) => {
   console.log(data);
-})
+});
 ```
 
 Promise，把它想象成一个容器，里面放着一些正在处理的问题，但不管过多长时间，它最终都会把它处理完成的结果(不管是成功还是失败的)输出给你，而且，它允许你通过.then((data)=>{})方法来接收这个结果数据。Promise 可以说是为处理异步而生.
@@ -345,10 +343,10 @@ Promise，把它想象成一个容器，里面放着一些正在处理的问题�
 
 它是将一个方法或函数变成异步的，它会将一个普通函数封装成一个 Promise，为什么要封装成 Promise 呢？其实它只是 Promise 的搬运工，利用了 Promise 处理异步问题的能力，能让你更好地解决需要异步处理的代码
 
-```
+```js
 /**async/await 与Promise */
-async function testAsync(){
-    return 'Here is Async';
+async function testAsync() {
+  return "Here is Async";
 }
 const result = testAsync();
 console.log(result); // 输出 Promise { 'Here is Async' }
@@ -364,25 +362,25 @@ await 命令后面的 Promise 对象，运行结果可能是 rejected，所以�
 
 await 具有阻塞功能，可以理解为：等待 await 语句执行完成后，后面的程序才会继续。这就意味着，虽然一段包含 await 语句的异步程序，最终却是按照同步的顺序来执行
 
-```
-async function test(){
-    console.log(2);
-    return 'Joyitsai';
+```js
+async function test() {
+  console.log(2);
+  return "Joyitsai";
 }
 
-async function run(){
-    console.log(1);
-    const data = await test();
-    console.log(data);
-    console.log(3);
+async function run() {
+  console.log(1);
+  const data = await test();
+  console.log(data);
+  console.log(3);
 }
 run();
 
 // 打印结果
-1
-2
-Joyitsai
-3
+1;
+2;
+Joyitsai;
+3;
 ```
 
 3.ES6 中的 Generator 函数
@@ -391,14 +389,14 @@ Generator 函数是 ES6 提供的一种异步编程解决方案，语法行为�
 
 形式上，Generator 函数是一个普通函数，但是有两个特征：1.function 关键字与函数名之间有一个星号 2.函数体内部使用 yield 语句，定义不同的内部状态
 
-```
+```js
 var arr = [1, [[2, 3], 4], [5, 6]];
 
-var flat = function* (a) {
+var flat = function*(a) {
   var length = a.length;
   for (var i = 0; i < length; i++) {
     var item = a[i];
-    if (typeof item !== 'number') {
+    if (typeof item !== "number") {
       yield* flat(item);
     } else {
       yield item;
@@ -418,12 +416,12 @@ for (var f of flat(arr)) {
    ES5 只有全局作用域和函数作用域，没有块级作用域。
    这带来很多不合理的场景: 1).内层变量可能覆盖外层变量, 2).用来计数的循环变量泄露为全局变量
 
-```
+```js
 var tmp = new Date();
 function f() {
   console.log(tmp); // 想打印外层的时间作用域
   if (false) {
-    var tmp = 'hello world'; // 这里声明的作用域为整个函数
+    var tmp = "hello world"; // 这里声明的作用域为整个函数
   }
 }
 f(); // undefined
@@ -487,6 +485,23 @@ window.b // undefined
   }
   fn(); // hello
 </script>
+
+var a = 1;
+function fn(a){
+    console.log(a)
+    var a = 2;
+    function a(){}
+}
+fn(a); // ƒ a(){} 函数在生命时，既生明也定义
+
+var foo='hello';
+(function(foo){
+   console.log(foo);
+   var foo=foo||'world';
+   console.log(foo);
+})(foo);
+console.log(foo); // hello hello hello  变量提升有形参赋值，以形参赋值为准
+
 ```
 
 局部作用域：
@@ -500,6 +515,24 @@ window.b // undefined
   fn();
   console.log(innerVar); // ReferenceError: innerVar is not defined
 </script>
+```
+
+#### 实现一个函数组合
+
+在函数式编程当中有一个很重要的概念就是函数组合， 实际上就是把处理数据的函数像管道一样连接起来， 然后让数据穿过管道得到最终的结果。 例如：
+
+```js
+    const add1 = (x) => x + 1;
+    const mul3 = (x) => x * 3;
+    const div2 = (x) => x / 2;
+    div2(mul3(add1(add1(0)))); //=>3
+​
+    // 而这样的写法可读性明显太差了，我们可以构建一个compose函数，它接受任意多个函数作为参数（这些函数都只接受一个参数），然后compose返回的也是一个函数，达到以下的效果：
+    const operate = compose(div2, mul3, add1, add1)
+    operate(0) //=>相当于div2(mul3(add1(add1(0))))
+    operate(2) //=>相当于div2(mul3(add1(add1(2))))
+​
+   //  简而言之：compose可以把类似于f(g(h(x)))这种写法简化成compose(f, g, h)(x)，请你完成 compose函数的编写
 ```
 
 #### 箭头函数的概念和普通函数的区别?
@@ -728,6 +761,18 @@ obj.c(); // 10
 > 每个构造函数(constructor)都有一个原型对象(prototype),原型对象都包含一个指向构造函数的指针,而实例(instance)都包含一个指向原型对象的内部指针.
 
 确定原型和实例的关系,使用 instanceof 操作符
+
+我们需要牢记两点：
+
+**proto**和 constructor 属性是对象所独有的；
+
+prototype 属性是函数所独有的，因为函数也是一种对象，所以函数也拥有**proto**和 constructor 属性。
+
+**proto**属性的作用就是当访问一个对象的属性时，如果该对象内部不存在这个属性，那么就会去它的**proto**属性所指向的那个对象（父对象）里找，一直找，直到**proto**属性的终点 null，再往上找就相当于在 null 上取值，会报错。通过**proto**属性将对象连接起来的这条链路即我们所谓的原型链。
+
+prototype 属性的作用就是让该函数所实例化的对象们都可以找到公用的属性和方法，即 f1.**proto** === Foo.prototype。
+
+constructor 属性的含义就是指向该对象的构造函数，所有函数（此时看成对象了）最终的构造函数都指向 Function。
 
 #### CommonJS、AMD、CMD 和 ES6 模块化区别
 
