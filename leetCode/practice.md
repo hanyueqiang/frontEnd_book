@@ -341,12 +341,20 @@ var throttle = function(func, delay) {
 #### 手写浅拷贝
 
 ```js
-function copy(obj1) {
-  var obj2 = {};
-  for (var key in obj1) {
-    obj2[key] = obj1[key];
+function copy(obj) {
+  if (typeof obj !== "object" || obj === null) {
+    return obj;
   }
-  return obj2;
+  let obj1 = {};
+  if (obj.constructor === Array) {
+    obj1 = [];
+  }
+  for (let key in obj) {
+    if (obj.hasOwnProperty(key)) {
+      obj1[key] = obj[key];
+    }
+  }
+  return obj1;
 }
 ```
 
@@ -409,6 +417,7 @@ function deepClone(obj, hash = new WeakMap()) {
 (6)使用 JavaScript 和 DOM 实现局部刷新.
 
 ```js
+// 步骤
 var XHR = new XMLHttpRequest();
 XHR.open("get", "./a.php");
 XHR.send(null);
@@ -418,5 +427,39 @@ XHR.onreadystatechange = function() {
       alert(XHR.responseText);
     }
   }
+};
+// 封装
+window.ajax = function(url, method, body, success, fail) {
+  let request = new XMLHttpRequest();
+  request.open(method, url);
+  request.onreadystatechange = () => {
+    if (request.readyState === 4) {
+      if (request.status >= 200 && request.status < 300) {
+        success.call(undefined, request.responseText);
+      } else if (request.status >= 400) {
+        fail.call(undefined, request);
+      }
+    }
+  };
+  request.send(body);
+};
+
+// promsie版
+window.ajax = function({ url, method }) {
+  // 传参是 es6解构赋值
+  return new Promise(function(resolve, reject) {
+    let request = new XMLHttpRequest();
+    request.open(method, url);
+    request.onreadystatechange = () => {
+      if (request.readyState === 4) {
+        if (request.status >= 200 && request.status < 300) {
+          resolve.call(undefined, request.responseText);
+        } else if (request.status >= 400) {
+          reject.call(undefined, request);
+        }
+      }
+    };
+    request.send();
+  });
 };
 ```
