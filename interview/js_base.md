@@ -533,6 +533,19 @@ console.log(foo); // hello hello hello  变量提升有形参赋值，以形参�
     operate(2) //=>相当于div2(mul3(add1(add1(2))))
 ​
    //  简而言之：compose可以把类似于f(g(h(x)))这种写法简化成compose(f, g, h)(x)，请你完成 compose函数的编写
+
+   function compose() {
+     let args = argumnets;
+     let start = args.length-1;
+     return function() {
+       let i = start;
+       let result = args[i].apply(this, arguments);
+       while(i-- && i >= 0) {
+         result = args[i].call(this, result);
+       }
+       return result;
+     }
+   }
 ```
 
 #### 箭头函数的概念和普通函数的区别?
