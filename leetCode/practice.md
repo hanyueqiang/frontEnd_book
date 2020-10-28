@@ -90,6 +90,31 @@ Function.prototype.newBind = function(context) {
 };
 ```
 
+#### new 实现原理
+
+```js
+function Animal(type) {
+  this.type = type;
+}
+Animal.prototype.say = function() {
+  console.log("say");
+};
+
+function mockNew() {
+  let Constructor = arguments.shift(); // 取出构造函数
+
+  let obj = {}; // new 执行会创建一个新对象
+
+  obj.__proto__ = Constructor.prototype;
+
+  Constructor.apply(obj, arguments);
+  return obj;
+}
+let animal = mockNew(Animal, "dog");
+
+console.log(animal.type); // dog
+```
+
 #### 手写 Promise 简版
 
 符合 A+规范
