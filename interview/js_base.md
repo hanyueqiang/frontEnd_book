@@ -936,3 +936,11 @@ CSRF Token: 需要服务端生成一个 Token，然后放在页面中，页面�
 伪类的操作对象是文档树中已有的元素，而伪元素则创建了一个文档树外的元素。因此，伪类与伪元素的区别在于：有没有创建一个文档树之外的元素。
 
 CSS3 规范中的要求使用双冒号(::)表示伪元素，以此来区分伪元素和伪类，比如::before 和::after 等伪元素使用双冒号(::)，:hover 和:active 等伪类使用单冒号(:)。除了一些低于 IE8 版本的浏览器外，大部分浏览器都支持伪元素的双冒号(::)表示方法。
+
+#### document.ready 和 window.onload 的区别
+
+document.ready 和 window.onload 的区别是：上面定义的 document.ready 方法在 DOM 树加载完成后就会执行，而 window.onload 是在页面资源（比如图片和媒体资源，它们的加载速度远慢于 DOM 的加载速度）加载完成之后才执行。也就是说\$(document).ready 要比 window.onload 先执行。
+
+onload 怎么用：
+
+浏览器加载完 DOM 后，会通过 javascript 为 DOM 元素添加事件，在 javascript 中，通常使用 window.onload()方法
