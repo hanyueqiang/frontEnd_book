@@ -146,13 +146,12 @@ function myPromise(constructor) {
 }
 
 myPromise.prototype.then = function(onFullfilled, onRejected) {
-  let self = this;
-  switch (self.status) {
+  switch (this.status) {
     case "resolved":
-      onFullfilled(self.resolveVal);
+      onFullfilled(this.resolveVal);
       break;
     case "rejected":
-      onRejected(self.rejectedVal);
+      onRejected(this.rejectedVal);
       break;
   }
 };
