@@ -1,16 +1,7 @@
 #### JavaScript 数据类型
 
-基本数据类型
-
-- 空值（null)
-- 未定义(undefined)
-- 布尔值（boolean)
-- 数字（number)
-- 字符串（string)
-- 符号（symbol, ES6 中新增)
-- 大整数（BigInt, ES2020 引入）
-
-其中对象 (object)是 js 内置类型，非基本类型
+空值（null) 、未定义(undefined) 、布尔值（boolean) 、数字（number) 、字符串（string) 、符号（symbol, ES6 中新增) 、大整数（BigInt, ES2020 引入）
+注意：对象 (object)是 js 内置类型，非基本类型
 
 #### instanceof 实现原理
 
@@ -33,17 +24,13 @@ const instanceof = (A, B) => {
 #### 手写 call
 
 ```js
-Function.prototype.newCall = function(context) {
-  var context = Object(context) || window;
-
+Function.prototype.newCall = function (context) {
+  context = Object(context) || window;
   context.fn = this;
-
   let result = "";
   const args = [...arguments].slice(1);
   result = context.fn(...args);
-
   delete context.fn;
-
   return result;
 };
 ```
@@ -51,21 +38,16 @@ Function.prototype.newCall = function(context) {
 #### 手写 apply
 
 ```js
-Function.prototype.newApply = function(context, args) {
-  var context = Object(context) || window;
-
+Function.prototype.newApply = function (context, args) {
+  context = Object(context) || window;
   context.fn = this;
-
-  let result = "";
-
+  let result;
   if (args) {
     result = context.fn(...args);
   } else {
     result = context.fn();
   }
-
   delete context.fn;
-
   return result;
 };
 ```
@@ -75,14 +57,13 @@ Function.prototype.newApply = function(context, args) {
 bind() 方法创建一个新的函数，在 bind() 被调用时，这个新函数的 this 被指定为 bind() 的第一个参数，而其余参数将作为新函数的参数
 
 ```js
-Function.prototype.newBind = function(context) {
+Function.prototype.newBind = function (context) {
   if (typeof this !== "function") {
     throw new Error("不是一个函数");
   }
   const self = this;
   const args1 = [...arguments].slice(1);
-
-  return function() {
+  return function () {
     // 函数科里化
     const args2 = [...arguments];
     self.apply(context, args1.concat(args2));
@@ -96,22 +77,17 @@ Function.prototype.newBind = function(context) {
 function Animal(type) {
   this.type = type;
 }
-Animal.prototype.say = function() {
+Animal.prototype.say = function () {
   console.log("say");
 };
-
-function mockNew() {
-  let Constructor = arguments.shift(); // 取出构造函数
-
+function mockNew(Constructor, ...args) {
+  // let Constructor = arguments.shift(); // 取出构造函数
   let obj = {}; // new 执行会创建一个新对象
-
   obj.__proto__ = Constructor.prototype;
-
-  Constructor.apply(obj, arguments);
+  Constructor.apply(obj, args);
   return obj;
 }
 let animal = mockNew(Animal, "dog");
-
 console.log(animal.type); // dog
 ```
 
@@ -122,7 +98,6 @@ console.log(animal.type); // dog
 ```js
 function myPromise(constructor) {
   let self = this;
-  // pending resolved rejected
   self.status = "pending";
   self.resolveVal = undefined;
   self.rejectedVal = undefined;
@@ -145,7 +120,7 @@ function myPromise(constructor) {
   }
 }
 
-myPromise.prototype.then = function(onFullfilled, onRejected) {
+myPromise.prototype.then = function (onFullfilled, onRejected) {
   switch (this.status) {
     case "resolved":
       onFullfilled(this.resolveVal);
@@ -168,10 +143,8 @@ function myPromise(fn) {
   const self = this; // 在function找到正确this指向
   self.status = PENDING;
   self.value = null; // 保存resolve/reject传入的值
-
   self.resolvedCallbacks = []; // 保存then中的回调,promise执行完后，state状态还可能是padding
   self.rejectedCallbacks = []; // 因此把回到函数保存起来，等待state状态改变时执行
-
   // 实现resolve
   funtion resolve(value) {
     if(value instanceof myPromise) {
@@ -185,7 +158,6 @@ function myPromise(fn) {
       }
     },0);
   }
-
   function reject(value) {
      setTimeout(()=> {
       if(self.status === PENDING) {
@@ -236,22 +208,22 @@ const p2 = new Promise((resolve) => {
 const p3 = 3;
 console.log(Promise.all([p1, p2, p3])); // [1, 2, 3]
 
-Promise.prototype.all = function(promiseArr) {
+Promise.prototype.all = function (promiseArr) {
   let resArr = [];
   let count = 0;
   let len = promiseArr.length;
   // 返回一个新的promise实例
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     for (let promise of promiseArr) {
       Promise.resolve(promise).then(
-        function(res) {
+        function (res) {
           resArr[count] = res;
           count++;
           if (count === len) {
             return resolve(resArr);
           }
         },
-        function(err) {
+        function (err) {
           return reject(err);
         }
       );
@@ -265,8 +237,8 @@ Promise.prototype.all = function(promiseArr) {
 与 Promise.all 一样，Promise.race 也接收包含 Promise 对象或普通值的数组(或其它可迭代对象)作为参数，返回一个 Promise 实例对象。与 Promise.all 不同的是，一旦有一个 Promise 实例对象 resolve ，立即把这个 resolve 的值作为 Promise.race resolve 的值。一旦有一个对象 reject， Promise.race 也会立即 reject。
 
 ```js
-Promise.prototype.race = function(promiseArr) {
-  return new Promise(function(resolve, reject) {
+Promise.prototype.race = function (promiseArr) {
+  return new Promise(function (resolve, reject) {
     for (let promise of promiseArr) {
       if (typeof promise === "object" && typeof promise.then === "function") {
         promise.then(resolve, reject);
@@ -286,10 +258,9 @@ Promise.prototype.race = function(promiseArr) {
 ```js
 function debounce(fn, delay) {
   let timeout;
-  return function() {
+  return function () {
     let context = this;
     let args = arguments;
-
     clearTimeout(timeout);
     timeout = setTimeout(() => {
       fn.apply(context, args);
@@ -303,7 +274,7 @@ function debounce(fn, delay) {
 ```js
 function debounce(fn, delay, immediate) {
   let timeout = null;
-  return function() {
+  return function () {
     let context = this;
     let args = arguments;
     if (timeout) {
@@ -334,7 +305,7 @@ function debounce(fn, delay, immediate) {
 ```js
 function throttle(func, delay) {
   var prev = Date.now();
-  return function() {
+  return function () {
     var context = this;
     var args = arguments;
     var now = Date.now();
@@ -346,14 +317,13 @@ function throttle(func, delay) {
 }
 
 // 定时器实现
-var throttle = function(func, delay) {
-  var timer = null;
-
-  return function() {
-    var context = this;
-    var args = arguments;
+var throttle = function (func, delay) {
+  let timer = null;
+  return function () {
+    const context = this;
+    const args = arguments;
     if (!timer) {
-      timer = setTimeout(function() {
+      timer = setTimeout(function () {
         func.apply(context, args);
         timer = null;
       }, delay);
@@ -445,7 +415,7 @@ function deepClone(obj, hash = new WeakMap()) {
 var XHR = new XMLHttpRequest();
 XHR.open("get", "./a.php");
 XHR.send(null);
-XHR.onreadystatechange = function() {
+XHR.onreadystatechange = function () {
   if (XHR.readyState === 4) {
     if (XHR.status === 200) {
       alert(XHR.responseText);
@@ -453,7 +423,7 @@ XHR.onreadystatechange = function() {
   }
 };
 // 封装
-window.ajax = function(url, method, body, success, fail) {
+window.ajax = function (url, method, body, success, fail) {
   let request = new XMLHttpRequest();
   request.open(method, url);
   request.onreadystatechange = () => {
@@ -468,10 +438,10 @@ window.ajax = function(url, method, body, success, fail) {
   request.send(body);
 };
 
-// promsie版
-window.ajax = function({ url, method }) {
+// promsie版ajax
+window.ajax = function ({ url, method }) {
   // 传参是 es6解构赋值
-  return new Promise(function(resolve, reject) {
+  return new Promise(function (resolve, reject) {
     let request = new XMLHttpRequest();
     request.open(method, url);
     request.onreadystatechange = () => {
