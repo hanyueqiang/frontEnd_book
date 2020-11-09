@@ -5,7 +5,7 @@
 ```js
 // every(): 数组的每一项都满足给定条件则返回true
 var arr = [1, 2, 3, 4, 5];
-var everyResult = arr.every(function(item, index, array) {
+var everyResult = arr.every(function (item, index, array) {
   return item > 2;
 });
 
@@ -13,7 +13,7 @@ console.log(everyResult); // false
 
 // some(): 数组中只需有一项满足给定条件则返回true
 var arr = [1, 2, 3, 4, 5];
-var everyResult = arr.some(function(item, index, array) {
+var everyResult = arr.some(function (item, index, array) {
   return item > 2;
 });
 
@@ -21,7 +21,7 @@ console.log(everyResult); // true
 
 // filter(): 返回所有满足给定条件的数据项所组成的新数组
 var arr = [1, 2, 3, 4, 5];
-var everyResult = arr.filter(function(item, index, array) {
+var everyResult = arr.filter(function (item, index, array) {
   return item > 2;
 });
 
@@ -30,7 +30,7 @@ console.log(arr); // [1,2,3,4,5]
 
 // map()：对数组的每一项应用给定条件，返回新的数组
 var arr = [1, 2, 3, 4, 5];
-var everyResult = arr.map(function(item, index, array) {
+var everyResult = arr.map(function (item, index, array) {
   return item * 2;
 });
 
@@ -39,13 +39,13 @@ console.log(arr); // [1, 2, 3, 4, 5]
 
 // forEach(): 数组遍历，与for循环一样
 var arr = [1, 2, 3, 4, 5];
-arr.forEach(function(item, index, array) {
+arr.forEach(function (item, index, array) {
   // 执行某些操作
 });
 
 // reduce()和reduceRight(), 这两个方法只是遍历方向不同
 var arr = [1, 2, 3, 4, 5];
-var sum = arr.reduce(function(prev, cur, index, array) {
+var sum = arr.reduce(function (prev, cur, index, array) {
   return prev + cur;
 }, 0);
 // 注意初始值不设的话，遇到空数组会报错
@@ -266,7 +266,7 @@ console.log(f1.__proto__ === Foo.prototype); // true
 </ul>;
 
 // 给父层元素绑定事件
-document.getElementById("list").addEventListener("click", function(e) {
+document.getElementById("list").addEventListener("click", function (e) {
   // 兼容性处理
   var event = e || window.event;
   var target = event.target || event.srcElement;
@@ -323,7 +323,7 @@ return false;
 
 ```js
 const p = new Promise((resolve, reject) => {
-  setTimeout(function() {
+  setTimeout(function () {
     const name = "joyitsai";
     resolve(name);
     /*
@@ -392,7 +392,7 @@ Generator 函数是 ES6 提供的一种异步编程解决方案，语法行为�
 ```js
 var arr = [1, [[2, 3], 4], [5, 6]];
 
-var flat = function*(a) {
+var flat = function* (a) {
   var length = a.length;
   for (var i = 0; i < length; i++) {
     var item = a[i];
@@ -665,7 +665,7 @@ console.log(result); // ['123', '456']
  * @param {number[]} nums
  * @return {number}
  */
-let maxSubArray = function(nums) {
+let maxSubArray = function (nums) {
   // 默认当前的最大和为第一个元素
   let sum = nums[0];
   // dp代表以当前元素结尾的最大和，默认也是第一个元素
@@ -738,7 +738,7 @@ const twoNum = (nums, target) => {
 ```js
 function test() {
   var a = 0;
-  return function() {
+  return function () {
     a++;
     alert(a);
   };
@@ -759,7 +759,7 @@ obj = {
     console.log(this.a); //undefined
     console.log(this); //window
   },
-  c: function() {
+  c: function () {
     return () => {
       console.log(this.a); //10
     };
@@ -795,17 +795,17 @@ NodeJS 是 CommonJS 规范的实现，webpack 也是以 CommonJS 的形式来书
 
 ```js
 function Foo() {
-  Foo.a = function() {
+  Foo.a = function () {
     console.log(1);
   };
-  this.a = function() {
+  this.a = function () {
     console.log(2);
   };
 }
-Foo.prototype.a = function() {
+Foo.prototype.a = function () {
   console.log(3);
 };
-Foo.a = function() {
+Foo.a = function () {
   console.log(4);
 };
 
@@ -827,7 +827,7 @@ Foo.a(); // 1
 var arr = [5, 7, 1, 3, 9];
 
 // 从小到大排序
-arr.sort(function(a, b) {
+arr.sort(function (a, b) {
   return a - b;
 });
 
@@ -944,3 +944,35 @@ document.ready 和 window.onload 的区别是：上面定义的 document.ready �
 onload 怎么用：
 
 浏览器加载完 DOM 后，会通过 javascript 为 DOM 元素添加事件，在 javascript 中，通常使用 window.onload()方法
+
+#### 实现 Promise.retry，成功后 resolve 结果，失败后重试，尝试超过一定次数才真正的 reject
+
+```js
+Promise.retry = function (fn, num = 3) {
+  return new Promise(async function (resolve, reject) {
+    while (num) {
+      try {
+        let result = await fn();
+        resolve(result);
+        num = 0;
+      } catch (error) {
+        if (!num) {
+          reject(error);
+        }
+      }
+      num--;
+    }
+  });
+};
+
+function getProm() {
+  const n = Math.random();
+  return new Promise((resolve, reject) => {
+    setTimeout(() => (n > 0.8 ? resolve(n) : reject(n)), 1000);
+  });
+}
+
+Promise.retry(getProm);
+```
+
+#### 如何模拟实现 Array.prototype.splice
