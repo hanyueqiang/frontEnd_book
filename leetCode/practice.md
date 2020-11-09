@@ -486,4 +486,54 @@ window.ajax = function({ url, method }) {
     request.send();
   });
 };
+// Partial 源码
+type Partial<T> = { [P in keyof T]?: T[P] };
+// Required源码
+type Required<T> = { [P in keyof T]-?: T[P] };
+// Pick源码
+type Pick<T, K extends keyof T> = { [P in K]: T[P] };
+// Exclude源码
+type Exclude<T, U> = T extends U ? never : T;
+// Omit源码
+type Omit = Pick<T, Exclude<keyof T, K>>
+
+// es5继承
+// 使用寄生组合继承
+function Person(name, like) {
+  this.name = name;
+  this.like = like;
+  this.money = 10000;
+}
+Person.prototype.say = function() {
+  console.log(this.name);
+}
+
+function Person1(name, like) {
+  Person.call(this);
+  this.name = name;
+  this.like = like;
+}
+Person1.prototype = Object.create(Person.prototype);
+
+let p = new Person1('明', '篮球');
+p.say()
+// es6继承
+class Father {
+  constructor(name, like) {
+    this.name = name;
+    this.like = like;
+  }
+  say() {
+    console.log(this.name);
+  }
+}
+
+class Children extends Father {
+  constructor(name, like) {
+    super(name, like);
+  }
+}
+let p = new Children('红', '足球')
+p.say()
+
 ```

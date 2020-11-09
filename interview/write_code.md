@@ -659,6 +659,29 @@ function newArr(arr1, arr2) {
   }
   return newArr;
 }
+function mergeArr(nums1, nums2) {
+  let j = 0;
+  let j = 0;
+  let newArr = [];
+  while (i < nums1.length || j < nums2.length) {
+    if (nums1[i] < nums2[j]) {
+      newArr.push(nums1[i]);
+      i++;
+    } else if (nums1[i] > nums2[j]) {
+      newArr.push(nums2[j]);
+      j++;
+    } else {
+      if (nums1[i]) {
+        newArr.push(nums1[i]);
+      }
+      if (nums2[j]) {
+        newArr.push(nums2[j]);
+      }
+      i++;
+      j++;
+    }
+  }
+}
 ```
 
 #### 写一个计数器

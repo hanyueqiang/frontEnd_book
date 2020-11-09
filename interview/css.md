@@ -284,3 +284,49 @@ css 的加载会阻塞 DOM 的渲染（渲染时需等 css 加载完毕，因为
 media 属性规定被链接文档将显示在什么设备上。
 
 media 属性用于为不同的媒介类型规定不同的样式。所有浏览器都支持值为 "screen"、"print" 以及 "all" 的 media 属性。
+
+#### 实现九宫格
+
+```js
+<style>
+body{
+  margin:0
+}
+.blockDiv{
+	width: 100%;
+	display:flex;
+	flex-wrap: wrap;
+}
+.block{
+	// 平均3等分减去margin10px宽度
+	width: calc(calc(100% / 3) - 10px);
+	margin: 5px;
+	height: 50px;
+	box-sizing: border-box;
+	border:1px  solid #000;
+}
+</style>
+<div class="blockDiv">
+	<div class="block"></div>
+	<div class="block"></div>
+	<div class="block"></div>
+	<div class="block"></div>
+	<div class="block"></div>
+	<div class="block"></div>
+	<div class="block"></div>
+	<div class="block"></div>
+	<div class="block"></div>
+</div>
+
+// 栅格布局
+.blockDiv{
+  display: grid;
+	grid-template-rows: 100px 100px 100px;
+	/*共三行，每行行高60px*/
+	grid-template-columns: 100px 100px 100px;
+}
+.block {
+  background-color: red;
+  margin: 10px
+}
+```
