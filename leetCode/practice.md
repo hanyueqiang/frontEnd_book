@@ -1,12 +1,16 @@
-#### JavaScript 数据类型
+#### JavaScript 基本数据类型
 
-空值（null) 、未定义(undefined) 、布尔值（boolean) 、数字（number) 、字符串（string) 、符号（symbol, ES6 中新增) 、大整数（BigInt, ES2020 引入）
-注意：对象 (object)是 js 内置类型，非基本类型
+```js
+// 7个基本类型 其中es6新增symbol ES2020引入了大整数BigInt
+boolean number string null undefined symbol BigInt
+
+// 注意：对象 (object)也是 js 内置类型，非基本类型
+```
 
 #### instanceof 实现原理
 
-用代码实现 如果 A 沿着原型链能找到 B.prototype 那么 A instanceof B 为 true
-遍历 A 的原型链 找到 B.prototype 返回 true
+用代码实现 如果 A 沿着原型链能找到 `B.prototype` 那么`A instanceof B` 为 true
+遍历 A 的原型链 找到 `B.prototype` 返回 true
 
 ```js
 const instanceof = (A, B) => {
@@ -24,7 +28,7 @@ const instanceof = (A, B) => {
 #### 手写 call
 
 ```js
-Function.prototype.newCall = function (context) {
+Function.prototype.newCall = function(context) {
   context = Object(context) || window;
   context.fn = this;
   let result = "";
@@ -38,7 +42,7 @@ Function.prototype.newCall = function (context) {
 #### 手写 apply
 
 ```js
-Function.prototype.newApply = function (context, args) {
+Function.prototype.newApply = function(context, args) {
   context = Object(context) || window;
   context.fn = this;
   let result;
@@ -54,16 +58,16 @@ Function.prototype.newApply = function (context, args) {
 
 #### 手写 bind
 
-bind() 方法创建一个新的函数，在 bind() 被调用时，这个新函数的 this 被指定为 bind() 的第一个参数，而其余参数将作为新函数的参数
+bind 方法创建一个新的函数，在 bind() 被调用时，这个新函数的 this 被指定为 bind() 的第一个参数，而其余参数将作为新函数的参数
 
 ```js
-Function.prototype.newBind = function (context) {
+Function.prototype.newBind = function(context) {
   if (typeof this !== "function") {
     throw new Error("不是一个函数");
   }
   const self = this;
   const args1 = [...arguments].slice(1);
-  return function () {
+  return function() {
     // 函数科里化
     const args2 = [...arguments];
     self.apply(context, args1.concat(args2));
@@ -77,16 +81,19 @@ Function.prototype.newBind = function (context) {
 function Animal(type) {
   this.type = type;
 }
-Animal.prototype.say = function () {
+Animal.prototype.say = function() {
   console.log("say");
 };
+
 function mockNew(Constructor, ...args) {
   // let Constructor = arguments.shift(); // 取出构造函数
-  let obj = {}; // new 执行会创建一个新对象
-  obj.__proto__ = Constructor.prototype;
+  // new 执行会创建一个新对象
+  let obj = {};
+  obj.__proto__ = Object.create(Constructor.prototype);
   Constructor.apply(obj, args);
   return obj;
 }
+
 let animal = mockNew(Animal, "dog");
 console.log(animal.type); // dog
 ```
@@ -120,7 +127,7 @@ function myPromise(constructor) {
   }
 }
 
-myPromise.prototype.then = function (onFullfilled, onRejected) {
+myPromise.prototype.then = function(onFullfilled, onRejected) {
   switch (this.status) {
     case "resolved":
       onFullfilled(this.resolveVal);
@@ -132,7 +139,7 @@ myPromise.prototype.then = function (onFullfilled, onRejected) {
 };
 ```
 
-#### 手写 Promise
+#### 手写 Promise （考虑异步）
 
 ```js
 const PENDING = 'pending';
@@ -208,22 +215,22 @@ const p2 = new Promise((resolve) => {
 const p3 = 3;
 console.log(Promise.all([p1, p2, p3])); // [1, 2, 3]
 
-Promise.prototype.all = function (promiseArr) {
+Promise.prototype.all = function(promiseArr) {
   let resArr = [];
   let count = 0;
   let len = promiseArr.length;
   // 返回一个新的promise实例
-  return new Promise(function (resolve, reject) {
+  return new Promise(function(resolve, reject) {
     for (let promise of promiseArr) {
       Promise.resolve(promise).then(
-        function (res) {
+        function(res) {
           resArr[count] = res;
           count++;
           if (count === len) {
             return resolve(resArr);
           }
         },
-        function (err) {
+        function(err) {
           return reject(err);
         }
       );
@@ -232,13 +239,13 @@ Promise.prototype.all = function (promiseArr) {
 };
 ```
 
-#### 手写 apromise.race
+#### 手写 promise.race
 
 与 Promise.all 一样，Promise.race 也接收包含 Promise 对象或普通值的数组(或其它可迭代对象)作为参数，返回一个 Promise 实例对象。与 Promise.all 不同的是，一旦有一个 Promise 实例对象 resolve ，立即把这个 resolve 的值作为 Promise.race resolve 的值。一旦有一个对象 reject， Promise.race 也会立即 reject。
 
 ```js
-Promise.prototype.race = function (promiseArr) {
-  return new Promise(function (resolve, reject) {
+Promise.prototype.race = function(promiseArr) {
+  return new Promise(function(resolve, reject) {
     for (let promise of promiseArr) {
       if (typeof promise === "object" && typeof promise.then === "function") {
         promise.then(resolve, reject);
@@ -253,12 +260,14 @@ Promise.prototype.race = function (promiseArr) {
 
 #### 手写防抖
 
+##### 非立即执行
+
 作用是在短时间内多次触发同一个函数，只执行最后一次，或者只在开始时执行。 1.非立即执行:，如果你在一个事件触发的 n 秒内又触发了这个事件，那我就以新的事件的时间为准，n 秒后才执行
 
 ```js
 function debounce(fn, delay) {
   let timeout;
-  return function () {
+  return function() {
     let context = this;
     let args = arguments;
     clearTimeout(timeout);
@@ -269,12 +278,14 @@ function debounce(fn, delay) {
 }
 ```
 
-2.立即执行：我不希望非要等到事件停止触发后才执行，我希望立刻执行函数，然后等到停止触发 n 秒后，才可以重新触发执行, 我们也可以为 debounce 函数加一个参数，可以选择是否立即执行函数
+##### 立即执行
+
+我不希望非要等到事件停止触发后才执行，我希望立刻执行函数，然后等到停止触发 n 秒后，才可以重新触发执行, 我们也可以为 debounce 函数加一个参数，可以选择是否立即执行函数
 
 ```js
 function debounce(fn, delay, immediate) {
   let timeout = null;
-  return function () {
+  return function() {
     let context = this;
     let args = arguments;
     if (timeout) {
@@ -305,7 +316,7 @@ function debounce(fn, delay, immediate) {
 ```js
 function throttle(func, delay) {
   var prev = Date.now();
-  return function () {
+  return function() {
     var context = this;
     var args = arguments;
     var now = Date.now();
@@ -317,13 +328,13 @@ function throttle(func, delay) {
 }
 
 // 定时器实现
-var throttle = function (func, delay) {
+var throttle = function(func, delay) {
   let timer = null;
-  return function () {
+  return function() {
     const context = this;
     const args = arguments;
     if (!timer) {
-      timer = setTimeout(function () {
+      timer = setTimeout(function() {
         func.apply(context, args);
         timer = null;
       }, delay);
@@ -352,7 +363,9 @@ function copy(obj) {
 }
 ```
 
-## 手写深拷贝
+#### 手写深拷贝
+
+该实现有可能引起爆栈，可考虑使用 weakMap 代替，应付面试足矣。
 
 ```js
 function deepClone(obj) {
@@ -380,20 +393,19 @@ function deepClone(obj) {
   return copy;
 }
 
+// weakMap
 function deepClone(obj, hash = new WeakMap()) {
-  if (obj === null) return obj; // 如果是null或者undefined我就不进行拷贝操作
+  if (typeof obj !== "object" || obj === null) return obj;
+
   if (obj instanceof Date) return new Date(obj);
   if (obj instanceof RegExp) return new RegExp(obj);
-  // 可能是对象或者普通的值  如果是函数的话是不需要深拷贝
-  if (typeof obj !== "object") return obj;
-  // 是对象的话就要进行深拷贝
+
   if (hash.get(obj)) return hash.get(obj);
+
   let cloneObj = new obj.constructor();
-  // 找到的是所属类原型上的constructor,而原型上的 constructor指向的是当前类本身
   hash.set(obj, cloneObj);
   for (let key in obj) {
     if (obj.hasOwnProperty(key)) {
-      // 实现一个递归拷贝
       cloneObj[key] = deepClone(obj[key], hash);
     }
   }
@@ -415,15 +427,16 @@ function deepClone(obj, hash = new WeakMap()) {
 var XHR = new XMLHttpRequest();
 XHR.open("get", "./a.php");
 XHR.send(null);
-XHR.onreadystatechange = function () {
+XHR.onreadystatechange = function() {
   if (XHR.readyState === 4) {
     if (XHR.status === 200) {
       alert(XHR.responseText);
     }
   }
 };
+
 // 封装
-window.ajax = function (url, method, body, success, fail) {
+function ajax(url, method, body, success, fail) {
   let request = new XMLHttpRequest();
   request.open(method, url);
   request.onreadystatechange = () => {
@@ -436,12 +449,14 @@ window.ajax = function (url, method, body, success, fail) {
     }
   };
   request.send(body);
-};
+}
+```
 
-// promsie版ajax
-window.ajax = function ({ url, method }) {
-  // 传参是 es6解构赋值
-  return new Promise(function (resolve, reject) {
+#### 手写 Promise 版 ajax
+
+```js
+window.ajax = function({ url, method }) {
+  return new Promise(function(resolve, reject) {
     let request = new XMLHttpRequest();
     request.open(method, url);
     request.onreadystatechange = () => {
@@ -456,18 +471,11 @@ window.ajax = function ({ url, method }) {
     request.send();
   });
 };
-// Partial 源码
-type Partial<T> = { [P in keyof T]?: T[P] };
-// Required源码
-type Required<T> = { [P in keyof T]-?: T[P] };
-// Pick源码
-type Pick<T, K extends keyof T> = { [P in K]: T[P] };
-// Exclude源码
-type Exclude<T, U> = T extends U ? never : T;
-// Omit源码
-type Omit = Pick<T, Exclude<keyof T, K>>
+```
 
-// es5继承
+#### es5 实现继承
+
+```js
 // 使用寄生组合继承
 function Person(name, like) {
   this.name = name;
@@ -476,18 +484,20 @@ function Person(name, like) {
 }
 Person.prototype.say = function() {
   console.log(this.name);
-}
+};
 
 function Person1(name, like) {
-  Person.call(this);
-  this.name = name;
-  this.like = like;
+  Person.call(this, name, like);
 }
 Person1.prototype = Object.create(Person.prototype);
 
-let p = new Person1('明', '篮球');
-p.say()
-// es6继承
+let p = new Person1("明", "篮球");
+p.say(); // 明
+```
+
+#### es6 实现继承
+
+```js
 class Father {
   constructor(name, like) {
     this.name = name;
@@ -503,7 +513,56 @@ class Children extends Father {
     super(name, like);
   }
 }
-let p = new Children('红', '足球')
-p.say()
+let p = new Children("C罗", "足球");
+p.say(); // C罗
+```
 
+#### TypeScript 中内置方法实现原理
+
+```js
+// Partial实现原理
+type Partial<T> = { [P in keyof T]?: T[P] };
+
+// Required实现原理
+type Required<T> = { [P in keyof T]-?: T[P] };
+
+// Pick实现原理
+type Pick<T, K extends keyof T> = { [P in K]: T[P] };
+
+// Exclude实现原理
+type Exclude<T, U> = T extends U ? never : T;
+
+// Omit实现原理
+type Omit = Pick<T, Exclude<keyof T, K>>
+```
+
+#### 实现一个函数组合 compose
+
+```js
+const a1 = (x) => x + 1;
+const d2 = (x) => x / 2;
+const m3 = (x) => x * 3;
+d2(m3(a1(a1(0)))); // => 3
+
+// 而这样的写法可读性明显太差了，我们可以构建一个compose函数,它接受任意多个函数作为参数（这些函数都只接受一个参数），然后compose返回的也是一个函数，达到以下的效果：
+const calcNum = compose(
+  d2,
+  m3,
+  a1,
+  a1
+);
+calcNum(0); // => d2(m3(a1(a(0))))
+
+function compose() {
+  let args = argumnets;
+  let start = args.length - 1;
+  return function() {
+    let i = start;
+    let result = args[i].apply(this, arguments);
+    while (i-- && i >= 0) {
+      result = args[i].call(this, result);
+    }
+    return result;
+  };
+}
 ```
