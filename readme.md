@@ -4,6 +4,8 @@
 
 部分文章已更新到掘金社区 [我的专栏](https://juejin.im/user/5c242177f265da610e8022b2/posts)，欢迎查看！
 
+[自定义浏览器滚动条样式](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B5%8F%E8%A7%88%E5%99%A8%E6%BB%9A%E5%8A%A8%E6%9D%A1%E7%9A%84%E6%A0%B7%E5%BC%8F.md)
+
 [TypeScript 在 React 中使用总结](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/03_typescript.md)
 
 [手写 React Hooks](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/reacthooks.md)
