@@ -4,6 +4,8 @@
 
 部分文章已更新到掘金社区 [我的专栏](https://juejin.im/user/5c242177f265da610e8022b2/posts)，欢迎查看！
 
+[POST 请求实现文件下载](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/post%E8%AF%B7%E6%B1%82%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD.md)
+
 [自定义浏览器滚动条样式](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/%E8%87%AA%E5%AE%9A%E4%B9%89%E6%B5%8F%E8%A7%88%E5%99%A8%E6%BB%9A%E5%8A%A8%E6%9D%A1%E7%9A%84%E6%A0%B7%E5%BC%8F.md)
 
 [TypeScript 在 React 中使用总结](https://github.com/hanyueqiang/frontEnd_book/blob/master/advanced/03_typescript.md)
