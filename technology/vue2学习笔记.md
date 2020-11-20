@@ -272,5 +272,138 @@ Vue.component("course-add", {
 
 #### 插槽 slot（内容分发）
 
-```js
+插槽具体展示内容由父组件传入
+
+- 默认插槽
+
+```vue
+<template>
+  <modal :show.sync="isShow">新增组件</modal>
+</template>
+<script>
+Vue.component("modal", {
+  props: ["show"],
+  template: `
+        <div class="modal" v-if="show">
+          <slot></slot>
+          <span class="modal-close" @click="$emit('update:show', false)">关闭</span>
+        </div>
+      `,
+});
+</script>
 ```
+
+- 具名插槽
+
+```vue
+<template>
+  <message :show.sync="isShow">
+    <template v-slot:title>
+      <strong>弹窗组件</strong>
+    </template>
+    <template
+      >新增</template
+    >
+  </message>
+</template>
+<script>
+Vue.component("message", {
+  props: ["show"],
+  template: `
+        <div class="message-box" v-if="show">
+          <slot name="title"></slot>
+          <slot></slot>
+          <span class="message-box-close" @click="$emit('update:show', false)">X</span>
+        </div>
+      `,
+});
+</script>
+```
+
+- 作用域插槽
+
+父组件的值来自子组件
+
+```vue
+<template>
+  <message :show.sync="isShow">
+    <template v-slot:title="slotProps">
+      <strong>{{ slotProps.title }}</strong>
+    </template>
+    <template
+      >新增</template
+    >
+  </message>
+</template>
+<script>
+Vue.component("message", {
+  props: ["show"],
+  template: `
+        <div class="message-box" v-if="show">
+          <slot name="title" title="来自子组件标题"></slot>
+          <slot></slot>
+          <span class="message-box-close" @click="$emit('update:show', false)">X</span>
+        </div>
+      `,
+});
+</script>
+```
+
+#### Vue api 整理
+
+- Vue.set
+  向响应式对象添加一个属性，并确保属性是响应式的
+  全局方法： `Vue.set(target, propName, value)`
+  组件实例内使用: `this.$set()`
+
+- Vue.delete
+  使用 delete obj[key] 不会触发响应式更新
+  删除对象属性
+  全局： `Vue.delete(target, propName)`
+  组件实例内使用：`this.$delete()`
+
+- vm.\$on
+  监听当前实例的自定义事件
+
+- vm.\$emit
+  触发实例上的事件，附加参数会传递给监听器回调。
+
+- 事件总线
+  通过 vue 原型添加一个实例作为事件总线，实现组件间相互通信，而不受组件关系影响
+
+`Vue.prototype.$bus = new Vue()`
+
+- vm.\$once
+  监听一个自定义事件，但是只触发一次，一旦触发后，监听器就会移除
+
+```js
+vm.$once("test", function(msg) {
+  console.log(msg);
+});
+```
+
+- vm.\$off
+  移除事件监听器
+
+```js
+// 移除所有事件监听器
+vm.$off();
+// 移除这个事件所有监听器
+vm.$off("test");
+```
+
+- 组件或元素引用
+  ref 或 vm.\$refs
+  注意： ref 如果加载 dom 上获取 dom 元素，如果是组件上，是组件实例
+
+```js
+<input type="text" ref="inp">
+
+mounted() {
+  this.$refs.inp.focus();
+}
+```
+
+#### 过滤器
+
+主要作用对传递数据进行格式化操作
