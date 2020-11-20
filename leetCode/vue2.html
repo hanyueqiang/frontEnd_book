@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .active {
+      background-color: #ccc;
+    }
+    .message-box {
+      padding: 10px;
+      background-color: #4fc08d;
+      border: 1px solid #42b983;
+    }
+    .message-box-close {
+      float: right;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <message :show.sync="isShow">
+      <template v-slot:title="slotProps">
+        <strong>{{slotProps.title}}</strong>
+      </template>
+      <template>新增课程</template>
+    </message>
+    <h2 :title="title">{{title}}</h2>
+    <!-- 列表组件  -->
+    <course-list :courses="courses"></course-list>
+    <button @click="batchUpdate">批量修改</button>
+   
+    <!-- <div v-for="item in courses" :key="item" :style="{backgroundColor: current===item? '#ccc': 'transparent'}" @click="current=item">
+      <div>{{ item }}</div>
+    </div> -->
+    <course-add @add-course="addCourse" v-model="curse"></course-add>
+    <!-- <input type="text" v-model="curse" @keydown.enter='addCourse'> -->
+    <div>{{total}}</div>
+    <div>{{totalCount}}</div>
+    </div>
+  <script src="vue.js"></script>
+  <script>
+    // 弹窗组件
+    Vue.component('message',{
+      props: ['show'],
+      template: `
+        <div class="message-box" v-if="show">
+          <slot name="title" title="来自子组件标题"></slot>
+          <slot></slot>
+          <span class="message-box-close" @click="$emit('update:show', false)">X</span>
+        </div>
+      `
+    })
+    // 课程新增组件
+    Vue.component('course-add', {
+      props: ['value'],
+      template: `
+      <div><input type="text" :value="value" @input="onInput" @keydown.enter='addCourse'>
+        <button @click="addCourse">添加</button>
+        </div>
+      `,
+      methods: {
+        addCourse() {
+          // 派发事件通知父组件
+          this.$emit('add-course');
+        },
+        onInput(e) {
+          this.$emit('input',e.target.value)
+        }
+      }
+    })
+    // 课程列表组件
+    Vue.component('course-list',{
+      data() {
+        return {
+          current: ''
+        }
+      },
+      props: {
+        courses: {
+          type: Array,
+          default: []
+        }
+      },
+      template: `
+      <div>
+        <div v-for="item in courses" :key="item.name" :style="{backgroundColor: current===item.name? '#ccc': 'transparent'}" @click="current=item.name">
+      <div>{{ item.name }}</div>
+        </div>
+      
+    </div>
+      `
+    });
+
+    const app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          title: 'hello vue',
+          courses: [{name: 'hello'},{name: 'dfefe'}],
+          curse: '',
+          current: '',
+          totalCount: 0,
+          isShow: false,
+          foo: {foo: 'qqq',bar:'bar'}
+        }
+      },
+      methods: {
+        addCourse() {
+          // 添加case到数组
+          // 清空course
+          this.courses.push({name: this.curse});
+          this.curse = '';
+          this.isShow=true;
+        },
+        batchUpdate() {
+          this.courses.forEach(item=> {
+            item.name = item.name + '。。。';
+          })
+        }
+      },
+      computed: {
+        total() {
+          return this.courses.length + '门';
+        }
+      },
+      watch: {
+        courses(newValue, oldValue) {
+          this.totalCount = newValue.length + '门';
+        }
+      },
+      watch: {
+        courses: {
+          immediate: true,
+         // deep: true,
+          handler(newValue, oldVal) {
+            this.totalCount = newValue.length + '门';
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>
