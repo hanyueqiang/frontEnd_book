@@ -39,7 +39,8 @@
     <div>{{total}}</div>
     <div>{{totalCount}}</div>
     </div>
-  <script src="vue.js"></script>
+  <!-- <script src="vue.js"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <script>
     // 弹窗组件
     Vue.component('message',{
@@ -52,11 +53,24 @@
         </div>
       `
     })
+    // 实现一个自定义指令
+    Vue.directive('hanFocus', {
+      inserted(el) {
+        el.focus();
+      }
+    });
     // 课程新增组件
     Vue.component('course-add', {
       props: ['value'],
       template: `
-      <div><input type="text" :value="value" @input="onInput" @keydown.enter='addCourse'>
+      <div>
+        <input 
+          type="text" 
+          :value="value" 
+          @input="onInput" 
+          @keydown.enter='addCourse' 
+          v-hanFocus
+        >
         <button @click="addCourse">添加</button>
         </div>
       `,
@@ -68,6 +82,9 @@
         onInput(e) {
           this.$emit('input',e.target.value)
         }
+      },
+      mounted() {
+
       }
     })
     // 课程列表组件
@@ -86,11 +103,15 @@
       template: `
       <div>
         <div v-for="item in courses" :key="item.name" :style="{backgroundColor: current===item.name? '#ccc': 'transparent'}" @click="current=item.name">
-      <div>{{ item.name }}</div>
-        </div>
-      
+      <div>{{ item.name| currency('￥') }}</div>
+        </div> 
     </div>
-      `
+      `,
+      filters: {
+        currency(value,symbol="$") {
+          return value + symbol;
+        }
+      }
     });
 
     const app = new Vue({

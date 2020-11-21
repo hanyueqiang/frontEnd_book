@@ -301,9 +301,7 @@ Vue.component("modal", {
     <template v-slot:title>
       <strong>弹窗组件</strong>
     </template>
-    <template
-      >新增</template
-    >
+    <template>新增</template>
   </message>
 </template>
 <script>
@@ -330,9 +328,7 @@ Vue.component("message", {
     <template v-slot:title="slotProps">
       <strong>{{ slotProps.title }}</strong>
     </template>
-    <template
-      >新增</template
-    >
+    <template>新增</template>
   </message>
 </template>
 <script>
@@ -377,7 +373,7 @@ Vue.component("message", {
   监听一个自定义事件，但是只触发一次，一旦触发后，监听器就会移除
 
 ```js
-vm.$once("test", function(msg) {
+vm.$once("test", function (msg) {
   console.log(msg);
 });
 ```
@@ -407,3 +403,76 @@ mounted() {
 #### 过滤器
 
 主要作用对传递数据进行格式化操作
+
+第一个参数为前面的参数
+
+```vue
+<script>
+Vue.component("course-list", {
+  data() {
+    return {
+      current: "",
+    };
+  },
+  props: {
+    courses: {
+      type: Array,
+      default: [],
+    },
+  },
+  template: `
+      <div>
+        <div v-for="item in courses" :key="item.name" :style="{backgroundColor: current===item.name? '#ccc': 'transparent'}" @click="current=item.name">
+      <div>{{ item.name | currency('￥') }}</div>
+        </div> 
+    </div>
+      `,
+  filters: {
+    currency(value, symbol = "$") {
+      return value + symbol;
+    },
+  },
+});
+</script>
+```
+
+#### 自定义指令
+
+对普通 dom 操作进行底层操作
+例如：输入框获取焦点
+
+```vue
+<script>
+// 实现一个自定义指令
+Vue.directive("hanFocus", {
+  inserted(el) {
+    el.focus();
+  },
+});
+// 课程新增组件
+Vue.component("course-add", {
+  props: ["value"],
+  template: `
+      <div>
+        <input 
+          type="text" 
+          :value="value" 
+          @input="onInput" 
+          @keydown.enter='addCourse' 
+          v-hanFocus
+        >
+        <button @click="addCourse">添加</button>
+        </div>
+      `,
+  methods: {
+    addCourse() {
+      // 派发事件通知父组件
+      this.$emit("add-course");
+    },
+    onInput(e) {
+      this.$emit("input", e.target.value);
+    },
+  },
+});
+</script>
+```
