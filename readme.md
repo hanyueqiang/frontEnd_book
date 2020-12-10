@@ -4,6 +4,8 @@
 
 部分文章已更新到掘金社区 [我的专栏](https://juejin.im/user/5c242177f265da610e8022b2/posts)，欢迎查看！
 
+[ES2020新特性总结](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/es2020.md)
+
 [React16 实现原理解析](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/react16%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90.md)
 
 [POST 请求实现文件下载](https://github.com/hanyueqiang/frontEnd_book/blob/master/technology/post%E8%AF%B7%E6%B1%82%E5%AE%9E%E7%8E%B0%E6%96%87%E4%BB%B6%E4%B8%8B%E8%BD%BD.md)
