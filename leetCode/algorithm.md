@@ -69,7 +69,7 @@ console.log(queue); // []
 
 ## 双指针
 
-指的是在遍历对象的过程中，不是普通的使用单个指针进行访问，而是使用两个相同方向（快慢指针）或者相反方向（对撞指针）的指针进行扫描，从而达到相应的目的。
+指的是在遍历数组的过程中，不是普通的使用单个指针进行访问，而是使用两个相同方向（快慢指针）或者相反方向（对撞指针）的指针进行扫描，从而达到相应的目的。
 
 #### 合并两个有序数组(leetcode88)
 
@@ -79,7 +79,7 @@ console.log(queue); // []
 ```js
 // 示例: nums1 = [1,2,3,0,0,0], m = 3; nums2 = [2,5,6], n = 3
 // 输出: [1,2,2,3,5,6]
-const merge = function(nums1, m, nums2, n) {
+const merge = function (nums1, m, nums2, n) {
   // 初始化两个指针的指向，初始化 nums1 尾部索引k
   let i = m - 1,
     j = n - 1,
@@ -122,7 +122,7 @@ nums = nums.sort((a, b) => {
 });
 
 // 示例： 给定数组 nums = [-1, 0, 1, 2, -1, -4]， 满足要求的三元组集合为： [ [-1, 0, 1], [-1, -1, 2] ]
-var threeSum = function(nums) {
+var threeSum = function (nums) {
   const arr = nums.sort((a, b) => a - b);
   const len = arr.length;
   const result = [];
@@ -187,7 +187,7 @@ var threeSum = function(nums) {
  * @param {number} target
  * @return {boolean}
  */
-var searchMatrix = function(matrix, target) {
+var searchMatrix = function (matrix, target) {
   const len = matrix.length;
   if (len === 0) {
     return false;
@@ -215,10 +215,7 @@ var searchMatrix = function(matrix, target) {
 
 ```js
 const str = "absdef";
-const result = str
-  .split("")
-  .reverse()
-  .join("");
+const result = str.split("").reverse().join("");
 ```
 
 判断一个字符串是否为回文串
@@ -226,10 +223,7 @@ const result = str
 ```js
 const str = "sfefsfs";
 function isRepeat(str) {
-  const reverseStr = str
-    .split("")
-    .reverse()
-    .join("");
+  const reverseStr = str.split("").reverse().join("");
   return str === reverseStr;
 }
 isRepeat(str);
@@ -262,7 +256,7 @@ function isPalindrome(str) {
  * @param {string} s
  * @return {boolean}
  */
-var isPalindrome = function(s) {
+var isPalindrome = function (s) {
   const str = s.replace(/[^0-9a-zA-Z]/g, "").toLowerCase();
   let i = 0;
   let j = str.length - 1;
@@ -288,7 +282,7 @@ var isPalindrome = function(s) {
 // 示例 2: 输入: "abca" 输出: True 解释: 你可以删除c字符。
 // 注意: 字符串只包含从 a-z 的小写字母。字符串的最大长度是50000。
 
-const validPalindrome = function(s) {
+const validPalindrome = function (s) {
   // 缓存字符串的长度
   const len = s.length;
   // i、j分别为左右指针
@@ -338,7 +332,7 @@ const validPalindrome = function(s) {
  * @param {string} s
  * @return {number}
  */
-var lengthOfLongestSubstring = function(s) {
+var lengthOfLongestSubstring = function (s) {
   const length = s.length;
   const arr = [];
   let max = 0;
@@ -532,7 +526,7 @@ m.clear();
  * @param {number} target
  * @return {number[]}
  */
-const twoSum = function(nums, target) {
+const twoSum = function (nums, target) {
   // 这里我用对象来模拟 map 的能力
   const diffs = {};
   // 缓存数组长度
@@ -869,7 +863,7 @@ const TreeComp = () => {
  * @param {TreeNode} root
  * @return {number}
  */
-var maxDepth = function(root) {
+var maxDepth = function (root) {
   let sum = 0;
   function dfs(n, l) {
     if (!n) {
@@ -906,7 +900,7 @@ var maxDepth = function(root) {
  * @param {TreeNode} root
  * @return {number}
  */
-var minDepth = function(root) {
+var minDepth = function (root) {
   if (!root) {
     return 0;
   }
@@ -947,7 +941,7 @@ var minDepth = function(root) {
  * @param {TreeNode} root
  * @return {number[][]}
  */
-var levelOrder = function(root) {
+var levelOrder = function (root) {
   if (!root) {
     return [];
   }
@@ -972,7 +966,7 @@ var levelOrder = function(root) {
 };
 
 // 解法2
-var levelOrder = function(root) {
+var levelOrder = function (root) {
   if (!root) {
     return [];
   }
@@ -1011,7 +1005,7 @@ var levelOrder = function(root) {
  * @param {TreeNode} root
  * @return {number[]}
  */
-var inorderTraversal = function(root) {
+var inorderTraversal = function (root) {
   if (!root) {
     return [];
   }
@@ -1049,7 +1043,7 @@ var inorderTraversal = function(root) {
  * @param {number} sum
  * @return {boolean}
  */
-var hasPathSum = function(root, sum) {
+var hasPathSum = function (root, sum) {
   if (!root) {
     return false;
   }
@@ -1300,7 +1294,7 @@ function mergeSort(arr) {
  * @param {ListNode} l2
  * @return {ListNode}
  */
-var mergeTwoLists = function(l1, l2) {
+var mergeTwoLists = function (l1, l2) {
   let res = new ListNode(0);
   let p1 = l1;
   let p2 = l2;
@@ -1419,7 +1413,7 @@ function secondSort(arr, str) {
  * @param {number} n
  * @return {number}
  */
-var guessNumber = function(n) {
+var guessNumber = function (n) {
   let low = 1;
   let high = n;
   while (low <= high) {
@@ -1476,7 +1470,7 @@ var guessNumber = function(n) {
  * @param {TreeNode} root
  * @return {TreeNode}
  */
-var invertTree = function(root) {
+var invertTree = function (root) {
   if (!root) {
     return null;
   }
@@ -1507,7 +1501,7 @@ var invertTree = function(root) {
  * @param {TreeNode} q
  * @return {boolean}
  */
-var isSameTree = function(p, q) {
+var isSameTree = function (p, q) {
   if (!p && !q) {
     return true;
   }
@@ -1541,7 +1535,7 @@ var isSameTree = function(p, q) {
  * @param {TreeNode} root
  * @return {boolean}
  */
-var isSymmetric = function(root) {
+var isSymmetric = function (root) {
   if (!root) {
     return true;
   }
@@ -1578,7 +1572,7 @@ var isSymmetric = function(root) {
 爬到第 n 阶可以第 n-1 阶爬一个台阶，或者 n-2 阶爬两个台阶
 
 ```js
-var climbStairs = function(n) {
+var climbStairs = function (n) {
   if (n < 2) {
     return 1;
   }
@@ -1608,7 +1602,7 @@ ak=第 k 个房屋钱数
 f(k) = max(f(k-2)+Ak, f(k-1))
 
 ```js
-var rob = function(nums) {
+var rob = function (nums) {
   if (nums.length === 0) {
     return 0;
   }
@@ -1620,7 +1614,7 @@ var rob = function(nums) {
   return dp[nums.length];
 };
 // 优化
-var rob = function(nums) {
+var rob = function (nums) {
   if (nums.length === 0) {
     return 0;
   }
